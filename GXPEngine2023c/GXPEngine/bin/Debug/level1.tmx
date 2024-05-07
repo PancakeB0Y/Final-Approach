@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="3">
+ <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
+  <image source="Assets/Background.jpg" width="406" height="720"/>
+ </tileset>
+ <objectgroup id="3" name="UI"/>
+ <objectgroup id="4" name="ObjectBackgrounds">
+  <object id="2" name="Background" gid="1" x="28" y="740" width="400" height="700"/>
+ </objectgroup>
+ <objectgroup id="2" name="Object Layer 1"/>
+</map>
