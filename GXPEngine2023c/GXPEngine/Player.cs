@@ -9,7 +9,7 @@ public class Player : Sprite
     public readonly float radius;
 
     public Vec2 velocity;
-    public Vec2 gravity = new Vec2(0, 0.2f);
+    public Vec2 gravity = new Vec2(0, 0.4f);
 
     Vec2 oldPosition;
 
@@ -157,6 +157,7 @@ public class Player : Sprite
         chargeDistance = (chargeMousePos - mousePosition).Magnitude();
 
         chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
+        chargeDistance = Mathf.Map(chargeDistance, 0, chargeDistanceMax, 0f, 20f);
     }
 
     void Release()
