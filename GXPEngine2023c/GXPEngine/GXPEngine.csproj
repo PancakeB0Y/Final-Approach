@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Arrow.cs" />
     <Compile Include="Components\CollisionInfo.cs" />
     <Compile Include="Components\LineCap.cs" />
     <Compile Include="Components\LineSegment.cs" />

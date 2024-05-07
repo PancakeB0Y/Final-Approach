@@ -22,6 +22,9 @@ public class Arrow : GameObject
 
     protected override void RenderSelf(GXPEngine.Core.GLContext glContext)
     {
+        if (!visible)
+            return;
+
         Vec2 endPoint = startPoint + vector * scaleFactor;
         Gizmos.RenderLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y, color, lineWidth, true);
 

@@ -20,12 +20,18 @@ public class Player : Sprite
     float chargeDistance;
     const float chargeDistanceMax = 100f;
 
+    Arrow chargeIndicator;
+
     public Player(string filename, Vec2 position) : base(filename, false, false)
     {
         SetOrigin(width / 2, height / 2);
 
         this.position = position;
         radius = width / 2;
+
+        chargeIndicator = new Arrow(position, new Vec2(0, 0), 10);
+        AddChild(chargeIndicator);
+        chargeIndicator.visible = false;
 
         UpdateCoordinates();
     }
@@ -139,6 +145,8 @@ public class Player : Sprite
         {
             isCharging = true;
             chargeMousePos = mousePosition;
+
+            chargeIndicator.visible = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -154,20 +162,23 @@ public class Player : Sprite
 
     void Charge()
     {
-        chargeDistance = (chargeMousePos - mousePosition).Magnitude();
+        Vec2 distanceVec = chargeMousePos - mousePosition;
+        chargeDistance = distanceVec.Magnitude();
 
         chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
         chargeDistance = Mathf.Map(chargeDistance, 0, chargeDistanceMax, 0f, 20f);
+
+        chargeIndicator.startPoint = position;
+        chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
+        chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
     }
 
     void Release()
     {
-        Launch();
-    }
-
-    void Launch()
-    {
+        //Launch
         velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
+
+        chargeIndicator.visible = false;
     }
 
     void UpdateCoordinates()
