@@ -1,11 +1,9 @@
-using System;        
-using GXPEngine;     
-using System.Drawing;
+using GXPEngine;
 using System.Collections.Generic;
 
 public class MyGame : Game {
 
-
+    Player player;
     List<LineSegment> _lines;
 
     public int GetNumberOfLines()
@@ -24,6 +22,9 @@ public class MyGame : Game {
 
     public MyGame() : base(800, 600, false)
 	{
+        player = new Player("circle.png", new Vec2(width / 2, height / 2));
+        AddChild(player);
+
         _lines = new List<LineSegment>();
 
         // boundary:
