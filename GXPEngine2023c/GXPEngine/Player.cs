@@ -3,7 +3,7 @@ using GXPEngine;
 
 public class Player : Sprite
 {
-    public readonly float bounciness;
+    public readonly float bounciness = 0.5f;
 
     public Vec2 position;
     public readonly float radius;
@@ -12,6 +12,13 @@ public class Player : Sprite
     public Vec2 gravity = new Vec2(0, 0.2f);
 
     Vec2 oldPosition;
+
+    Vec2 mousePosition;
+
+    bool isCharging = false;
+    Vec2 chargeMousePos;
+    float chargeDistance;
+    const float chargeDistanceMax = 100f;
 
     public Player(string filename, Vec2 position) : base(filename, false, false)
     {
@@ -28,6 +35,12 @@ public class Player : Sprite
         oldPosition = position;
 
         Move();
+        UpdateCoordinates();
+
+
+        //Aiming
+        UpdateMousePosition();
+        CheckForMouseInput();
         UpdateCoordinates();
     }
 
@@ -113,6 +126,47 @@ public class Player : Sprite
         }
 
         return earliestColl;
+    }
+
+    void UpdateMousePosition()
+    {
+        mousePosition.SetXY(Input.mouseX, Input.mouseY);
+    }
+
+    void CheckForMouseInput()
+    {
+        if (!isCharging && Input.GetMouseButtonDown(0))
+        {
+            isCharging = true;
+            chargeMousePos = mousePosition;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isCharging = false;
+            Release();
+        }
+
+        if (isCharging)
+        {
+            Charge();
+        }
+    }
+
+    void Charge()
+    {
+        chargeDistance = (chargeMousePos - mousePosition).Magnitude();
+
+        chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
+    }
+
+    void Release()
+    {
+        Launch();
+    }
+
+    void Launch()
+    {
+        velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
     }
 
     void UpdateCoordinates()
