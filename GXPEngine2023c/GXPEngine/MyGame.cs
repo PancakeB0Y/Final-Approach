@@ -1,32 +1,50 @@
-using System;                                   // System contains a lot of default C# libraries 
-using GXPEngine;                                // GXPEngine contains the engine
-using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
+using System;        
+using GXPEngine;     
+using System.Drawing;
+using System.Collections.Generic;
 
 public class MyGame : Game {
-	public MyGame() : base(800, 600, false)     // Create a window that's 800x600 and NOT fullscreen
-	{
-		// Draw some things on a canvas:
-		EasyDraw canvas = new EasyDraw(800, 600);
-		canvas.Clear(Color.MediumPurple);
-		canvas.Fill(Color.Yellow);
-		canvas.Ellipse(width / 2, height / 2, 200, 200);
-		canvas.Fill(50);
-		canvas.TextSize(32);
-		canvas.TextAlign(CenterMode.Center, CenterMode.Center);
-		canvas.Text("Welcome!", width / 2, height / 2);
 
-		// Add the canvas to the engine to display it:
-		AddChild(canvas);
-		Console.WriteLine("MyGame initialized");
+
+    List<LineSegment> _lines;
+
+    public int GetNumberOfLines()
+    {
+        return _lines.Count;
+    }
+
+    public LineSegment GetLine(int index)
+    {
+        if (index >= 0 && index < _lines.Count)
+        {
+            return _lines[index];
+        }
+        return null;
+    }
+
+    public MyGame() : base(800, 600, false)
+	{
+        _lines = new List<LineSegment>();
+
+        // boundary:
+        AddLine(new Vec2(50, height - 20), new Vec2(width - 50, height - 20));  //bottom
+        AddLine(new Vec2(width - 50, height - 20), new Vec2(width - 50, 20));
+        AddLine(new Vec2(width - 50, 20), new Vec2(50, 20));
+        AddLine(new Vec2(50, 20), new Vec2(50, height - 20));  //right
+    }
+
+    void AddLine(Vec2 start, Vec2 end, bool lineCapStart = false, bool lineCapEnd = false)
+    {
+        LineSegment line = new LineSegment(start, end, lineCapStart, lineCapEnd, 0xff00ff00, 4);
+        AddChild(line);
+        _lines.Add(line);
+    }
+
+    void Update() {
 	}
 
-	// For every game object, Update is called every frame, by the engine:
-	void Update() {
-		// Empty
-	}
-
-	static void Main()                          // Main() is the first method that's called when the program is run
+	static void Main()       
 	{
-		new MyGame().Start();                   // Create a "MyGame" and start it
+		new MyGame().Start();
 	}
 }
