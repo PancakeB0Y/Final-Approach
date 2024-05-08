@@ -29,7 +29,7 @@ public class Player : AnimationSprite
 
     Arrow chargeIndicator;
 
-    Element element = Element.Fire;
+    Element element;
 
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {

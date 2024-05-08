@@ -91,6 +91,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="MyUtils.cs" />
+    <Compile Include="Walls\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

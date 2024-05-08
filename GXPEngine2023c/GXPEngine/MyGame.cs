@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-    List<LineSegment> _lines;
+    public List<LineSegment> Lines;
 
     public int GetNumberOfLines()
     {
-        return _lines.Count;
+        return Lines.Count;
     }
 
     public LineSegment GetLine(int index)
     {
-        if (index >= 0 && index < _lines.Count)
+        if (index >= 0 && index < Lines.Count)
         {
-            return _lines[index];
+            return Lines[index];
         }
         return null;
     }
@@ -23,22 +23,22 @@ public class MyGame : Game
     {
         targetFps = 60;
 
-        AddChild(new Level("level1.tmx", 1));
-
-        _lines = new List<LineSegment>();
+        Lines = new List<LineSegment>();
 
         // boundary:
         AddLine(new Vec2(50, height - 20), new Vec2(width - 50, height - 20));  //bottom
         AddLine(new Vec2(width - 50, height - 20), new Vec2(width - 50, 20));
         AddLine(new Vec2(width - 50, 20), new Vec2(50, 20));
         AddLine(new Vec2(50, 20), new Vec2(50, height - 20));  //right
+
+        AddChild(new Level("level1.tmx", 1));
     }
 
     void AddLine(Vec2 start, Vec2 end, bool lineCapStart = false, bool lineCapEnd = false)
     {
         LineSegment line = new LineSegment(start, end, lineCapStart, lineCapEnd, 0xff00ff00, 4);
         AddChild(line);
-        _lines.Add(line);
+        Lines.Add(line);
     }
 
     void Update()
