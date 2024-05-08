@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Arrow.cs" />
+    <Compile Include="Components\CollisionInfo.cs" />
+    <Compile Include="Components\LineCap.cs" />
+    <Compile Include="Components\LineSegment.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
@@ -83,6 +87,8 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Vec2.cs" />
     <Compile Include="MyUtils.cs" />
   </ItemGroup>
   <ItemGroup>

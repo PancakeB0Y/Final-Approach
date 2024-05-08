@@ -1,69 +1,101 @@
 using GXPEngine;
-using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using TiledMapParser;
 
-namespace gxpengine_template.MyClasses
+public class MyGame : Game
 {
 
-    public class MyGame : Game
+    public Level CurrentScene { get; private set; }
+    private string _newSceneName = null;
+
+    Player player;
+    List<LineSegment> _lines;
+
+    public int GetNumberOfLines()
     {
-        public Level CurrentScene { get; private set; }
-        private string _newSceneName = null;
+        return _lines.Count;
+    }
 
-        public MyGame() : base(500, 800, false, false)
+    public LineSegment GetLine(int index)
+    {
+        if (index >= 0 && index < _lines.Count)
         {
-            targetFps = 60;
-            LoadScene("level1.tmx");
-            OnAfterStep += LoadSceneIfNotNull;
+            return _lines[index];
         }
+        return null;
+    }
 
-        static void Main()
-        {
-            new MyGame().Start();
-        }
-        void Update()
-        {
-            if (Input.GetKeyDown(Key.R))
-            {
-                ReloadScene();
-            }
-        }
-        private void LoadSceneIfNotNull()
-        {
-            if (_newSceneName == null) return;
-            DestroyAll();
-            var level = new Level(_newSceneName);
-            CurrentScene = level;
-            AddChild(level);
-            level.Init();
+    public MyGame() : base(800, 600, false)
+    {
+        targetFps = 60;
+        LoadScene("level1.tmx");
+        OnAfterStep += LoadSceneIfNotNull;
 
-            _newSceneName = null;
-        }
+        player = new Player("Assets/circle.png", new Vec2(width / 2, height / 2));
+        AddChild(player);
 
-        public void LoadScene(string sceneName)
+        _lines = new List<LineSegment>();
+
+        // boundary:
+        AddLine(new Vec2(50, height - 20), new Vec2(width - 50, height - 20));  //bottom
+        AddLine(new Vec2(width - 50, height - 20), new Vec2(width - 50, 20));
+        AddLine(new Vec2(width - 50, 20), new Vec2(50, 20));
+        AddLine(new Vec2(50, 20), new Vec2(50, height - 20));  //right
+    }
+
+    void AddLine(Vec2 start, Vec2 end, bool lineCapStart = false, bool lineCapEnd = false)
+    {
+        LineSegment line = new LineSegment(start, end, lineCapStart, lineCapEnd, 0xff00ff00, 4);
+        AddChild(line);
+        _lines.Add(line);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(Key.R))
         {
-            _newSceneName = sceneName;
+            ReloadScene();
         }
+    }
 
-        public void ReloadScene()
+
+    private void LoadSceneIfNotNull()
+    {
+        if (_newSceneName == null) return;
+        DestroyAll();
+        var level = new Level(_newSceneName);
+        CurrentScene = level;
+        AddChild(level);
+        level.Init();
+
+        _newSceneName = null;
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        _newSceneName = sceneName;
+    }
+
+    public void ReloadScene()
+    {
+        _newSceneName = CurrentScene.Name;
+    }
+
+    protected override void OnDestroy()
+    {
+        OnAfterStep -= LoadSceneIfNotNull;
+    }
+    private void DestroyAll()
+    {
+        foreach (var child in GetChildren())
         {
-            _newSceneName = CurrentScene.Name;
-        }
 
-        protected override void OnDestroy()
-        {
-            OnAfterStep -= LoadSceneIfNotNull;
-        }
-        private void DestroyAll()
-        {
-            foreach (var child in GetChildren())
-            {
+            child.LateDestroy();
 
-                child.LateDestroy();
-
-            }
         }
+    }
+
+    static void Main()
+    {
+        new MyGame().Start();
     }
 }

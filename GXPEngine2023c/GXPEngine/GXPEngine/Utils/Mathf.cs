@@ -206,6 +206,20 @@ namespace GXPEngine
 			return f < min ? min : (f > max ? max : f);
 		}
 
-	}
+        /// <summary>
+        /// Maps a value from an 'input' range to an 'output' one
+        /// </summary>
+        public static float Map(float x, float inputMin, float inputMax, float outputMin = 0f, float outputMax = 0f)
+        {
+            if (outputMin == 0f && outputMax == 0f)
+            {
+                outputMin = inputMin;
+                outputMax = inputMax;
+            }
+
+            float t = (x - inputMin) / (inputMax - inputMin);
+            return outputMin + t * (outputMax - outputMin);
+        }
+    }
 }
 
