@@ -31,6 +31,13 @@ public class Player : AnimationSprite
 
     Element element;
 
+    PlayerState playerState = PlayerState.None;
+
+    Wall currentSlideWall;
+    Element wallElement;
+    float durationToStick = 2000;
+    float durationToStickCounter = 0;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(width / 2, height / 2);
@@ -58,18 +65,27 @@ public class Player : AnimationSprite
 
     void Update ()
     {
+        if (playerState == PlayerState.Sticking)
+        {
+            Stick();
+        }
+        else
+        {
+            if (playerState == PlayerState.Sliding)
+            {
+                Slide();
+            }
 
-        oldPosition = Position;
+            oldPosition = Position;
 
-        Move();
-        UpdateCoordinates();
+            Move();
+            UpdateCoordinates();
 
-        UpdateSize();
-
-        //Aiming
-        UpdateMousePosition();
-        CheckForMouseInput();
-        UpdateCoordinates();
+            //Aiming
+            UpdateMousePosition();
+            CheckForMouseInput();
+            UpdateCoordinates();
+        }
     }
 
     void Move()
@@ -91,14 +107,14 @@ public class Player : AnimationSprite
         Level level = (Level)this.parent;
 
         //Check wall lines
-        for (int i = 0; i < level.GetNumberOfWallLines(); i++)
+        for (int i = 0; i < level.GetNumberOfWall(); i++)
         {
-            LineSegment lineSegment = level.GetWallLine(i);
+            Wall wall = level.GetWall(i);
 
             //Check line caps
             for (int j = 0; j < 2; j++)
             {
-                LineCap lineCap = j % 2 == 0 ? lineSegment.lineCapStart : lineSegment.lineCapEnd;
+                LineCap lineCap = j % 2 == 0 ? wall.LineSegment.lineCapStart : wall.LineSegment.lineCapEnd;
                 if (lineCap == null)
                     continue;
 
@@ -106,36 +122,17 @@ public class Player : AnimationSprite
             }
 
             //Check line segment
-            earliestCollision = CheckLineSegmentCollision(earliestCollision, lineSegment);
-        }
-
-        //Check boundary lines - REMOVE when real levels are ready
-        for (int i = 0; i < level.GetNumberOfLines(); i++)
-        {
-            LineSegment lineSegment = level.GetLine(i);
-
-            //Check line caps
-            //for (int j = 0; j < 2; j++)
-            //{
-            //    Ball lineCap = j % 2 == 0 ? lineSegment.lineCapStart : lineSegment.lineCapEnd;
-            //    if (lineCap == null)
-            //        continue;
-
-            //    earliestCollision = CheckBallCollision(earliestCollision, lineCap);
-            //}
-
-            //Check line segment
-            earliestCollision = CheckLineSegmentCollision(earliestCollision, lineSegment);
+            earliestCollision = CheckLineSegmentCollision(earliestCollision, wall);
         }
 
         return earliestCollision;
     }
 
-    CollisionInfo CheckLineSegmentCollision(CollisionInfo earliestColl, LineSegment lineSegment)
+    CollisionInfo CheckLineSegmentCollision(CollisionInfo earliestColl, Wall wall)
     {
-        Vec2 lineVector = lineSegment.start - lineSegment.end;
+        Vec2 lineVector = wall.LineSegment.start - wall.LineSegment.end;
         Vec2 lineNormal = lineVector.Normal();
-        float a = Vec2.Dot(oldPosition - lineSegment.start, lineNormal) - Radius;
+        float a = Vec2.Dot(oldPosition - wall.LineSegment.start, lineNormal) - Radius;
         float b = Vec2.Dot(oldPosition - Position, lineNormal);
         if (b <= 0)
         {
@@ -157,12 +154,12 @@ public class Player : AnimationSprite
         if (toi <= 1)
         {
             Vec2 poi = oldPosition + Velocity * toi;
-            float d = Vec2.Dot(lineSegment.start - poi, lineVector.Normalized());
+            float d = Vec2.Dot(wall.LineSegment.start - poi, lineVector.Normalized());
             if (d >= 0 && d <= lineVector.Magnitude())
             {
                 if (earliestColl == null || toi < earliestColl.timeOfImpact)
                 {
-                    earliestColl = new CollisionInfo(lineNormal, lineSegment, toi);
+                    earliestColl = new CollisionInfo(lineNormal, wall, toi);
                 }
             }
         }
@@ -215,10 +212,22 @@ public class Player : AnimationSprite
             Position = otherBall.position + coll.normal;
             Velocity.Reflect(coll.normal.Normalized(), Bounciness);
         }
-        else if (coll.other is LineSegment)
+        else if (coll.other is Wall)
         {
+            currentSlideWall = (Wall)coll.other;
+
             Position = oldPosition + Velocity * coll.timeOfImpact;
-            Velocity.Reflect(coll.normal, Bounciness);
+            Velocity = new Vec2();
+
+            //Start timer
+            durationToStickCounter = 0;
+            playerState = PlayerState.Sticking;
+
+            wallElement = Element.None;
+            if (currentSlideWall is ElementWall)
+            {
+                wallElement = ((ElementWall)currentSlideWall).Element;
+            }
         }
     }
 
@@ -251,14 +260,14 @@ public class Player : AnimationSprite
             Charge();
         }
 
-        if (Input.GetKeyDown(Key.LEFT))
-        {
-            mass -= 0.1f;
-        }
-        if (Input.GetKeyDown(Key.RIGHT))
-        {
-            mass += 0.1f;
-        }
+        //if (Input.GetKeyDown(Key.LEFT))
+        //{
+        //    mass -= 0.1f;
+        //}
+        //if (Input.GetKeyDown(Key.RIGHT))
+        //{
+        //    mass += 0.1f;
+        //}
     }
 
     void SwitchElement()
@@ -296,10 +305,64 @@ public class Player : AnimationSprite
         chargeIndicator.visible = false;
     }
 
+    void Stick()
+    {
+        durationToStickCounter += Time.deltaTime;
+        if (durationToStickCounter > durationToStick)
+        {
+            playerState = wallElement != Element.None ? PlayerState.Sliding : PlayerState.None;//If the wall is a normal one, directly switch to the normal player state
+            durationToStickCounter = 0;
+        }
+    }
+
+    void Slide()
+    {
+        //Checks if the player has not reached the end of the given wall
+        if ((currentSlideWall.IsLeft && Position.y <= currentSlideWall.LineSegment.end.y)
+            || (!currentSlideWall.IsLeft && Position.y <= currentSlideWall.LineSegment.start.y))
+        {
+            UpdateSize();
+        }
+        else
+        {
+            playerState = PlayerState.None;
+        }
+    }
+
     void UpdateSize()
     {
+        bool shouldGrow = element == wallElement;
+        if (shouldGrow)
+        {
+            mass += 0.01f;
+        }
+        else
+        {
+            mass -= 0.01f;
+        }
+
+        mass = Mathf.Clamp(mass, 0.5f, 10f);
+
         SetScaleXY(mass);
         Radius = width / 2;
+
+        CheckForScaleCorrection(shouldGrow);
+    }
+
+    //Checks if the player is in or away from the wall and corrects it accordingly
+    void CheckForScaleCorrection(bool shouldGrow)
+    {
+        float distance = 0f;
+        if (shouldGrow && Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x) < Radius)
+        {
+            distance = Radius - Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x);
+            Position.x = currentSlideWall.IsLeft ? Position.x + distance : Position.x - distance;
+        }
+        else if (Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x) > Radius)
+        {
+            distance = Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x) - Radius;
+            Position.x = currentSlideWall.IsLeft ? Position.x - distance : Position.x + distance;
+        }
     }
 
     void UpdateCoordinates()
@@ -307,4 +370,9 @@ public class Player : AnimationSprite
         x = Position.x;
         y = Position.y;
     }
+}
+
+enum PlayerState
+{
+    None, Sticking, Sliding
 }

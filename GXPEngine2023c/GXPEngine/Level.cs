@@ -15,9 +15,7 @@ public class Level : GameObject
     TiledLoader tiledLoader;
 
     Player player;
-
-    List<LineSegment> lines;
-    List<LineSegment> wallLines;
+    List<Wall> walls;
 
     public Level(string fileName, int id)
     {
@@ -31,14 +29,7 @@ public class Level : GameObject
 
     void CreateLevel()
     {
-        lines = new List<LineSegment>();
-        wallLines = new List<LineSegment>();
-
-        // boundary:
-        AddLine(new Vec2(50, game.height - 20), new Vec2(game.width - 50, game.height - 20));  //bottom
-        AddLine(new Vec2(game.width - 50, game.height - 20), new Vec2(game.width - 50, 20));
-        AddLine(new Vec2(game.width - 50, 20), new Vec2(50, 20));
-        AddLine(new Vec2(50, 20), new Vec2(50, game.height - 20));  //right
+        walls = new List<Wall>();
 
         tiledLoader.autoInstance = true;
         tiledLoader.rootObject = this;
@@ -50,47 +41,20 @@ public class Level : GameObject
 
         foreach (var wall in GetChildren().Where(c => c is Wall))
         {
-            AddWallLine(((Wall)wall).LineSegment);
+            walls.Add((Wall)wall);
         }
     }
 
-    void AddLine(Vec2 start, Vec2 end, bool lineCapStart = false, bool lineCapEnd = false)
+    public int GetNumberOfWall()
     {
-        LineSegment line = new LineSegment(start, end, lineCapStart, lineCapEnd, 0xff00ff00, 4);
-        AddChild(line);
-        lines.Add(line);
+        return walls.Count;
     }
 
-    public int GetNumberOfLines()
+    public Wall GetWall(int index)
     {
-        return lines.Count;
-    }
-
-    public LineSegment GetLine(int index)
-    {
-        if (index >= 0 && index < lines.Count)
+        if (index >= 0 && index < walls.Count)
         {
-            return lines[index];
-        }
-        return null;
-    }
-
-    public void AddWallLine(LineSegment wallLine)
-    {
-        AddChild(wallLine);
-        wallLines.Add(wallLine);
-    }
-
-    public int GetNumberOfWallLines()
-    {
-        return wallLines.Count;
-    }
-
-    public LineSegment GetWallLine(int index)
-    {
-        if (index >= 0 && index < wallLines.Count)
-        {
-            return wallLines[index];
+            return walls[index];
         }
         return null;
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-    public MyGame() : base(800, 600, false)
+    public MyGame() : base(1500, 900, false)
     {
         targetFps = 60;
 

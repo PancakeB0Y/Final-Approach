@@ -8,10 +8,10 @@ using static GXPEngine.GlobalVariables;
 
 public class ElementWall : Wall
 {
-    Element element;
+    public readonly Element Element;
 
     public ElementWall(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, obj)
     {
-        element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
+        Element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
     }
 }
