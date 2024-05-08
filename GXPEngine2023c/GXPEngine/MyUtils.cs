@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace gxpengine_template.MyClasses
+public static class MyUtils
 {
-    public static class MyUtils
-    {
-        public static MyGame MyGame => (MyGame)MyGame.main;
+    public static MyGame MyGame => (MyGame)MyGame.main;
 
-        public static bool TryGetIndex<T>(this T[] array, Predicate<T> predicate, out int index)
-        {
-            index = Array.FindIndex(array, predicate);
-            return index > -1;
-        }
+    public static bool TryGetIndex<T>(this T[] array, Predicate<T> predicate, out int index)
+    {
+        index = Array.FindIndex(array, predicate);
+        return index > -1;
     }
 }
+
