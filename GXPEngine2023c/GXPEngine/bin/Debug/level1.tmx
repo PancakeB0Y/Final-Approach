@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="4">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="15">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
  <tileset firstgid="2" name="player" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="Assets/circle.png" width="64" height="64"/>
  </tileset>
+ <tileset firstgid="3" name="wallGreen" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallGreen.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="4" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="5" name="wallRed" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallRed.png" width="32" height="160"/>
+ </tileset>
  <objectgroup id="4" name="ObjectBackgrounds">
-  <object id="2" name="Background" gid="1" x="28" y="740" width="400" height="700"/>
-  <object id="3" name="Player" type="Player" gid="2" x="515.85" y="302.341" width="64" height="64">
+  <object id="2" name="Background" gid="1" x="1150.67" y="734.667" width="400" height="700"/>
+  <object id="3" name="Player" type="Player" gid="2" x="337.183" y="297.008" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="6" name="Wall" type="Wall" gid="4" x="243" y="722.333" width="32" height="160">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="7" name="Wall" type="Wall" gid="4" x="621" y="593.667" width="32" height="160">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="9" name="GreenWall" type="ElementWall" gid="3" x="243" y="242.5" width="32" height="160">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="10" name="RedWall" type="ElementWall" gid="5" x="621" y="433.5" width="32" height="160">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="12" name="Wall" type="Wall" gid="4" x="621" y="273.5" width="32" height="160">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="13" name="Wall" type="Wall" gid="4" x="243" y="402.5" width="32" height="160">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="14" name="GreenWall" type="ElementWall" gid="3" x="243" y="562" width="32" height="160">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

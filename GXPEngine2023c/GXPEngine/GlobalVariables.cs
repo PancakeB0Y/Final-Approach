@@ -8,6 +8,6 @@ namespace GXPEngine
 {
     public static class GlobalVariables
     {
-        public enum Element { Fire, Ice };
+        public enum Element { None, Fire, Ice };
     }
 }

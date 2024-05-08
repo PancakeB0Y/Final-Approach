@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using GXPEngine;
@@ -13,7 +14,8 @@ public class Level : GameObject
     int id;
     TiledLoader tiledLoader;
 
-    private Player player;
+    Player player;
+    List<Wall> walls;
 
     public Level(string fileName, int id)
     {
@@ -27,6 +29,8 @@ public class Level : GameObject
 
     void CreateLevel()
     {
+        walls = new List<Wall>();
+
         tiledLoader.autoInstance = true;
         tiledLoader.rootObject = this;
         tiledLoader.addColliders = false;
@@ -34,5 +38,24 @@ public class Level : GameObject
         tiledLoader.LoadObjectGroups(0);
 
         player = FindObjectOfType<Player>();
+
+        foreach (var wall in GetChildren().Where(c => c is Wall))
+        {
+            walls.Add((Wall)wall);
+        }
+    }
+
+    public int GetNumberOfWall()
+    {
+        return walls.Count;
+    }
+
+    public Wall GetWall(int index)
+    {
+        if (index >= 0 && index < walls.Count)
+        {
+            return walls[index];
+        }
+        return null;
     }
 }

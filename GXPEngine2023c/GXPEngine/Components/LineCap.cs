@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class LineCap
+public class LineCap : GameObject
 {
     public Vec2 position;
 
