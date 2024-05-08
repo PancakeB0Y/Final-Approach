@@ -97,9 +97,31 @@ public class Player : AnimationSprite
 
     CollisionInfo CheckForBoundariesCollisions(CollisionInfo earliestCollision)
     {
-        for (int i = 0; i < ((MyGame)game).GetNumberOfLines(); i++)
+        Level level = (Level)this.parent;
+
+        //Check wall lines
+        for (int i = 0; i < level.GetNumberOfWallLines(); i++)
         {
-            LineSegment lineSegment = ((MyGame)game).GetLine(i);
+            LineSegment lineSegment = level.GetWallLine(i);
+
+            //Check line caps
+            //for (int j = 0; j < 2; j++)
+            //{
+            //    Ball lineCap = j % 2 == 0 ? lineSegment.lineCapStart : lineSegment.lineCapEnd;
+            //    if (lineCap == null)
+            //        continue;
+
+            //    earliestCollision = CheckBallCollision(earliestCollision, lineCap);
+            //}
+
+            //Check line segment
+            earliestCollision = CheckLineSegmentCollision(earliestCollision, lineSegment);
+        }
+
+        //Check boundary lines
+        for (int i = 0; i < level.GetNumberOfLines(); i++)
+        {
+            LineSegment lineSegment = level.GetLine(i);
 
             //Check line caps
             //for (int j = 0; j < 2; j++)
