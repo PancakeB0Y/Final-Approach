@@ -86,15 +86,6 @@ public class Player : AnimationSprite
         }
     }
 
-    void ResolveCollision(CollisionInfo coll)
-    {
-        if (coll.other is LineSegment)
-        {
-            Position = oldPosition + Velocity * coll.timeOfImpact;
-            Velocity.Reflect(coll.normal, Bounciness);
-        }
-    }
-
     CollisionInfo CheckForBoundariesCollisions(CollisionInfo earliestCollision)
     {
         Level level = (Level)this.parent;
@@ -105,20 +96,20 @@ public class Player : AnimationSprite
             LineSegment lineSegment = level.GetWallLine(i);
 
             //Check line caps
-            //for (int j = 0; j < 2; j++)
-            //{
-            //    Ball lineCap = j % 2 == 0 ? lineSegment.lineCapStart : lineSegment.lineCapEnd;
-            //    if (lineCap == null)
-            //        continue;
+            for (int j = 0; j < 2; j++)
+            {
+                LineCap lineCap = j % 2 == 0 ? lineSegment.lineCapStart : lineSegment.lineCapEnd;
+                if (lineCap == null)
+                    continue;
 
-            //    earliestCollision = CheckBallCollision(earliestCollision, lineCap);
-            //}
+                earliestCollision = CheckBallCollision(earliestCollision, lineCap);
+            }
 
             //Check line segment
             earliestCollision = CheckLineSegmentCollision(earliestCollision, lineSegment);
         }
 
-        //Check boundary lines
+        //Check boundary lines - REMOVE when real levels are ready
         for (int i = 0; i < level.GetNumberOfLines(); i++)
         {
             LineSegment lineSegment = level.GetLine(i);
@@ -177,6 +168,58 @@ public class Player : AnimationSprite
         }
 
         return earliestColl;
+    }
+
+    CollisionInfo CheckBallCollision(CollisionInfo earliestColl, LineCap ball)
+    {
+        Vec2 relativePosition = oldPosition - ball.position;
+        float a = Mathf.Pow(Velocity.Magnitude(), 2);
+        float b = 2 * Vec2.Dot(relativePosition, Velocity);
+        float c = Mathf.Pow(relativePosition.Magnitude(), 2) - Mathf.Pow(Radius + 0, 2);
+        if (c < 0)
+        {
+            if (b < 0)
+            {
+                Vec2 pNormal = relativePosition.Normalized() * (Radius + 0);
+                earliestColl = new CollisionInfo(pNormal, ball, 0f);
+            }
+            return earliestColl;
+        }
+        if (a < 0.001f)
+        {
+            return earliestColl;
+        }
+        float D = Mathf.Pow(b, 2) - 4 * a * c;
+        if (D < 0)
+        {
+            return earliestColl;
+        }
+        float toi = (-b - Mathf.Sqrt(D)) / (2 * a);
+        if (toi < 1 && toi >= 0)
+        {
+            if (earliestColl == null || toi < earliestColl.timeOfImpact)
+            {
+                Vec2 poi = oldPosition + Velocity * toi;
+                earliestColl = new CollisionInfo(poi - ball.position, ball, toi);
+            }
+        }
+
+        return earliestColl;
+    }
+
+    void ResolveCollision(CollisionInfo coll)
+    {
+        if (coll.other is LineCap)
+        {
+            LineCap otherBall = (LineCap)coll.other;
+            Position = otherBall.position + coll.normal;
+            Velocity.Reflect(coll.normal.Normalized(), Bounciness);
+        }
+        else if (coll.other is LineSegment)
+        {
+            Position = oldPosition + Velocity * coll.timeOfImpact;
+            Velocity.Reflect(coll.normal, Bounciness);
+        }
     }
 
     void UpdateMousePosition()
