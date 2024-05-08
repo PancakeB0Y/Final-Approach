@@ -186,14 +186,14 @@ public class Player : AnimationSprite
             Charge();
         }
 
-      /*  if (Input.GetKeyDown(Key.LEFT))
+        if (Input.GetKeyDown(Key.LEFT))
         {
             mass -= 0.1f;
         }
         if (Input.GetKeyDown(Key.RIGHT))
         {
             mass += 0.1f;
-        }*/
+        }
     }
 
     void SwitchElement()
