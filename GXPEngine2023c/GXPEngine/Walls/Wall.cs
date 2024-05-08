@@ -11,7 +11,7 @@ public class Wall : AnimationSprite
 {
     public readonly bool IsLeft;
 
-    LineSegment lineSegment;
+    protected LineSegment lineSegment;
 
     public Wall(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
