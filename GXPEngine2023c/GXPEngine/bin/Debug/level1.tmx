@@ -8,6 +8,10 @@
  </tileset>
  <objectgroup id="4" name="ObjectBackgrounds">
   <object id="2" name="Background" gid="1" x="28" y="740" width="400" height="700"/>
-  <object id="3" name="Player" type="Player" gid="2" x="515.85" y="302.341" width="64" height="64"/>
+  <object id="3" name="Player" type="Player" gid="2" x="515.85" y="302.341" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

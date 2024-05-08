@@ -1,17 +1,21 @@
-﻿using System;
+using System;
 using System.Drawing;
+using System.Linq.Expressions;
 using GXPEngine;
+using static GXPEngine.GlobalVariables;
 using TiledMapParser;
 
 public class Player : AnimationSprite
 {
-    public readonly float bounciness = 0.5f;
+    public readonly float Bounciness = 0.5f;
 
-    public Vec2 position;
-    public readonly float radius;
+    public Vec2 Position;
+    public readonly float Radius;
 
-    public Vec2 velocity;
-    public Vec2 gravity = new Vec2(0, 0.4f);
+    public Vec2 Velocity;
+    public Vec2 Gravity = new Vec2(0, 0.4f);
+
+    float mass = 1;
 
     Vec2 oldPosition;
 
@@ -24,14 +28,27 @@ public class Player : AnimationSprite
 
     Arrow chargeIndicator;
 
+    Element element = Element.Fire;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
         SetOrigin(width / 2, height / 2);
 
-        this.position = new Vec2(obj.X, obj.Y);
-        radius = width / 2;
+        this.Position = new Vec2(obj.X, obj.Y);
+        Radius = width / 2;
 
-        chargeIndicator = new Arrow(position, new Vec2(0, 0), 10);
+        element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
+
+        if(element == Element.Fire)
+        {
+            SetColor(1, 0, 1);
+        }
+        else
+        {
+            SetColor(0, 1, 1);
+        }
+
+        chargeIndicator = new Arrow(Position, new Vec2(0, 0), 10);
         AddChild(chargeIndicator);
         chargeIndicator.visible = false;
 
@@ -41,7 +58,7 @@ public class Player : AnimationSprite
     void Update ()
     {
 
-        oldPosition = position;
+        oldPosition = Position;
 
         Move();
         UpdateCoordinates();
@@ -55,8 +72,8 @@ public class Player : AnimationSprite
 
     void Move()
     {
-        velocity += gravity;
-        position += velocity;
+        Velocity += Gravity;
+        Position += Velocity;
 
         CollisionInfo firstCollision = null;
         firstCollision = CheckForBoundariesCollisions(firstCollision);
@@ -70,8 +87,8 @@ public class Player : AnimationSprite
     {
         if (coll.other is LineSegment)
         {
-            position = oldPosition + velocity * coll.timeOfImpact;
-            velocity.Reflect(coll.normal, bounciness);
+            Position = oldPosition + Velocity * coll.timeOfImpact;
+            Velocity.Reflect(coll.normal, Bounciness);
         }
     }
 
@@ -102,8 +119,8 @@ public class Player : AnimationSprite
     {
         Vec2 lineVector = lineSegment.start - lineSegment.end;
         Vec2 lineNormal = lineVector.Normal();
-        float a = Vec2.Dot(oldPosition - lineSegment.start, lineNormal) - radius;
-        float b = Vec2.Dot(oldPosition - position, lineNormal);
+        float a = Vec2.Dot(oldPosition - lineSegment.start, lineNormal) - Radius;
+        float b = Vec2.Dot(oldPosition - Position, lineNormal);
         if (b <= 0)
         {
             return earliestColl;
@@ -113,7 +130,7 @@ public class Player : AnimationSprite
         {
             toi = a / b;
         }
-        else if (a >= -radius)
+        else if (a >= -Radius)
         {
             toi = 0;
         }
@@ -123,7 +140,7 @@ public class Player : AnimationSprite
         }
         if (toi <= 1)
         {
-            Vec2 poi = oldPosition + velocity * toi;
+            Vec2 poi = oldPosition + Velocity * toi;
             float d = Vec2.Dot(lineSegment.start - poi, lineVector.Normalized());
             if (d >= 0 && d <= lineVector.Magnitude())
             {
@@ -156,10 +173,28 @@ public class Player : AnimationSprite
             isCharging = false;
             Release();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            SwitchElement();
+        }
 
         if (isCharging)
         {
             Charge();
+        }
+    }
+
+    void SwitchElement()
+    {
+        if(element == Element.Fire)
+        {
+            SetColor(0, 1, 1);
+            element = Element.Ice;
+        }
+        else
+        {
+            SetColor(1, 0, 1);
+            element = Element.Fire;
         }
     }
 
@@ -171,7 +206,7 @@ public class Player : AnimationSprite
         chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
         chargeDistance = Mathf.Map(chargeDistance, 0, chargeDistanceMax, 0f, 20f);
 
-        chargeIndicator.startPoint = position;
+        chargeIndicator.startPoint = Position;
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
     }
@@ -179,14 +214,14 @@ public class Player : AnimationSprite
     void Release()
     {
         //Launch
-        velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
+        Velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
 
         chargeIndicator.visible = false;
     }
 
     void UpdateCoordinates()
     {
-        x = position.x;
-        y = position.y;
+        x = Position.x;
+        y = Position.y;
     }
 }
