@@ -10,11 +10,12 @@ public class Player : AnimationSprite
     public readonly float Bounciness = 0.5f;
 
     public Vec2 Position;
-    public readonly float Radius;
+    public float Radius;
 
     public Vec2 Velocity;
     public Vec2 Gravity = new Vec2(0, 0.4f);
 
+    Vec2 accel = new Vec2(0, 0);
     float mass = 1;
 
     Vec2 oldPosition;
@@ -30,7 +31,7 @@ public class Player : AnimationSprite
 
     Element element = Element.Fire;
 
-    public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
+    public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(width / 2, height / 2);
 
@@ -63,6 +64,7 @@ public class Player : AnimationSprite
         Move();
         UpdateCoordinates();
 
+        UpdateSize();
 
         //Aiming
         UpdateMousePosition();
@@ -72,7 +74,8 @@ public class Player : AnimationSprite
 
     void Move()
     {
-        Velocity += Gravity;
+        accel = Gravity * mass;
+        Velocity += accel;
         Position += Velocity;
 
         CollisionInfo firstCollision = null;
@@ -182,6 +185,15 @@ public class Player : AnimationSprite
         {
             Charge();
         }
+
+      /*  if (Input.GetKeyDown(Key.LEFT))
+        {
+            mass -= 0.1f;
+        }
+        if (Input.GetKeyDown(Key.RIGHT))
+        {
+            mass += 0.1f;
+        }*/
     }
 
     void SwitchElement()
@@ -217,6 +229,12 @@ public class Player : AnimationSprite
         Velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
 
         chargeIndicator.visible = false;
+    }
+
+    void UpdateSize()
+    {
+        SetScaleXY(mass);
+        Radius = width / 2;
     }
 
     void UpdateCoordinates()

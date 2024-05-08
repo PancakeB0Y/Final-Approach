@@ -126,6 +126,9 @@ namespace GXPEngine
         public static Vec2 operator *(Vec2 vec2, float scalar)
             => new Vec2(scalar * vec2.x, scalar * vec2.y);
 
+        public static Vec2 operator /(Vec2 vec2, float scalar)
+            => new Vec2(vec2.x / scalar, vec2.y / scalar);
+
         public override string ToString()
         {
             return String.Format("({0},{1})", x, y);
