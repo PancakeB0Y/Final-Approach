@@ -10,60 +10,29 @@ public class Level : GameObject
 {
     public string Name { get; }
 
-    public Level(string fileName)
+    int id;
+    TiledLoader tiledLoader;
+
+    private Player player;
+
+    public Level(string fileName, int id)
     {
+        this.id = id;
         Name = fileName;
+
+        tiledLoader = new TiledLoader(fileName);
+
+        CreateLevel();
     }
 
-    //not in constructor because level has to be parent of game first
-    public void Init()
+    void CreateLevel()
     {
-        var loader = new TiledLoader(Name, MyGame.main, addColliders: false, autoInstance: true);
+        tiledLoader.autoInstance = true;
+        tiledLoader.rootObject = this;
+        tiledLoader.addColliders = false;
 
-        int index;
+        tiledLoader.LoadObjectGroups(0);
 
-        //background
-        if (loader.map.ImageLayers != null)
-        {
-            loader.rootObject = this;
-            loader.LoadImageLayers();
-
-        }
-
-        //managers
-        if (loader.map.ObjectGroups.TryGetIndex(x => x.Name == "Managers", out index))
-        {
-            loader.rootObject = MyGame.main;
-            loader.addColliders = false;
-            loader.LoadObjectGroups(index);
-        }
-
-        //background objects
-        if (loader.map.ObjectGroups.TryGetIndex(x => x.Name == "ObjectBackgrounds", out index))
-        {
-            loader.rootObject = this;
-            loader.addColliders = false;
-            loader.LoadObjectGroups(index);
-
-        }
-
-        //level objects
-        if (loader.map.ObjectGroups.TryGetIndex(x => x.Name == "Object Layer 1", out index))
-        {
-            loader.rootObject = this;
-            loader.addColliders = true;
-            loader.LoadObjectGroups(index);
-
-        }
-
-        //ui
-        if (loader.map.ObjectGroups.TryGetIndex(x => x.Name == "UI", out index))
-        {
-            loader.addColliders = false;
-            loader.rootObject = game;
-            loader.LoadObjectGroups(index);
-        }
-
+        player = FindObjectOfType<Player>();
     }
-
 }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using GXPEngine;
+using TiledMapParser;
 
-public class Player : Sprite
+public class Player : AnimationSprite
 {
     public readonly float bounciness = 0.5f;
 
@@ -22,11 +24,11 @@ public class Player : Sprite
 
     Arrow chargeIndicator;
 
-    public Player(string filename, Vec2 position) : base(filename, false, false)
+    public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows)
     {
         SetOrigin(width / 2, height / 2);
 
-        this.position = position;
+        this.position = new Vec2(obj.X, obj.Y);
         radius = width / 2;
 
         chargeIndicator = new Arrow(position, new Vec2(0, 0), 10);
@@ -38,6 +40,7 @@ public class Player : Sprite
 
     void Update ()
     {
+
         oldPosition = position;
 
         Move();
