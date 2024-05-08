@@ -1,10 +1,11 @@
 using GXPEngine;
 using System.Collections.Generic;
 
-public class MyGame : Game {
-	
-        public Level CurrentScene { get; private set; }
-        private string _newSceneName = null;
+public class MyGame : Game
+{
+
+    public Level CurrentScene { get; private set; }
+    private string _newSceneName = null;
 
     Player player;
     List<LineSegment> _lines;
@@ -24,12 +25,12 @@ public class MyGame : Game {
     }
 
     public MyGame() : base(800, 600, false)
-	{
-		targetFps = 60;
-            LoadScene("level1.tmx");
-            OnAfterStep += LoadSceneIfNotNull;
-		
-        player = new Player("circle.png", new Vec2(width / 2, height / 2));
+    {
+        targetFps = 60;
+        LoadScene("level1.tmx");
+        OnAfterStep += LoadSceneIfNotNull;
+
+        player = new Player("Assets/circle.png", new Vec2(width / 2, height / 2));
         AddChild(player);
 
         _lines = new List<LineSegment>();
@@ -48,52 +49,53 @@ public class MyGame : Game {
         _lines.Add(line);
     }
 
-    void Update() {
-		if (Input.GetKeyDown(Key.R))
-            {
-                ReloadScene();
-            }
-	}
-	
-	
-        private void LoadSceneIfNotNull()
+    void Update()
+    {
+        if (Input.GetKeyDown(Key.R))
         {
-            if (_newSceneName == null) return;
-            DestroyAll();
-            var level = new Level(_newSceneName);
-            CurrentScene = level;
-            AddChild(level);
-            level.Init();
-
-            _newSceneName = null;
+            ReloadScene();
         }
+    }
 
-        public void LoadScene(string sceneName)
+
+    private void LoadSceneIfNotNull()
+    {
+        if (_newSceneName == null) return;
+        DestroyAll();
+        var level = new Level(_newSceneName);
+        CurrentScene = level;
+        AddChild(level);
+        level.Init();
+
+        _newSceneName = null;
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        _newSceneName = sceneName;
+    }
+
+    public void ReloadScene()
+    {
+        _newSceneName = CurrentScene.Name;
+    }
+
+    protected override void OnDestroy()
+    {
+        OnAfterStep -= LoadSceneIfNotNull;
+    }
+    private void DestroyAll()
+    {
+        foreach (var child in GetChildren())
         {
-            _newSceneName = sceneName;
+
+            child.LateDestroy();
+
         }
+    }
 
-        public void ReloadScene()
-        {
-            _newSceneName = CurrentScene.Name;
-        }
-
-        protected override void OnDestroy()
-        {
-            OnAfterStep -= LoadSceneIfNotNull;
-        }
-        private void DestroyAll()
-        {
-            foreach (var child in GetChildren())
-            {
-
-                child.LateDestroy();
-
-            }
-        }
-
-	static void Main()       
-	{
-		new MyGame().Start();
-	}
+    static void Main()
+    {
+        new MyGame().Start();
+    }
 }
