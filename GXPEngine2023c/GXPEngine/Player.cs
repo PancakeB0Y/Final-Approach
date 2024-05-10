@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Linq.Expressions;
+using System.Collections;
 using GXPEngine;
 using static GXPEngine.GlobalVariables;
 using TiledMapParser;
@@ -38,12 +39,14 @@ public class Player : AnimationSprite
     float durationToStick = 2000;
     float durationToStickCounter = 0;
 
+    bool isInAir = false;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        SetOrigin(width / 2, height / 2);
+        SetOrigin(obj.Width / 2, obj.Height / 2);
 
         this.Position = new Vec2(obj.X, obj.Y);
-        Radius = width / 2;
+        Radius = obj.Width / 2;
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
 
@@ -61,6 +64,8 @@ public class Player : AnimationSprite
         chargeIndicator.visible = false;
 
         UpdateCoordinates();
+
+        SetCycle(0);
     }
 
     void Update ()
@@ -84,8 +89,10 @@ public class Player : AnimationSprite
 
         //Aiming
         UpdateMousePosition();
-        CheckForMouseInput();
+        HandleInputs();
         UpdateCoordinates();
+
+        HandleAnimatons();
     }
 
     void Move()
@@ -291,6 +298,8 @@ public class Player : AnimationSprite
             //Start timer
             durationToStickCounter = 0;
             playerState = PlayerState.Sticking;
+            PlayWallAnim();
+            isInAir = false;
 
             wallElement = Element.None;
             if (currentSlideWall is ElementWall)
@@ -312,7 +321,7 @@ public class Player : AnimationSprite
         mousePosition.SetXY(Input.mouseX, Input.mouseY);
     }
 
-    void CheckForMouseInput()
+    void HandleInputs()
     {
         if (!isCharging && Input.GetMouseButtonDown(0))
         {
@@ -320,6 +329,8 @@ public class Player : AnimationSprite
             chargeMousePos = mousePosition;
 
             chargeIndicator.visible = true;
+
+            PlayChargeAnim();
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -336,14 +347,10 @@ public class Player : AnimationSprite
             Charge();
         }
 
-        //if (Input.GetKeyDown(Key.LEFT))
-        //{
-        //    mass -= 0.1f;
-        //}
-        //if (Input.GetKeyDown(Key.RIGHT))
-        //{
-        //    mass += 0.1f;
-        //}
+        if(Input.GetKeyDown(Key.M))
+        {
+            _mirrorX = !_mirrorX;
+        }
     }
 
     void SwitchElement()
@@ -380,8 +387,12 @@ public class Player : AnimationSprite
 
         chargeIndicator.visible = false;
 
+        PlayReleaseAnim();
+
         if (playerState == PlayerState.Sticking)
             playerState = PlayerState.None;
+
+        isInAir = true;
     }
 
     void Stick()
@@ -448,6 +459,78 @@ public class Player : AnimationSprite
     {
         x = Position.x;
         y = Position.y;
+    }
+
+    void HandleAnimatons()
+    {
+        float animDelay = 0.5f;
+
+        if (isInAir)
+        {
+            animDelay = 0.2f;
+            if (currentFrame == 14)
+            {
+                SetCycle(14);
+            }
+        }
+        else if(isCharging)
+        {
+            if(playerState != PlayerState.Sticking)
+            {
+                if (currentFrame == 3)
+                {
+                    SetCycle(3);
+                }
+            }
+            else
+            {
+                animDelay = 0.2f;
+                if (currentFrame == 11)
+                {
+                    SetCycle(11);
+                }
+            }
+        }
+        else if(playerState == PlayerState.Sticking)
+        {
+            animDelay = 0.3f;
+            if (currentFrame == 9)
+            {
+                SetCycle(9);
+            }
+        }
+        else
+        {
+            SetCycle(0);
+        }
+
+        Animate(animDelay);
+    }
+
+    void PlayChargeAnim()
+    {
+        if (playerState == PlayerState.Sticking)
+        {
+            SetCycle(10, 12);
+        }
+        else
+        {
+            SetCycle(0, 4);
+        }
+    }
+
+    void PlayWallAnim()
+    {
+        SetCycle(5, 10);
+    }
+
+    void PlayReleaseAnim()
+    {
+        if (playerState == PlayerState.Sticking)
+        {
+            SetCycle(12, 15);
+        }
+        else { SetCycle(4); }
     }
 }
 
