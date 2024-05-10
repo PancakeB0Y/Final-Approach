@@ -26,5 +26,13 @@ public class AABB : AnimationSprite
             new LineSegment(new Vec2(obj.X + obj.Width, obj.Y), new Vec2(obj.X + obj.Width, obj.Y - obj.Height), true)
         };
     }
+
+    public void MoveLineSegments(Vec2 moveAmount)
+    {
+        foreach (var line in walls)
+        {
+            line.MoveWithWall(moveAmount);
+        }
+    }
 }
 

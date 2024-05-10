@@ -101,6 +101,12 @@ public class Player : AnimationSprite
         {
             ResolveCollision(firstCollision);
         }
+
+        //Move the level
+        if (Position.x != oldPosition.x && Position.y != oldPosition.y)
+        {
+            ((Level)parent).MoveLevel(oldPosition - Position);
+        }
     }
 
     CollisionInfo CheckForBoundariesCollisions(CollisionInfo earliestCollision)

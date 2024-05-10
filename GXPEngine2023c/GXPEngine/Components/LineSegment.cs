@@ -24,6 +24,16 @@ public class LineSegment : GameObject
         this.lineCapEnd = lineCapEnd ? new LineCap(pEnd) : null;
     }
 
+    public void MoveWithWall(Vec2 moveAmount)
+    {
+        start += moveAmount;
+        end += moveAmount;
+        if (lineCapStart != null)
+            lineCapStart.position += moveAmount;
+        if (lineCapEnd != null)
+            lineCapEnd.position += moveAmount;
+    }
+
     //------------------------------------------------------------------------------------------------------------------------
     //														RenderSelf()
     //------------------------------------------------------------------------------------------------------------------------

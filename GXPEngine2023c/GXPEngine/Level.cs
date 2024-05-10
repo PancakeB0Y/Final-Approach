@@ -54,6 +54,22 @@ public class Level : GameObject
         }
     }
 
+    public void MoveLevel(Vec2 moveAmount)
+    {
+        foreach (var child in GetChildren())
+        {
+            child.Move(moveAmount.x, moveAmount.y);
+            if (child is Wall)
+            {
+                ((Wall)child).LineSegment.MoveWithWall(moveAmount);
+            }
+            else if (child is AABB)
+            {
+                ((AABB)child).MoveLineSegments(moveAmount);
+            }
+        }
+    }
+
     public int GetWallCount()
     {
         return walls.Count;
