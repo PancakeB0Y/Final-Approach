@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="46">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="49">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
@@ -17,9 +17,9 @@
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
   <object id="44" gid="1" x="32" y="752" width="768" height="1344"/>
-  <object id="34" name="Wall" type="Wall" gid="4" x="0" y="768" width="32" height="768">
+  <object id="34" name="Wall" type="Wall" gid="4" x="32" y="-112" width="32" height="5008">
    <properties>
-    <property name="isLeft" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
   <object id="35" name="RedWall" type="ElementWall" gid="5" x="784" y="752" width="16" height="352">
@@ -40,7 +40,7 @@
   </object>
   <object id="38" name="Wall" type="Wall" gid="4" x="32" y="768" width="800" height="16">
    <properties>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
   <object id="39" name="GreenWall" type="ElementWall" gid="3" x="32" y="48" width="16" height="160">
@@ -49,9 +49,9 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="40" name="Wall" type="Wall" gid="4" x="800" y="752" width="32" height="752">
+  <object id="40" name="Wall" type="Wall" gid="4" x="784" y="-16" width="32" height="5008">
    <properties>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
   <object id="41" name="GreenWall" type="ElementWall" gid="3" x="32" y="752" width="16" height="352">
@@ -60,10 +60,25 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="43" gid="3" x="784" y="400" width="16" height="400"/>
-  <object id="45" name="RedWall" type="ElementWall" gid="5" x="32" y="400" width="16" height="352">
+  <object id="45" name="RedWall" type="ElementWall" gid="5" x="32" y="336" width="16" height="288">
    <properties>
     <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="46" name="Wall" type="Wall" gid="4" x="32" y="400" width="224" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="47" name="Wall" type="Wall" gid="4" x="576" y="400" width="224" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="48" name="GreenWall" type="ElementWall" gid="3" x="784" y="336" width="16" height="352">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
