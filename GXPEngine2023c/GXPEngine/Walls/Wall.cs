@@ -18,11 +18,11 @@ public class Wall : AnimationSprite
 
         if (IsLeft)
         {
-            LineSegment = new LineSegment(new Vec2(obj.X + width, obj.Y - height), new Vec2(obj.X + width, obj.Y), true, true);
+            LineSegment = new LineSegment(new Vec2(obj.X + obj.Width, obj.Y - obj.Height), new Vec2(obj.X + obj.Width, obj.Y), true, true);
         }
         else
         {
-            LineSegment = new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - height), true, true);
+            LineSegment = new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - obj.Height), true, true);
         }
     }
 }
