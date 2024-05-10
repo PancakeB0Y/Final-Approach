@@ -80,12 +80,12 @@ public class Player : AnimationSprite
 
             Move();
             UpdateCoordinates();
-
-            //Aiming
-            UpdateMousePosition();
-            CheckForMouseInput();
-            UpdateCoordinates();
         }
+
+        //Aiming
+        UpdateMousePosition();
+        CheckForMouseInput();
+        UpdateCoordinates();
     }
 
     void Move()
@@ -360,6 +360,9 @@ public class Player : AnimationSprite
         Velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
 
         chargeIndicator.visible = false;
+
+        if (playerState == PlayerState.Sticking)
+            playerState = PlayerState.None;
     }
 
     void Stick()
