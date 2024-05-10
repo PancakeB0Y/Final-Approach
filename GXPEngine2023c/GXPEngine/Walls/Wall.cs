@@ -1,4 +1,4 @@
-﻿using GXPEngine;
+using GXPEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +14,15 @@ public class Wall : AnimationSprite
 
     public Wall(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        IsLeft = obj.GetBoolProperty("isLeft");
+        IsLeft = obj.GetBoolProperty("isLeft", false);
 
         if (IsLeft)
         {
-            LineSegment = new LineSegment(new Vec2(obj.X + width, obj.Y - height), new Vec2(obj.X + width, obj.Y), false, false);
+            LineSegment = new LineSegment(new Vec2(obj.X + obj.Width, obj.Y - obj.Height), new Vec2(obj.X + obj.Width, obj.Y), true, true);
         }
         else
         {
-            LineSegment = new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - height), false, false);
+            LineSegment = new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - obj.Height), true, true);
         }
     }
 }
