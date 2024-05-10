@@ -1,4 +1,4 @@
-﻿using GXPEngine;
+using GXPEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ public class Wall : AnimationSprite
 
     public Wall(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        IsLeft = obj.GetBoolProperty("isLeft");
+        IsLeft = obj.GetBoolProperty("isLeft", false);
 
         if (IsLeft)
         {
