@@ -122,13 +122,19 @@ public class Player : AnimationSprite
             }
 
             //Check line segment
-            earliestCollision = CheckLineSegmentCollision(earliestCollision, wall);
+            earliestCollision = CheckWallCollision(earliestCollision, wall);
+        }
+
+        for(int i = 0; i < level.lines.Count; i++)
+        {
+            LineSegment line = level.lines[i];
+            earliestCollision = CheckLineSegmentCollision(earliestCollision, line);
         }
 
         return earliestCollision;
     }
 
-    CollisionInfo CheckLineSegmentCollision(CollisionInfo earliestColl, Wall wall)
+    CollisionInfo CheckWallCollision(CollisionInfo earliestColl, Wall wall)
     {
         Vec2 lineVector = wall.LineSegment.start - wall.LineSegment.end;
         Vec2 lineNormal = lineVector.Normal();
@@ -164,6 +170,50 @@ public class Player : AnimationSprite
             }
         }
 
+        return earliestColl;
+    }
+
+    CollisionInfo CheckLineSegmentCollision(CollisionInfo earliestColl, LineSegment line)
+    {
+        Vec2 dif = new Vec2(oldPosition.x - line.start.x, oldPosition.y - line.start.y);
+        Vec2 lineVector = line.end - line.start;
+        Vec2 lineNormal = lineVector.Normal();
+        float a = dif.Dot(lineNormal) - Radius;
+
+        Vec2 totalMovement = Position - oldPosition;
+
+        float b = -totalMovement.Dot(lineNormal);
+
+        if (b <= 0) { return earliestColl; }
+
+        float t;
+
+        if (a >= 0)
+        {
+            t = a / b;
+        }
+        else if (a > -Radius)
+        {
+            t = 0;
+        }
+        else
+        {
+            return earliestColl;
+        }
+
+        if (t >= 0 && t <= 1)
+        {
+            Vec2 POI = oldPosition + Velocity * t;
+            Vec2 dif2 = new Vec2(POI.x - line.start.x, POI.y - line.start.y);
+
+            float d = dif2.Dot(lineVector.Normalized());
+
+            if (d >= 0 && d <= lineVector.Magnitude())
+            {
+                earliestColl = new CollisionInfo(lineNormal, line, t);
+            }
+        }
+    
         return earliestColl;
     }
 
@@ -228,6 +278,13 @@ public class Player : AnimationSprite
             {
                 wallElement = ((ElementWall)currentSlideWall).Element;
             }
+        }
+        else if (coll.other is LineSegment)
+        {
+            Vec2 POI = oldPosition + Velocity * coll.timeOfImpact;
+            Position = POI;
+
+            //Velocity.Reflect(coll.normal);
         }
     }
 

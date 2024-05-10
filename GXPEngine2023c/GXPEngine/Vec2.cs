@@ -134,6 +134,9 @@ namespace GXPEngine
             return String.Format("({0},{1})", x, y);
         }
 
+        public float Dot(Vec2 other)
+        => (x * other.x) + (y * other.y);
+
         public static float Dot(Vec2 firstVec2, Vec2 secondVec2)
         => (firstVec2.x * secondVec2.x) + (firstVec2.y * secondVec2.y);
 
