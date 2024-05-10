@@ -284,7 +284,7 @@ public class Player : AnimationSprite
             Vec2 POI = oldPosition + Velocity * coll.timeOfImpact;
             Position = POI;
 
-            Velocity.Reflect(coll.normal);
+            //Velocity.Reflect(coll.normal);
         }
     }
 
