@@ -8,21 +8,23 @@ using TiledMapParser;
 
 public class AABB : AnimationSprite
 {
-    float colW;
-    float colH;
-
-    Vec2 position;
-
     public List<LineSegment> walls;
     public AABB(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        colW = obj.Width;
-        colH = obj.Height;
-        position = new Vec2(obj.X, obj.Y);
+        walls = new List<LineSegment>
+        {
+            //top
+            new LineSegment(new Vec2(obj.X + obj.Width, obj.Y - obj.Height), new Vec2(obj.X, obj.Y - obj.Height), true),
 
-        //Add 4 walls
+            //bottom
+            new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X + obj.Width, obj.Y), true),
 
-        //walls.Add(new LineSegment(new Vec2(obj.X), , new Vec2(obj.X + width, obj.Y), true, true);)
+            //right
+            new LineSegment(new Vec2(obj.X, obj.Y - obj.Height), new Vec2(obj.X, obj.Y), true),
+
+            //left
+            new LineSegment(new Vec2(obj.X + obj.Width, obj.Y), new Vec2(obj.X + obj.Width, obj.Y - obj.Height), true)
+        };
     }
 }
 

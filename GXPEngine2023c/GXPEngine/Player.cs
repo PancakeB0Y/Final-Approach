@@ -80,12 +80,12 @@ public class Player : AnimationSprite
 
             Move();
             UpdateCoordinates();
-
-            //Aiming
-            UpdateMousePosition();
-            CheckForMouseInput();
-            UpdateCoordinates();
         }
+
+        //Aiming
+        UpdateMousePosition();
+        CheckForMouseInput();
+        UpdateCoordinates();
     }
 
     void Move()
@@ -107,7 +107,7 @@ public class Player : AnimationSprite
         Level level = (Level)this.parent;
 
         //Check wall lines
-        for (int i = 0; i < level.GetNumberOfWall(); i++)
+        for (int i = 0; i < level.GetWallCount(); i++)
         {
             Wall wall = level.GetWall(i);
 
@@ -125,7 +125,26 @@ public class Player : AnimationSprite
             earliestCollision = CheckWallCollision(earliestCollision, wall);
         }
 
-        for(int i = 0; i < level.lines.Count; i++)
+        //Check obstacles
+        for (int i = 0; i < level.GetObstacleCount(); i++)
+        {
+            AABB obstacle = level.GetObstacle(i);
+
+            //Check line caps
+            for (int j = 0; j < obstacle.walls.Count; j++)
+            {
+                LineCap lineCap = obstacle.walls[j].lineCapStart;
+
+                earliestCollision = CheckBallCollision(earliestCollision, lineCap);
+            }
+
+            for (int j = 0; j < obstacle.walls.Count; j++)
+            {
+                earliestCollision = CheckLineSegmentCollision(earliestCollision, obstacle.walls[j]);
+            }
+        }
+
+        for (int i = 0; i < level.lines.Count; i++)
         {
             LineSegment line = level.lines[i];
             earliestCollision = CheckLineSegmentCollision(earliestCollision, line);
@@ -360,6 +379,9 @@ public class Player : AnimationSprite
         Velocity = chargeDistance * (chargeMousePos - mousePosition).Normalized();
 
         chargeIndicator.visible = false;
+
+        if (playerState == PlayerState.Sticking)
+            playerState = PlayerState.None;
     }
 
     void Stick()

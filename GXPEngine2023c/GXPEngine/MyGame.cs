@@ -3,15 +3,38 @@ using System.Collections.Generic;
 
 public class MyGame : Game
 {
-    public MyGame() : base(1500, 900, false)
+    string curSceneName;
+    public MyGame() : base(1500, 900, false, false)
     {
         targetFps = 60;
 
-        AddChild(new Level("level1.tmx", 1));
+        curSceneName = "level1.tmx";
+        LoadScene(curSceneName);
     }
 
     void Update()
     {
+        HandleInput();
+    }
+
+    void HandleInput()
+    {
+        if (Input.GetKeyDown(Key.R))
+        {
+            LoadScene(curSceneName);
+        }
+    }
+
+    void LoadScene(string sceneName)
+    {
+        List<GameObject> children = GetChildren();
+        foreach (GameObject child in children)
+        {
+            child.LateDestroy();
+        }
+        children.Clear();
+        AddChild(new Level(sceneName, 1));
+        curSceneName = sceneName;
     }
 
     static void Main()
