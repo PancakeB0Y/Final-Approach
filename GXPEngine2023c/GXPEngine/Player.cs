@@ -47,7 +47,7 @@ public class Player : AnimationSprite
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
 
-        if(element == Element.Fire)
+        if (element == Element.Fire)
         {
             SetColor(1, 0, 1);
         }
@@ -63,23 +63,24 @@ public class Player : AnimationSprite
         UpdateCoordinates();
     }
 
-    void Update ()
+    void Update()
     {
-        if (playerState == PlayerState.Sticking)
+        oldPosition = Position;
+
+        switch (playerState)
         {
-            Stick();
-        }
-        else
-        {
-            if (playerState == PlayerState.Sliding)
-            {
+            case PlayerState.Sticking:
+                Stick();
+                break;
+            case PlayerState.Sliding:
                 Slide();
-            }
-
-            oldPosition = Position;
-
-            Move();
-            UpdateCoordinates();
+                break;
+            case PlayerState.None:
+                Move();
+                UpdateCoordinates();
+                break;
+            default:
+                break;
         }
 
         //Aiming
@@ -272,7 +273,7 @@ public class Player : AnimationSprite
 
     void SwitchElement()
     {
-        if(element == Element.Fire)
+        if (element == Element.Fire)
         {
             SetColor(0, 1, 1);
             element = Element.Ice;
@@ -304,7 +305,7 @@ public class Player : AnimationSprite
 
         chargeIndicator.visible = false;
 
-        if (playerState == PlayerState.Sticking)
+        if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
             playerState = PlayerState.None;
     }
 
@@ -313,22 +314,14 @@ public class Player : AnimationSprite
         durationToStickCounter += Time.deltaTime;
         if (durationToStickCounter > durationToStick)
         {
-            playerState = wallElement != Element.None ? PlayerState.Sliding : PlayerState.None;//If the wall is a normal one, directly switch to the normal player state
+            playerState = PlayerState.Sliding;//If the wall is a normal one, directly switch to the normal player state
             durationToStickCounter = 0;
+            return;
         }
-    }
 
-    void Slide()
-    {
-        //Checks if the player has not reached the end of the given wall
-        if ((currentSlideWall.IsLeft && Position.y <= currentSlideWall.LineSegment.end.y)
-            || (!currentSlideWall.IsLeft && Position.y <= currentSlideWall.LineSegment.start.y))
+        if (wallElement != Element.None)
         {
             UpdateSize();
-        }
-        else
-        {
-            playerState = PlayerState.None;
         }
     }
 
@@ -344,12 +337,32 @@ public class Player : AnimationSprite
             mass -= 0.01f;
         }
 
-        mass = Mathf.Clamp(mass, 0.5f, 10f);
+        mass = Mathf.Clamp(mass, 0.5f, 3f);
 
         SetScaleXY(mass);
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
+    }
+
+    void Slide()
+    {
+        Velocity = Gravity * 10 * mass;
+        Position += Velocity;
+
+        //Checks if the player has not reached the end of the given wall
+        if ((currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.end.y)
+            || (!currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.start.y))
+        {
+            playerState = PlayerState.None;
+        }
+
+        CollisionInfo firstCollision = null;
+        firstCollision = CheckForBoundariesCollisions(firstCollision);
+        if (firstCollision != null)
+        {
+            ResolveCollision(firstCollision);
+        }
     }
 
     //Checks if the player is in or away from the wall and corrects it accordingly
