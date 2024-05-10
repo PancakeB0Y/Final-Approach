@@ -128,7 +128,7 @@ public class Player : AnimationSprite
         //Check obstacles
         for (int i = 0; i < level.GetObstacleCount(); i++)
         {
-            AABB obstacle = level.GetObstacle(i);
+            Obstacle obstacle = level.GetObstacle(i);
 
             //Check line caps
             for (int j = 0; j < obstacle.walls.Count; j++)
@@ -138,10 +138,7 @@ public class Player : AnimationSprite
                 earliestCollision = CheckBallCollision(earliestCollision, lineCap);
             }
 
-            for (int j = 0; j < obstacle.walls.Count; j++)
-            {
-                earliestCollision = CheckLineSegmentCollision(earliestCollision, obstacle.walls[j]);
-            }
+            earliestCollision = CheckObstacleCollision(earliestCollision, obstacle);
         }
 
         for (int i = 0; i < level.lines.Count; i++)
@@ -189,6 +186,52 @@ public class Player : AnimationSprite
             }
         }
 
+        return earliestColl;
+    }
+
+    CollisionInfo CheckObstacleCollision(CollisionInfo earliestColl, Obstacle obstacle)
+    {
+        float minT = 1;
+        for (int i = 0; i < obstacle.walls.Count; i++)
+        {
+            LineSegment currWall = obstacle.walls[i];
+
+            Vec2 lineVector = currWall.start - currWall.end;
+            Vec2 lineNormal = lineVector.Normal();
+            float a = Vec2.Dot(oldPosition - currWall.start, lineNormal) - Radius;
+            float b = Vec2.Dot(oldPosition - Position, lineNormal);
+            if (b <= 0)
+            {
+                continue;
+            }
+            float toi;
+            if (a >= 0)
+            {
+                toi = a / b;
+            }
+            else if (a >= -Radius)
+            {
+                toi = 0;
+            }
+            else
+            {
+                continue;
+            }
+            if (toi <= minT)
+            {
+                Vec2 poi = oldPosition + Velocity * toi;
+                float d = Vec2.Dot(currWall.start - poi, lineVector.Normalized());
+                if (d >= 0 && d <= lineVector.Magnitude())
+                {
+                    if (earliestColl == null || toi < earliestColl.timeOfImpact)
+                    {
+                        earliestColl = new CollisionInfo(lineNormal, obstacle, toi);
+                        minT = toi;
+                    }
+                }
+            }
+
+        }
         return earliestColl;
     }
 
@@ -297,6 +340,13 @@ public class Player : AnimationSprite
             {
                 wallElement = ((ElementWall)currentSlideWall).Element;
             }
+        }
+        else if (coll.other is Obstacle)
+        {
+            Vec2 POI = oldPosition + Velocity * coll.timeOfImpact;
+            Position = POI;
+
+            //Velocity.Reflect(coll.normal);
         }
         else if (coll.other is LineSegment)
         {
