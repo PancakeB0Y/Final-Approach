@@ -91,21 +91,31 @@ public class Player : AnimationSprite
 
     void Move()
     {
-        accel = Gravity * mass;
-        Velocity += accel;
-        Position += Velocity;
+        //If higher than certain amount, move the level instead
+        if (Position.y <= game.height * 0.75f && Velocity.y < 0)
+        {
+            Position.y = game.height * 0.75f;
+            oldPosition.y = Position.y + 1;
+
+            accel = Gravity * mass;
+            Velocity += accel;
+            ((Level)parent).MoveLevel(-Velocity.y);
+
+            Position.x += Velocity.x;
+        }
+        //Normal player movement
+        else
+        {
+            accel = Gravity * mass;
+            Velocity += accel;
+            Position += Velocity;
+        }
 
         CollisionInfo firstCollision = null;
         firstCollision = CheckForBoundariesCollisions(firstCollision);
         if (firstCollision != null)
         {
             ResolveCollision(firstCollision);
-        }
-
-        //Move the level
-        if (Position.x != oldPosition.x && Position.y != oldPosition.y)
-        {
-            ((Level)parent).MoveLevel(oldPosition - Position);
         }
     }
 
@@ -239,7 +249,7 @@ public class Player : AnimationSprite
                 earliestColl = new CollisionInfo(lineNormal, line, t);
             }
         }
-    
+
         return earliestColl;
     }
 
@@ -309,8 +319,6 @@ public class Player : AnimationSprite
         {
             Vec2 POI = oldPosition + Velocity * coll.timeOfImpact;
             Position = POI;
-
-            //Velocity.Reflect(coll.normal);
         }
     }
 

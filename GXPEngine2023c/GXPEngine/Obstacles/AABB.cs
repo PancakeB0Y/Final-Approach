@@ -27,7 +27,7 @@ public class AABB : AnimationSprite
         };
     }
 
-    public void MoveLineSegments(Vec2 moveAmount)
+    public void MoveLineSegments(float moveAmount)
     {
         foreach (var line in walls)
         {

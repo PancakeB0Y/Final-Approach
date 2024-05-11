@@ -54,11 +54,11 @@ public class Level : GameObject
         }
     }
 
-    public void MoveLevel(Vec2 moveAmount)
+    public void MoveLevel(float moveAmount)
     {
         foreach (var child in GetChildren())
         {
-            child.Move(moveAmount.x, moveAmount.y);
+            child.Move(0f, moveAmount);
             if (child is Wall)
             {
                 ((Wall)child).LineSegment.MoveWithWall(moveAmount);

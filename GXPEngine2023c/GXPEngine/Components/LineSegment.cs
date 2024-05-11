@@ -24,14 +24,14 @@ public class LineSegment : GameObject
         this.lineCapEnd = lineCapEnd ? new LineCap(pEnd) : null;
     }
 
-    public void MoveWithWall(Vec2 moveAmount)
+    public void MoveWithWall(float moveAmount)
     {
-        start += moveAmount;
-        end += moveAmount;
+        start.y += moveAmount;
+        end.y += moveAmount;
         if (lineCapStart != null)
-            lineCapStart.position += moveAmount;
+            lineCapStart.position.y += moveAmount;
         if (lineCapEnd != null)
-            lineCapEnd.position += moveAmount;
+            lineCapEnd.position.y += moveAmount;
     }
 
     //------------------------------------------------------------------------------------------------------------------------

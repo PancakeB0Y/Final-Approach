@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class MyGame : Game
 {
     string curSceneName;
-    public MyGame() : base(1500, 900, false, false)
+    public MyGame() : base(1920, 1080, false, false)
     {
         targetFps = 60;
 
