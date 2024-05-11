@@ -54,6 +54,15 @@ public class Level : GameObject
         }
     }
 
+    public void ReloadLevel()
+    {
+        foreach (GameObject child in GetChildren())
+        {
+            child.LateDestroy();
+        }
+        CreateLevel();
+    }
+
     public void MoveLevel(float moveAmount)
     {
         foreach (var child in GetChildren())

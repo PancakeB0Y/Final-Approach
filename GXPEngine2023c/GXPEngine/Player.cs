@@ -113,6 +113,9 @@ public class Player : AnimationSprite
             accel = Gravity * mass;
             Velocity += accel;
             Position += Velocity;
+
+            if (Position.y > game.height)
+                ((Level)parent).ReloadLevel();
         }
 
         CollisionInfo firstCollision = null;
