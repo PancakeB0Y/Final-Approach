@@ -67,7 +67,7 @@ public class Level : GameObject
     {
         foreach (GameObject child in GetChildren())
         {
-            child.LateDestroy();
+            child.Destroy();
         }
         CreateLevel();
     }
@@ -79,21 +79,13 @@ public class Level : GameObject
         {
             if (child != player && !(child is LineSegment))
             {
-                child.Move(0f, moveAmount);
+                child.y += moveAmount;
             }
             else if (child is LineSegment)
             {
                 LineSegment line = (LineSegment)child;
                 line.MoveLine(moveAmount);
             }
-            //if (child is Wall)
-            //{
-            //    ((Wall)child).LineSegment.MoveWithWall(moveAmount);
-            //}
-            //else if (child is AABB)
-            //{
-            //    ((AABB)child).MoveLineSegments(moveAmount);
-            //}
         }
     }
 

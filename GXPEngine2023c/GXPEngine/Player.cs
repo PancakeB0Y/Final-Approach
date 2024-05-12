@@ -42,7 +42,7 @@ public class Player : AnimationSprite
     {
         SetOrigin(width / 2, height / 2);
 
-        this.Position = new Vec2(obj.X, obj.Y);
+        this.Position = new Vec2(obj.X + obj.Width / 2, obj.Y - obj.Height / 2);
         Radius = width / 2;
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
@@ -67,7 +67,9 @@ public class Player : AnimationSprite
     {
         //Camera slowly creeping up if the player is stationary
         if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
+        {
             ((Level)parent).MoveLevel(0.5f);
+        }
 
         oldPosition = Position;
 
@@ -96,7 +98,7 @@ public class Player : AnimationSprite
     void Move()
     {
         //If higher than certain amount, move the level instead
-        if (Position.y <= game.height * 0.75f && Velocity.y < 0)
+        if (Position.y <= game.height * 0.6f && Velocity.y < 0)
         {
             //Position.y = game.height * 0.75f;
             //oldPosition.y = Position.y + 1;
@@ -115,7 +117,10 @@ public class Player : AnimationSprite
             Position += Velocity;
 
             if (y > game.height)
+            {
                 ((Level)parent).ReloadLevel();
+                return;
+            }
         }
 
         CollisionInfo firstCollision = null;
