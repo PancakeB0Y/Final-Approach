@@ -15,5 +15,14 @@ public class ElementObstacle : Obstacle
     {
         Element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
         Mass = obj.GetFloatProperty("Mass", 2);
+
+        if (Element == Element.Fire)
+        {
+            SetColor(1, 0.5f, 0.5f);
+        }
+        else
+        {
+            SetColor(0.5f, 0.5f, 1);
+        }
     }
 }
