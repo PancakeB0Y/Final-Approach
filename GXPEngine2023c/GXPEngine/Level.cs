@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -46,11 +48,18 @@ public class Level : GameObject
         foreach (var wall in GetChildren().Where(c => c is Wall))
         {
             walls.Add((Wall)wall);
+
+            AddChild(((Wall)wall).LineSegment);
         }
 
         foreach (var obstacle in GetChildren().Where(c => c is AABB))
         {
             obstacles.Add((AABB)obstacle);
+
+            foreach (var wall in ((AABB)obstacle).walls)
+            {
+                AddChild(wall);
+            }
         }
     }
 
@@ -65,17 +74,26 @@ public class Level : GameObject
 
     public void MoveLevel(float moveAmount)
     {
-        foreach (var child in GetChildren())
+        var children = GetChildren();
+        foreach (var child in children)
         {
-            child.Move(0f, moveAmount);
-            if (child is Wall)
+            if (child != player && !(child is LineSegment))
             {
-                ((Wall)child).LineSegment.MoveWithWall(moveAmount);
+                child.Move(0f, moveAmount);
             }
-            else if (child is AABB)
+            else if (child is LineSegment)
             {
-                ((AABB)child).MoveLineSegments(moveAmount);
+                LineSegment line = (LineSegment)child;
+                line.MoveLine(moveAmount);
             }
+            //if (child is Wall)
+            //{
+            //    ((Wall)child).LineSegment.MoveWithWall(moveAmount);
+            //}
+            //else if (child is AABB)
+            //{
+            //    ((AABB)child).MoveLineSegments(moveAmount);
+            //}
         }
     }
 

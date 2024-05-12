@@ -98,8 +98,8 @@ public class Player : AnimationSprite
         //If higher than certain amount, move the level instead
         if (Position.y <= game.height * 0.75f && Velocity.y < 0)
         {
-            Position.y = game.height * 0.75f;
-            oldPosition.y = Position.y + 1;
+            //Position.y = game.height * 0.75f;
+            //oldPosition.y = Position.y + 1;
 
             accel = Gravity * mass;
             Velocity += accel;
@@ -114,7 +114,7 @@ public class Player : AnimationSprite
             Velocity += accel;
             Position += Velocity;
 
-            if (Position.y > game.height)
+            if (y > game.height)
                 ((Level)parent).ReloadLevel();
         }
 
@@ -326,6 +326,8 @@ public class Player : AnimationSprite
         {
             Vec2 POI = oldPosition + Velocity * coll.timeOfImpact;
             Position = POI;
+
+            //Velocity.Reflect(coll.normal.Normalized(), Bounciness);
         }
     }
 

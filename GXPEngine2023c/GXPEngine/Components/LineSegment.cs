@@ -24,7 +24,7 @@ public class LineSegment : GameObject
         this.lineCapEnd = lineCapEnd ? new LineCap(pEnd) : null;
     }
 
-    public void MoveWithWall(float moveAmount)
+    public void MoveLine(float moveAmount)
     {
         start.y += moveAmount;
         end.y += moveAmount;
