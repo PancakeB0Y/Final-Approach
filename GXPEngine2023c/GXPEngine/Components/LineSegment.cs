@@ -24,6 +24,16 @@ public class LineSegment : GameObject
         this.lineCapEnd = lineCapEnd ? new LineCap(pEnd) : null;
     }
 
+    public void MoveLine(float moveAmount)
+    {
+        start.y += moveAmount;
+        end.y += moveAmount;
+        if (lineCapStart != null)
+            lineCapStart.position.y += moveAmount;
+        if (lineCapEnd != null)
+            lineCapEnd.position.y += moveAmount;
+    }
+
     //------------------------------------------------------------------------------------------------------------------------
     //														RenderSelf()
     //------------------------------------------------------------------------------------------------------------------------
