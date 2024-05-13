@@ -64,7 +64,7 @@
   <object id="30" type="ElementObstacle" gid="4" x="515.667" y="546" width="68.6667" height="337.333">
    <properties>
     <property name="Fire" type="bool" value="true"/>
-    <property name="Mass" type="float" value="1"/>
+    <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
  </objectgroup>
