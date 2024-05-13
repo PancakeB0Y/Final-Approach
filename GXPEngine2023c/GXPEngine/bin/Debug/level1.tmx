@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="204">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="313">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
@@ -102,7 +102,7 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="55" name="GreenWall" type="ElementWall" gid="3" x="816" y="32" width="40" height="304">
+  <object id="55" name="GreenWall" type="ElementWall" gid="3" x="816" y="32" width="32" height="304">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="false"/>
@@ -275,43 +275,13 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="128" name="AABB" type="AABB" gid="4" x="48" y="-4416" width="128" height="64">
-   <properties>
-    <property name="isLeft" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="129" name="AABB" type="AABB" gid="4" x="688" y="-4416" width="128" height="64">
-   <properties>
-    <property name="isLeft" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="130" name="AABB" type="AABB" gid="4" x="304" y="-4416" width="256" height="64">
-   <properties>
-    <property name="isLeft" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="131" name="GreenWall" type="ElementWall" gid="3" x="16" y="-3932" width="32" height="484">
+  <object id="131" name="GreenWall" type="ElementWall" gid="3" x="16" y="-3932" width="32" height="788">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="132" name="Wall" type="Wall" gid="4" x="16" y="-4480" width="32" height="320">
-   <properties>
-    <property name="isLeft" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="133" name="Wall" type="Wall" gid="4" x="816" y="-4480" width="32" height="320">
-   <properties>
-    <property name="isLeft" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="135" name="AABB" type="AABB" gid="4" x="48" y="-4800" width="768" height="64">
-   <properties>
-    <property name="isLeft" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="137" name="RedWall" type="ElementWall" gid="5" x="816" y="-3712" width="32" height="704">
+  <object id="137" name="RedWall" type="ElementWall" gid="5" x="816" y="-3712" width="32" height="1008">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="isLeft" type="bool" value="false"/>
@@ -529,25 +499,474 @@
     <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
-  <object id="200" type="ElementObstacle" gid="6" x="176" y="-4416" width="64" height="64">
+  <object id="207" name="GreenWall" type="ElementWall" gid="3" x="272" y="-4720" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="209" name="RedWall" type="ElementWall" gid="5" x="464" y="-4968" width="32" height="368">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="214" name="AABB" type="AABB" gid="4" x="32" y="-4720" width="240" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="215" name="Wall" type="Wall" gid="4" x="16" y="-4784" width="32" height="320">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="216" name="AABB" type="AABB" gid="4" x="592" y="-4720" width="240" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="217" name="RedWall" type="ElementWall" gid="5" x="560" y="-4720" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="219" name="GreenWall" type="ElementWall" gid="3" x="816" y="-4784" width="32" height="304">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="220" name="AABB" type="AABB" gid="4" x="652" y="-5088" width="180" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="221" name="GreenWall" type="ElementWall" gid="3" x="620" y="-5088" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="222" name="AABB" type="AABB" gid="4" x="32" y="-6424" width="176" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="224" name="Wall" type="Wall" gid="4" x="816" y="-5152" width="32" height="192">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="225" name="Wall" type="AABB" gid="4" x="400" y="-6424" width="64" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="226" name="RedWall" type="ElementWall" gid="5" x="816" y="-5344" width="32" height="368">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="227" name="GreenWall" type="ElementWall" gid="3" x="464" y="-6424" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="228" name="GreenWall" type="ElementWall" gid="3" x="368" y="-6424" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="230" name="RedWall" type="ElementWall" gid="5" x="208" y="-6424" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="231" name="Wall" type="Wall" gid="4" x="432" y="-4968" width="32" height="368">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="232" name="AABB" type="AABB" gid="4" x="320" y="-5024" width="112" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="233" name="RedWall" type="ElementWall" gid="5" x="16" y="-5104" width="32" height="808">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="234" name="RedWall" type="ElementWall" gid="5" x="288" y="-5024" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="235" name="GreenWall" type="ElementWall" gid="3" x="16" y="-6488" width="32" height="736">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="236" name="RedWall" type="ElementWall" gid="5" x="816" y="-6160" width="32" height="1024">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="237" name="RedWall" type="ElementWall" gid="5" x="464" y="-7200" width="32" height="368">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="238" name="GreenWall" type="ElementWall" gid="3" x="432" y="-7200" width="32" height="368">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="239" name="AABB" type="AABB" gid="4" x="48" y="-7760" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="240" name="AABB" type="AABB" gid="4" x="688" y="-7760" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="241" name="AABB" type="AABB" gid="4" x="304" y="-7760" width="256" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="242" name="AABB" type="AABB" gid="4" x="32" y="-6828" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="243" name="Wall" type="Wall" gid="4" x="16" y="-7220" width="32" height="540">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="244" name="GreenWall" type="ElementWall" gid="3" x="816" y="-7184" width="32" height="576">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="245" name="GreenWall" type="ElementWall" gid="3" x="16" y="-5912" width="32" height="512">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="246" name="Wall" type="Wall" gid="4" x="464" y="-5592" width="32" height="384">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="247" name="GreenWall" type="ElementWall" gid="3" x="432" y="-5592" width="32" height="384">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="248" name="GreenWall" type="ElementWall" gid="3" x="816" y="-5712" width="32" height="448">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="249" name="RedWall" type="ElementWall" gid="5" x="16" y="-7824" width="32" height="860">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="250" name="AABB" type="AABB" gid="4" x="48" y="-9232" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="251" name="AABB" type="AABB" gid="4" x="688" y="-9232" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="252" name="AABB" type="AABB" gid="4" x="304" y="-9232" width="256" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="253" name="GreenWall" type="ElementWall" gid="3" x="16" y="-8748" width="32" height="484">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="254" name="Wall" type="Wall" gid="4" x="16" y="-9296" width="32" height="320">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="255" name="Wall" type="Wall" gid="4" x="816" y="-9296" width="32" height="320">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="256" name="AABB" type="AABB" gid="4" x="48" y="-9616" width="768" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="257" name="RedWall" type="ElementWall" gid="5" x="816" y="-8528" width="32" height="704">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="258" name="GreenWall" type="ElementWall" gid="3" x="816" y="-7824" width="32" height="640">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="259" name="AABB" type="AABB" gid="4" x="688" y="-8464" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="260" name="RedWall" type="ElementWall" gid="5" x="656" y="-8464" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="261" name="RedWall" type="ElementWall" gid="5" x="528" y="-8748" width="32" height="368">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="262" name="Wall" type="Wall" gid="4" x="496" y="-8748" width="32" height="368">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="263" name="AABB" type="AABB" gid="4" x="384" y="-9008" width="112" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="264" name="RedWall" type="ElementWall" gid="5" x="352" y="-9008" width="32" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="265" name="AABB" type="AABB" gid="4" x="48" y="-8684" width="128" height="64">
+   <properties>
+    <property name="isLeft" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="266" type="ElementObstacle" gid="6" x="592" y="-4656" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
-  <object id="201" type="ElementObstacle" gid="6" x="240" y="-4416" width="64" height="64">
-   <properties>
-    <property name="Fire" type="bool" value="true"/>
-    <property name="Mass" type="float" value="0.5"/>
-   </properties>
-  </object>
-  <object id="202" type="ElementObstacle" gid="6" x="560" y="-4416" width="64" height="64">
+  <object id="267" type="ElementObstacle" gid="6" x="208" y="-4848" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
-  <object id="203" type="ElementObstacle" gid="6" x="624" y="-4416" width="64" height="64">
+  <object id="268" type="ElementObstacle" gid="6" x="48" y="-5040" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="269" type="ElementObstacle" gid="6" x="496" y="-5272" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="270" type="ElementObstacle" gid="6" x="620" y="-5024" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="272" type="ElementObstacle" gid="6" x="752" y="-5648" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="273" type="ElementObstacle" gid="6" x="752" y="-5912" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="275" type="ElementObstacle" gid="6" x="368" y="-5912" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="276" type="ElementObstacle" gid="6" x="368" y="-5528" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="280" type="ElementObstacle" gid="6" x="176" y="-6360" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="281" type="ElementObstacle" gid="6" x="620" y="-6824" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="282" type="ElementObstacle" gid="6" x="368" y="-6824" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="283" type="ElementObstacle" gid="6" x="496" y="-7264" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="284" type="ElementObstacle" gid="6" x="752" y="-7256" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="286" type="ElementObstacle" gid="6" x="624" y="-7324" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="289" type="ElementObstacle" gid="6" x="240" y="-8684" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="290" type="ElementObstacle" gid="6" x="560" y="-8684" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="292" type="ElementObstacle" gid="6" x="176" y="-8016" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="294" type="ElementObstacle" gid="6" x="176" y="-9232" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="295" type="ElementObstacle" gid="6" x="240" y="-9232" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="296" type="ElementObstacle" gid="6" x="560" y="-9232" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="297" type="ElementObstacle" gid="6" x="624" y="-9232" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="299" type="ElementObstacle" gid="6" x="240" y="-5336" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="300" type="ElementObstacle" gid="6" x="496" y="-5720" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="303" type="ElementObstacle" gid="6" x="304" y="-6168" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="304" type="ElementObstacle" gid="6" x="560" y="-6232" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="305" type="ElementObstacle" gid="6" x="112" y="-7264" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="307" type="ElementObstacle" gid="6" x="304" y="-7632" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="308" type="ElementObstacle" gid="6" x="432" y="-8272" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="true"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="309" type="ElementObstacle" gid="6" x="240" y="-8080" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="310" type="ElementObstacle" gid="6" x="372" y="-8748" width="64" height="64">
+   <properties>
+    <property name="Fire" type="bool" value="false"/>
+    <property name="Mass" type="float" value="0.5"/>
+   </properties>
+  </object>
+  <object id="311" type="ElementObstacle" gid="6" x="752" y="-9052" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="Mass" type="float" value="0.5"/>
