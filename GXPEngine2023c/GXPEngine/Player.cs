@@ -68,7 +68,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         //if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         //{
-            //((Level)parent).MoveLevel(2f);
+            //((Level)parent).MoveLevel(1.5f);
         //}
 
         oldPosition = Position;
@@ -564,7 +564,8 @@ public class Player : AnimationSprite
         chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
         chargeDistance = Mathf.Map(chargeDistance, 0, chargeDistanceMax, 0f, 20f);
 
-        chargeIndicator.startPoint = Position;
+
+        chargeIndicator.startPoint = new Vec2(x, game.height/2);
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
     }
