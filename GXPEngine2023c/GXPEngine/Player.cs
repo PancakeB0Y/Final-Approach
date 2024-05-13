@@ -68,7 +68,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         //if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         //{
-            ((Level)parent).MoveLevel(2f);
+            //((Level)parent).MoveLevel(2f);
         //}
 
         oldPosition = Position;
