@@ -68,7 +68,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         //if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         //{
-            ((Level)parent).MoveLevel(0.5f);
+            ((Level)parent).MoveLevel(2f);
         //}
 
         oldPosition = Position;
@@ -98,7 +98,7 @@ public class Player : AnimationSprite
     void Move()
     {
         //If higher than certain amount, move the level instead
-        if (Position.y <= game.height * 0.6f && Velocity.y < 0)
+        /*if (Position.y <= game.height * 0.6f && Velocity.y < 0)
         {
             //Position.y = game.height * 0.75f;
             //oldPosition.y = Position.y + 1;
@@ -111,7 +111,7 @@ public class Player : AnimationSprite
         }
         //Normal player movement
         else
-        {
+        {*/
             accel = Gravity * mass;
             Velocity += accel;
             Position += Velocity;
@@ -121,7 +121,7 @@ public class Player : AnimationSprite
                 ((Level)parent).ReloadLevel();
                 return;
             }
-        }
+        //}
 
         CollisionInfo firstCollision = null;
         firstCollision = CheckForBoundariesCollisions(firstCollision);
@@ -293,7 +293,7 @@ public class Player : AnimationSprite
                 {
                     if (earliestColl == null || toi < earliestColl.timeOfImpact)
                     {
-                        earliestColl = new CollisionInfo(lineNormal, obstacle, toi);
+                        earliestColl = new CollisionInfo(lineNormal, obstacle, toi, currWall);
                         minT = toi;
                     }
                 }
@@ -445,14 +445,22 @@ public class Player : AnimationSprite
             }
         }
         else if (coll.other is Obstacle)
-        { 
+        {
             Obstacle curObstacle = (Obstacle)coll.other;
-            
+
+            if (coll.otherReal is LineCap)
+            {
+                LineCap otherBall = (LineCap)coll.otherReal;
+                Position = otherBall.position + coll.normal;
+                Velocity.Reflect(coll.normal.Normalized(), Bounciness);
+                return;
+            }
+
             if (!(curObstacle is ElementObstacle))
             {
                 Position = oldPosition + Velocity * coll.timeOfImpact;
                 Velocity = new Vec2();
-                //Velocity.Reflect(coll.normal);
+                //Velocity.Reflect(coll.normal.Normalized(), Bounciness);
                 return;
             }
             if (element != ((ElementObstacle)curObstacle).Element)
@@ -624,7 +632,7 @@ public class Player : AnimationSprite
         firstCollision = CheckForBoundariesCollisions(firstCollision);
         if (firstCollision != null)
         {
-            if(firstCollision.otherReal is LineCap) { return; }
+            //if(firstCollision.otherReal is LineCap) { return; }
             ResolveCollision(firstCollision);
         }
     }

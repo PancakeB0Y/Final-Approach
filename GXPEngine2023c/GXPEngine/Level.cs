@@ -93,6 +93,20 @@ public class Level : GameObject
         }
     }
 
+    public void HandleScrolling()
+    {
+        if(player == null) { return; }
+
+        if(player.y + y > 540)
+        {
+            y = 540 - player.y;
+        }
+        if (player.y + y < 540)
+        {
+            y = 540 - player.x;
+        }
+    }
+
     public int GetWallCount()
     {
         return walls.Count;
