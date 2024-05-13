@@ -1,4 +1,4 @@
-﻿using GXPEngine;
+using GXPEngine;
 using GXPEngine.Core;
 using System;
 using System.Collections.Generic;

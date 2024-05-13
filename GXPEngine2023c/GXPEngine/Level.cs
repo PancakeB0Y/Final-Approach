@@ -18,7 +18,7 @@ public class Level : GameObject
 
     Player player;
     List<Wall> walls;
-    List<AABB> obstacles;
+    List<Obstacle> obstacles;
     public List<LineSegment> lines;
 
     public Level(string fileName, int id)
@@ -34,7 +34,7 @@ public class Level : GameObject
     void CreateLevel()
     {
         walls = new List<Wall>();
-        obstacles = new List<AABB>();
+        obstacles = new List<Obstacle>();
         lines = new List<LineSegment>();
 
         tiledLoader.autoInstance = true;
@@ -52,7 +52,7 @@ public class Level : GameObject
             AddChild(((Wall)wall).LineSegment);
         }
 
-        foreach (var obstacle in GetChildren().Where(c => c is AABB))
+        foreach (var obstacle in GetChildren().Where(c => c is Obstacle))
         {
             obstacles.Add((AABB)obstacle);
 
@@ -108,7 +108,7 @@ public class Level : GameObject
         return obstacles.Count;
     }
 
-    public AABB GetObstacle(int index)
+    public Obstacle GetObstacle(int index)
     {
         if (index >= 0 && index < obstacles.Count)
         {
