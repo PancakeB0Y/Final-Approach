@@ -215,7 +215,7 @@ public class Player : AnimationSprite
                 if (b < 0)
                 {
                     Vec2 pNormal = relativePosition.Normalized() * (Radius + 0);
-                    earliestColl = new CollisionInfo(pNormal, obstacle, 0f);
+                    earliestColl = new CollisionInfo(pNormal, ball, 0f);
                 }
                 continue;
             }
@@ -234,7 +234,7 @@ public class Player : AnimationSprite
                 if (earliestColl == null || toi < earliestColl.timeOfImpact)
                 {
                     Vec2 poi = oldPosition + Velocity * toi;
-                    earliestColl = new CollisionInfo(poi - ball.position, obstacle, toi);
+                    earliestColl = new CollisionInfo(poi - ball.position, ball, toi);
                     minT = toi;
                 }
             }
@@ -588,8 +588,8 @@ public class Player : AnimationSprite
         Position += Velocity;
 
         //Checks if the player has not reached the end of the given wall
-        if ((currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.end.y)
-            || (!currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.start.y))
+        if ((currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.end.y - 1)
+            || (!currentSlideWall.IsLeft && Position.y >= currentSlideWall.LineSegment.start.y - 1))
         {
             playerState = PlayerState.None;
         }
