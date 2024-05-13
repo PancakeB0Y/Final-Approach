@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -46,11 +48,48 @@ public class Level : GameObject
         foreach (var wall in GetChildren().Where(c => c is Wall))
         {
             walls.Add((Wall)wall);
+
+            AddChild(((Wall)wall).LineSegment);
         }
 
         foreach (var obstacle in GetChildren().Where(c => c is Obstacle))
         {
             obstacles.Add((Obstacle)obstacle);
+
+            foreach (var wall in ((Obstacle)obstacle).topBottom)
+            {
+                AddChild(wall);
+            }
+            foreach (var wall in ((Obstacle)obstacle).leftRight)
+            {
+                AddChild(wall);
+            }
+        }
+    }
+
+    public void ReloadLevel()
+    {
+        foreach (GameObject child in GetChildren())
+        {
+            child.Destroy();
+        }
+        CreateLevel();
+    }
+
+    public void MoveLevel(float moveAmount)
+    {
+        var children = GetChildren();
+        foreach (var child in children)
+        {
+            if (child != player && !(child is LineSegment))
+            {
+                child.y += moveAmount;
+            }
+            else if (child is LineSegment)
+            {
+                LineSegment line = (LineSegment)child;
+                line.MoveLine(moveAmount);
+            }
         }
     }
 
