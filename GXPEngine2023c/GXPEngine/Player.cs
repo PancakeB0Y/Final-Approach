@@ -419,7 +419,15 @@ public class Player : AnimationSprite
         else if (coll.other is Obstacle)
         { 
             Obstacle curObstacle = (Obstacle)coll.other;
-            
+
+            if (coll.otherReal is LineCap)
+            {
+                LineCap otherBall = (LineCap)coll.otherReal;
+                Position = otherBall.position + coll.normal;
+                Velocity.Reflect(coll.normal.Normalized(), Bounciness);
+                return;
+            }
+
             if (!(curObstacle is ElementObstacle))
             {
                 Position = oldPosition + Velocity * coll.timeOfImpact;

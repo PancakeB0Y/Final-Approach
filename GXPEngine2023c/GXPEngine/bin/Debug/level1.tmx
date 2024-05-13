@@ -61,7 +61,7 @@
    </properties>
   </object>
   <object id="16" name="Floor" type="Obstacle" gid="4" x="236" y="776" width="414" height="44"/>
-  <object id="30" type="ElementObstacle" gid="4" x="431.667" y="582" width="68.6667" height="337.333">
+  <object id="30" type="Obstacle" gid="4" x="431.667" y="582" width="68.6667" height="337.333">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="Mass" type="float" value="0.1"/>
