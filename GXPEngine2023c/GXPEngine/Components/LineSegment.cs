@@ -1,4 +1,4 @@
-﻿using GXPEngine;
+using GXPEngine;
 using GXPEngine.Core;
 using System;
 using System.Collections.Generic;
@@ -22,6 +22,16 @@ public class LineSegment : GameObject
         end = pEnd;
         this.lineCapStart = lineCapStart ? new LineCap(pStart) : null;
         this.lineCapEnd = lineCapEnd ? new LineCap(pEnd) : null;
+    }
+
+    public void MoveLine(float moveAmount)
+    {
+        start.y += moveAmount;
+        end.y += moveAmount;
+        if (lineCapStart != null)
+            lineCapStart.position.y += moveAmount;
+        if (lineCapEnd != null)
+            lineCapEnd.position.y += moveAmount;
     }
 
     //------------------------------------------------------------------------------------------------------------------------
