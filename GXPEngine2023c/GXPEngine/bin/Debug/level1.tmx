@@ -16,7 +16,7 @@
   <image source="Assets/wallRed.png" width="32" height="160"/>
  </tileset>
  <tileset firstgid="6" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
-  <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/wallNormal.png" width="32" height="160"/>
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
   <object id="44" gid="1" x="1464" y="864" width="784" height="1368"/>
