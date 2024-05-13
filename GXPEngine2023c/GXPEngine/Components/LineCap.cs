@@ -9,7 +9,6 @@ public class LineCap : GameObject
 {
     public Vec2 position;
 
-
     public LineCap(Vec2 position)
     {
         this.position = position;
