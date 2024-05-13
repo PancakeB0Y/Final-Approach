@@ -174,11 +174,6 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="83" name="AABB" type="AABB" gid="4" x="320" y="-208" width="112" height="64">
-   <properties>
-    <property name="isLeft" type="bool" value="false"/>
-   </properties>
-  </object>
   <object id="84" name="RedWall" type="ElementWall" gid="5" x="16" y="-288" width="32" height="808">
    <properties>
     <property name="Fire" type="bool" value="true"/>
