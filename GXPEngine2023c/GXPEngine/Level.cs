@@ -19,7 +19,6 @@ public class Level : GameObject
     Player player;
     List<Wall> walls;
     List<Obstacle> obstacles;
-    public List<LineSegment> lines;
 
     public Level(string fileName, int id)
     {
@@ -35,7 +34,6 @@ public class Level : GameObject
     {
         walls = new List<Wall>();
         obstacles = new List<Obstacle>();
-        lines = new List<LineSegment>();
 
         tiledLoader.autoInstance = true;
         tiledLoader.rootObject = this;
@@ -54,15 +52,17 @@ public class Level : GameObject
 
         foreach (var obstacle in GetChildren().Where(c => c is Obstacle))
         {
-            obstacles.Add((Obstacle)obstacle);
+            Obstacle obstacle1 = (Obstacle)obstacle;
 
-            foreach (var wall in ((Obstacle)obstacle).topBottom)
+            obstacles.Add(obstacle1);
+
+            foreach (var line in obstacle1.leftRight)
             {
-                AddChild(wall);
+                AddChild(line);
             }
-            foreach (var wall in ((Obstacle)obstacle).leftRight)
+            foreach (var line in obstacle1.topBottom)
             {
-                AddChild(wall.LineSegment);
+                AddChild(line);
             }
         }
     }
@@ -95,14 +95,15 @@ public class Level : GameObject
 
     public void HandleScrolling()
     {
-        if(player == null) { return; }
+        if (player == null) { return; }
 
         if (player.y + y > game.height / 2)
         {
             y = game.height / 2 - player.y;
         }
-        if (player.y + y < game.height /2)
+        if (player.y + y < game.height / 2)
         {
+            Console.WriteLine("In");
             y = game.height / 2 - player.y;
         }
     }
@@ -138,10 +139,20 @@ public class Level : GameObject
     public void RemoveObstacle(Obstacle obstacle)
     {
         obstacles.Remove(obstacle);
+
+        foreach (var line in obstacle.leftRight)
+        {
+            line.Destroy();
+        }
+        foreach (var line in obstacle.topBottom)
+        {
+            line.Destroy();
+        }
+        obstacle.Destroy();
     }
 
     void Update()
     {
-        HandleScrolling();
+        //HandleScrolling();
     }
 }
