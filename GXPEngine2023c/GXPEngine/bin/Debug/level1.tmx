@@ -26,7 +26,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="37" name="Player" type="Player" gid="2" x="918.667" y="998.637" width="64" height="64">
+  <object id="37" name="Player" type="Player" gid="2" x="166.667" y="676.637" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
    </properties>
@@ -42,13 +42,13 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="41" name="GreenWall" type="ElementWall" gid="3" x="544" y="1037.33" width="32" height="352">
+  <object id="41" name="GreenWall" type="ElementWall" gid="3" x="0" y="765.33" width="32" height="352">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="45" name="RedWall" type="ElementWall" gid="5" x="992" y="133.333" width="32" height="368">
+  <object id="45" name="RedWall" type="ElementWall" gid="5" x="814" y="397.333" width="32" height="368">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="isLeft" type="bool" value="true"/>
@@ -64,13 +64,13 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="48" name="GreenWall" type="ElementWall" gid="3" x="1344" y="621.333" width="32" height="240">
+  <object id="48" name="GreenWall" type="ElementWall" gid="3" x="824" y="-296.667" width="32" height="240">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="49" name="GreenWall" type="ElementWall" gid="3" x="544" y="621.333" width="32" height="240">
+  <object id="49" name="GreenWall" type="ElementWall" gid="3" x="-12" y="395.333" width="32" height="240">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="true"/>
@@ -81,7 +81,7 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="51" name="Wall" type="Wall" gid="4" x="544" y="317.333" width="32" height="320">
+  <object id="51" name="Wall" type="Wall" gid="4" x="0" y="127.333" width="32" height="320">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -91,7 +91,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="53" name="RedWall" type="ElementWall" gid="5" x="1088" y="381.333" width="32" height="64">
+  <object id="53" name="RedWall" type="ElementWall" gid="5" x="610" y="-208.667" width="32" height="64">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="isLeft" type="bool" value="false"/>
@@ -113,7 +113,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="57" name="GreenWall" type="ElementWall" gid="3" x="1148" y="13.3333" width="32" height="64">
+  <object id="57" name="GreenWall" type="ElementWall" gid="3" x="648" y="-276.667" width="32" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="false"/>
@@ -129,7 +129,7 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="60" name="Wall" type="Wall" gid="4" x="1344" y="-50.6667" width="32" height="192">
+  <object id="60" name="Wall" type="Wall" gid="4" x="822" y="-548.667" width="32" height="192">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -732,7 +732,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="259" name="AABB" type="AABB" gid="4" x="688" y="-8464" width="128" height="64">
+  <object id="259" name="Obstacle" type="Obstacle" gid="4" x="688" y="-8464" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -754,7 +754,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="263" name="AABB" type="AABB" gid="4" x="384" y="-9008" width="112" height="64">
+  <object id="263" name="Obstacle" type="Obstacle" gid="4" x="384" y="-9008" width="112" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -765,7 +765,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="265" name="AABB" type="AABB" gid="4" x="48" y="-8684" width="128" height="64">
+  <object id="265" name="Obstacle" type="Obstacle" gid="4" x="48" y="-8684" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
