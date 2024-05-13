@@ -20,12 +20,6 @@ public class Obstacle : AnimationSprite
 
             //bottom
             new LineSegment(new Vec2(obj.X + obj.Width, obj.Y), new Vec2(obj.X, obj.Y), true),
-
-            /*//right
-            new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - obj.Height), true),
-
-            //left
-            new LineSegment(new Vec2(obj.X + obj.Width, obj.Y - obj.Height), new Vec2(obj.X + obj.Width, obj.Y), true)*/
         };
 
         leftRight = new List<Wall>
