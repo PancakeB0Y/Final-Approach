@@ -88,7 +88,8 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Obstacles\AABB.cs" />
+    <Compile Include="Obstacles\Obstacle.cs" />
+    <Compile Include="Obstacles\ElementObstacle.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="MyUtils.cs" />
