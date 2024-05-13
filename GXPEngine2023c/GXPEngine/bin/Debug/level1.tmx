@@ -56,12 +56,12 @@
   </object>
   <object id="46" name="AABB" type="Obstacle" gid="4" x="32" y="400" width="208" height="64">
    <properties>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="" value=""/>
    </properties>
   </object>
   <object id="47" name="AABB" type="Obstacle" gid="4" x="624" y="400" width="208" height="64">
    <properties>
-    <property name="isLeft" type="bool" value="false"/>
+    <property name="isLeft" type="" value=""/>
    </properties>
   </object>
   <object id="48" name="GreenWall" type="ElementWall" gid="3" x="824" y="-296.667" width="32" height="240">
@@ -78,7 +78,7 @@
   </object>
   <object id="50" name="AABB" type="Obstacle" gid="4" x="32" y="96" width="240" height="64">
    <properties>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="" value=""/>
    </properties>
   </object>
   <object id="51" name="Wall" type="Wall" gid="4" x="0" y="127.333" width="32" height="320">
@@ -88,7 +88,7 @@
   </object>
   <object id="52" name="AABB" type="Obstacle" gid="4" x="592" y="96" width="240" height="64">
    <properties>
-    <property name="isLeft" type="bool" value="false"/>
+    <property name="isLeft" type="" value=""/>
    </properties>
   </object>
   <object id="53" name="RedWall" type="ElementWall" gid="5" x="610" y="-208.667" width="32" height="64">
@@ -99,7 +99,7 @@
   </object>
   <object id="54" name="AABB" type="Obstacle" gid="4" x="304" y="592" width="256" height="64">
    <properties>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="" value=""/>
    </properties>
   </object>
   <object id="55" name="GreenWall" type="ElementWall" gid="3" x="816" y="32" width="32" height="304">

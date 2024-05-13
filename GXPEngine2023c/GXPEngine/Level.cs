@@ -97,13 +97,13 @@ public class Level : GameObject
     {
         if(player == null) { return; }
 
-        if(player.y + y > 540)
+        if (player.y + y > game.height / 2)
         {
-            y = 540 - player.y;
+            y = game.height / 2 - player.y;
         }
-        if (player.y + y < 540)
+        if (player.y + y < game.height /2)
         {
-            y = 540 - player.x;
+            y = game.height / 2 - player.y;
         }
     }
 
@@ -138,5 +138,10 @@ public class Level : GameObject
     public void RemoveObstacle(Obstacle obstacle)
     {
         obstacles.Remove(obstacle);
+    }
+
+    void Update()
+    {
+        HandleScrolling();
     }
 }
