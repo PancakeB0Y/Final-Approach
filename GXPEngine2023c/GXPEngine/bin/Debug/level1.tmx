@@ -94,7 +94,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="54" name="AABB" type="AABB" gid="4" x="304" y="592" width="256" height="64">
+  <object id="54" name="AABB" type="AABB" gid="4" x="360" y="380" width="256" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
