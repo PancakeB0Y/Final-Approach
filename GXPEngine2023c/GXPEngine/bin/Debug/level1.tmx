@@ -200,13 +200,13 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="91" name="RedWall" type="ElementWall" gid="5" x="464" y="-2448" width="32" height="368">
+  <object id="91" name="RedWall" type="ElementWall" gid="5" x="448" y="-2384" width="32" height="368">
    <properties>
     <property name="Fire" type="bool" value="true"/>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="92" name="GreenWall" type="ElementWall" gid="3" x="432" y="-2448" width="32" height="368">
+  <object id="92" name="GreenWall" type="ElementWall" gid="3" x="416" y="-2384" width="32" height="368">
    <properties>
     <property name="Fire" type="bool" value="false"/>
     <property name="isLeft" type="bool" value="false"/>
