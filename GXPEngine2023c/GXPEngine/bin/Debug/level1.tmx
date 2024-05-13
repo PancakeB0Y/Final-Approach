@@ -28,7 +28,7 @@
     <property name="Fire" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="38" name="AABB" type="AABB" gid="4" x="560" y="1077.33" width="800" height="40">
+  <object id="38" name="Obstacle" type="Obstacle" gid="4" x="560" y="1077.33" width="800" height="40">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -51,12 +51,12 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="46" name="AABB" type="AABB" gid="4" x="560" y="685.333" width="208" height="64">
+  <object id="46" name="Obstacle" type="Obstacle" gid="4" x="560" y="685.333" width="208" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="47" name="AABB" type="AABB" gid="4" x="1152" y="685.333" width="208" height="64">
+  <object id="47" name="Obstacle" type="Obstacle" gid="4" x="1152" y="685.333" width="208" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -73,7 +73,7 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="50" name="AABB" type="AABB" gid="4" x="560" y="381.333" width="240" height="64">
+  <object id="50" name="Obstacle" type="Obstacle" gid="4" x="560" y="381.333" width="240" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -83,7 +83,7 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="52" name="AABB" type="AABB" gid="4" x="1120" y="381.333" width="240" height="64">
+  <object id="52" name="Obstacle" type="Obstacle" gid="4" x="1120" y="381.333" width="240" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -100,7 +100,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="56" name="AABB" type="AABB" gid="4" x="1180" y="13.3333" width="180" height="64">
+  <object id="56" name="Obstacle" type="Obstacle" gid="4" x="1180" y="13.3333" width="180" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -111,12 +111,12 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="58" name="AABB" type="AABB" gid="4" x="560" y="-1322.67" width="176" height="64">
+  <object id="58" name="Obstacle" type="Obstacle" gid="4" x="560" y="-1322.67" width="176" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="59" name="AABB" type="AABB" gid="4" x="1184" y="-1322.67" width="176" height="64">
+  <object id="59" name="Obstacle" type="Obstacle" gid="4" x="1184" y="-1322.67" width="176" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -126,7 +126,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="61" name="Wall" type="AABB" gid="4" x="928" y="-1322.67" width="64" height="64">
+  <object id="61" name="Obstacle" type="Obstacle" gid="4" x="928" y="-1322.67" width="64" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -234,7 +234,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="83" name="AABB" type="AABB" gid="4" x="848" y="77.3333" width="112" height="64">
+  <object id="83" name="Obstacle" type="Obstacle" gid="4" x="848" y="77.3333" width="112" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
@@ -275,22 +275,22 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="94" name="AABB" type="AABB" gid="4" x="576" y="-2658.67" width="128" height="64">
+  <object id="94" name="Obstacle" type="Obstacle" gid="4" x="576" y="-2658.67" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="95" name="AABB" type="AABB" gid="4" x="1216" y="-2658.67" width="128" height="64">
+  <object id="95" name="Obstacle" type="Obstacle" gid="4" x="1216" y="-2658.67" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="96" name="AABB" type="AABB" gid="4" x="832" y="-2658.67" width="256" height="64">
+  <object id="96" name="Obstacle" type="Obstacle" gid="4" x="832" y="-2658.67" width="256" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="97" name="AABB" type="AABB" gid="4" x="560" y="-1726.67" width="128" height="64">
+  <object id="97" name="Obstacle" type="Obstacle" gid="4" x="560" y="-1726.67" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -335,17 +335,17 @@
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="128" name="AABB" type="AABB" gid="4" x="576" y="-3746.67" width="128" height="64">
+  <object id="128" name="Obstacle" type="Obstacle" gid="4" x="576" y="-3746.67" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="129" name="AABB" type="AABB" gid="4" x="1216" y="-3746.67" width="128" height="64">
+  <object id="129" name="Obstacle" type="Obstacle" gid="4" x="1216" y="-3746.67" width="128" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="130" name="AABB" type="AABB" gid="4" x="832" y="-3746.67" width="256" height="64">
+  <object id="130" name="Obstacle" type="Obstacle" gid="4" x="832" y="-3746.67" width="256" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -366,7 +366,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="135" name="AABB" type="AABB" gid="4" x="576" y="-4130.67" width="768" height="64">
+  <object id="135" name="Obstacle" type="Obstacle" gid="4" x="576" y="-4130.67" width="768" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
@@ -383,7 +383,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="140" name="AABB" type="AABB" gid="4" x="860" y="861.333" width="208" height="64">
+  <object id="140" name="Obstacle" type="Obstacle" gid="4" x="864.667" y="876.666" width="208" height="64">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>

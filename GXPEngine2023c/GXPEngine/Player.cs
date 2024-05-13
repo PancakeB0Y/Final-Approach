@@ -66,10 +66,10 @@ public class Player : AnimationSprite
     void Update()
     {
         //Camera slowly creeping up if the player is stationary
-        if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
-        {
+        //if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
+        //{
             ((Level)parent).MoveLevel(0.5f);
-        }
+        //}
 
         oldPosition = Position;
 
@@ -467,7 +467,7 @@ public class Player : AnimationSprite
 
             if (element != ((ElementObstacle)curObstacle).Element)
             {
-                curObstacle.LateDestroy();
+                curObstacle.Destroy();
             }
             else
             {

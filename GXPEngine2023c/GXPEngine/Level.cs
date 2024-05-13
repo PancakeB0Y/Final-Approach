@@ -54,9 +54,13 @@ public class Level : GameObject
 
         foreach (var obstacle in GetChildren().Where(c => c is Obstacle))
         {
-            obstacles.Add((AABB)obstacle);
+            obstacles.Add((Obstacle)obstacle);
 
-            foreach (var wall in ((AABB)obstacle).walls)
+            foreach (var wall in ((Obstacle)obstacle).topBottom)
+            {
+                AddChild(wall);
+            }
+            foreach (var wall in ((Obstacle)obstacle).leftRight)
             {
                 AddChild(wall);
             }
