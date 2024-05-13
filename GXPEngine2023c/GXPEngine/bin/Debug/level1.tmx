@@ -19,7 +19,7 @@
   <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/wallNormal.png" width="32" height="160"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
-  <object id="44" gid="1" x="32" y="764" width="784" height="1368"/>
+  <object id="44" gid="1" x="32" y="760" width="784" height="1368"/>
   <object id="35" name="RedWall" type="ElementWall" gid="5" x="816" y="752" width="32" height="352">
    <properties>
     <property name="Fire" type="bool" value="true"/>
