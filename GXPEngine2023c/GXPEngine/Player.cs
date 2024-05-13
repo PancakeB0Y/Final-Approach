@@ -40,6 +40,9 @@ public class Player : AnimationSprite
 
     ElementObstacle currentElementObstacle;
 
+    bool canJump = true;
+    bool canSwitchElement = true;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(width / 2, height / 2);
@@ -334,6 +337,13 @@ public class Player : AnimationSprite
                 //Collide from top or bottom
                 else if (coll.normal.y != 0f)
                 {
+                    if (coll.normal.y == -1f)
+                    {
+                        //Restart abilities
+                        canJump = true;
+                        canSwitchElement = true;
+                    }
+
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity.Reflect(coll.normal, Bounciness);
                 }
@@ -362,7 +372,9 @@ public class Player : AnimationSprite
         {
             if (coll.normal.y == -1f)
             {
-                //Reset abilities
+                //Restart abilities
+                canJump = true;
+                canSwitchElement = true;
             }
 
             Position = oldPosition + Velocity * coll.timeOfImpact;
@@ -382,19 +394,19 @@ public class Player : AnimationSprite
 
     void CheckForMouseInput()
     {
-        if (!isCharging && Input.GetMouseButtonDown(0))
+        if (!isCharging && Input.GetMouseButtonDown(0) && canJump)
         {
             isCharging = true;
             chargeMousePos = mousePosition;
 
             chargeIndicator.visible = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && canJump)
         {
             isCharging = false;
             Release();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && canSwitchElement)
         {
             SwitchElement();
         }
@@ -417,6 +429,8 @@ public class Player : AnimationSprite
             SetColor(1, 0, 1);
             element = Element.Fire;
         }
+
+        canSwitchElement = false;
     }
 
     void Charge()
@@ -443,6 +457,8 @@ public class Player : AnimationSprite
 
         if (playerState == PlayerState.StickingWall || playerState == PlayerState.Sliding)
             playerState = PlayerState.None;
+
+        canJump = false;
     }
 
     void StickWall()
@@ -452,6 +468,11 @@ public class Player : AnimationSprite
         {
             playerState = PlayerState.Sliding;//If the wall is a normal one, directly switch to the normal player state
             durationToStickCounter = 0;
+
+            //Restart abilities
+            canJump = true;
+            canSwitchElement = true;
+
             return;
         }
 
@@ -476,6 +497,8 @@ public class Player : AnimationSprite
             playerState = PlayerState.Sliding;
 
             //Restart abilities
+            canJump = true;
+            canSwitchElement = true;
         }
     }
 
