@@ -62,7 +62,7 @@ public class Level : GameObject
             }
             foreach (var wall in ((Obstacle)obstacle).leftRight)
             {
-                AddChild(wall);
+                AddChild(wall.LineSegment);
             }
         }
     }
@@ -112,6 +112,7 @@ public class Level : GameObject
         return obstacles.Count;
     }
 
+
     public Obstacle GetObstacle(int index)
     {
         if (index >= 0 && index < obstacles.Count)
@@ -119,5 +120,9 @@ public class Level : GameObject
             return obstacles[index];
         }
         return null;
+    }
+    public void RemoveObstacle(Obstacle obstacle)
+    {
+        obstacles.Remove(obstacle);
     }
 }
