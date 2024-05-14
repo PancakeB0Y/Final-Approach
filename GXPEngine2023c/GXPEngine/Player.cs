@@ -13,7 +13,7 @@ public class Player : AnimationSprite
     public float Radius;
 
     public Vec2 Velocity;
-    public Vec2 Gravity = new Vec2(0, 0.4f);
+    public Vec2 Gravity = new Vec2(0, 0.34f);
 
     Vec2 accel = new Vec2(0, 0);
     float mass = 1;
