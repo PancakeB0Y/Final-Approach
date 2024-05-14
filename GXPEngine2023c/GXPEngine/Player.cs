@@ -313,6 +313,8 @@ public class Player : AnimationSprite
                     playerState = PlayerState.Slide;
                     return;
                 }
+
+                canSwitchElement = false;
             }
         }
         else if (coll.other is ElementObstacle)
