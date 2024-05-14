@@ -20,6 +20,10 @@ public class Level : GameObject
     List<Wall> walls;
     List<Obstacle> obstacles;
 
+    EasyDraw sizeMeter;
+    EasyDraw canJump;
+    EasyDraw canSwitchElement;
+
     public Level(string fileName, int id)
     {
         this.id = id;
@@ -65,6 +69,38 @@ public class Level : GameObject
                 AddChild(line);
             }
         }
+
+        InitEasyDraws();
+    }
+
+    void InitEasyDraws()
+    {
+        sizeMeter = new EasyDraw(150, 50, false);
+        sizeMeter.TextAlign(CenterMode.Center, CenterMode.Center);
+        sizeMeter.Fill(Color.White);
+        sizeMeter.TextSize(25);
+        sizeMeter.Text($"Size: {player.Mass}/3", true, 255, 0, 0, 0);
+        sizeMeter.SetOrigin(sizeMeter.width / 2, sizeMeter.height / 2);
+        sizeMeter.SetXY((game.width - 800) / 4, 30f);
+        game.AddChild(sizeMeter);
+
+        canJump = new EasyDraw(200, 50, false);
+        canJump.TextAlign(CenterMode.Center, CenterMode.Center);
+        canJump.Fill(Color.White);
+        canJump.TextSize(20);
+        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
+        canJump.SetOrigin(canJump.width / 2, canJump.height / 2);
+        canJump.SetXY(game.width - (game.width - 800) / 4, 30f);
+        game.AddChild(canJump);
+
+        canSwitchElement = new EasyDraw(310, 50, false);
+        canSwitchElement.TextAlign(CenterMode.Center, CenterMode.Center);
+        canSwitchElement.Fill(Color.White);
+        canSwitchElement.TextSize(20);
+        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
+        canSwitchElement.SetOrigin(canSwitchElement.width / 2, canSwitchElement.height / 2);
+        canSwitchElement.SetXY(game.width - (game.width - 800) / 4, 70f);
+        game.AddChild(canSwitchElement);
     }
 
     public void ReloadLevel()
@@ -153,6 +189,13 @@ public class Level : GameObject
 
     void Update()
     {
-        //HandleScrolling();
+        DrawEasyDraws();
+    }
+
+    void DrawEasyDraws()
+    {
+        sizeMeter.Text($"Size: {(int)player.Mass}/3", true, 255, 0, 0, 0);
+        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
+        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
     }
 }
