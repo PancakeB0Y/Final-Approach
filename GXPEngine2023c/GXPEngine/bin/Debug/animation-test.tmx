@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="316">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="85" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="317">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
@@ -18,11 +18,10 @@
  <tileset firstgid="6" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
   <image source="Assets/wallNormal.png" width="32" height="160"/>
  </tileset>
- <tileset firstgid="7" name="playerAnim" tilewidth="256" tileheight="256" tilecount="20" columns="5">
-  <image source="Assets/player.png" width="1280" height="1024"/>
+ <tileset firstgid="7" name="playerAnim" tilewidth="256" tileheight="256" tilecount="49" columns="7">
+  <image source="Assets/player.png" width="1792" height="1792"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
-  <object id="315" gid="4" x="8.24242" y="798.182" width="853.212" height="1760"/>
   <object id="35" name="RedWall" type="ElementWall" gid="5" x="816" y="752" width="32" height="352">
    <properties>
     <property name="Fire" type="bool" value="true"/>
@@ -222,10 +221,6 @@
     <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
-  <object id="313" name="Player" type="Player" gid="7" x="118.667" y="704" width="64" height="64">
-   <properties>
-    <property name="Fire" type="bool" value="false"/>
-   </properties>
-  </object>
+  <object id="316" name="Player" type="Player" gid="7" x="98.6667" y="720" width="64" height="64"/>
  </objectgroup>
 </map>

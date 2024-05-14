@@ -45,6 +45,8 @@ public class Player : AnimationSprite
     //float scale = 1;
     float scale = 4;
 
+    int spritesheetGap = 0;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         this.obj = obj;
@@ -57,22 +59,13 @@ public class Player : AnimationSprite
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
 
-        if (element == Element.Fire)
-        {
-            SetColor(1, 0, 1);
-        }
-        else
-        {
-            SetColor(0, 1, 1);
-        }
-
         chargeIndicator = new Arrow(Position, new Vec2(0, 0), 10);
         AddChild(chargeIndicator);
         chargeIndicator.visible = false;
 
         UpdateCoordinates();
 
-        SetCycle(0);
+        SetCycle(0 + spritesheetGap);
     }
 
     void Update()
@@ -445,9 +438,18 @@ public class Player : AnimationSprite
         {
             isInAir = false;
         }
-            
+
         if (coll.other is Wall)
         {
+            if (coll.normal.x < 0)
+            {
+                _mirrorX = false;
+            }
+            else
+            {
+                _mirrorX = true;
+            }
+
             currentSlideWall = (Wall)coll.other;
 
             Position = oldPosition + Velocity * coll.timeOfImpact;
@@ -497,6 +499,15 @@ public class Player : AnimationSprite
             }
             else
             {
+                if (coll.normal.x < 0)
+                {
+                    _mirrorX = false;
+                }
+                else
+                {
+                    _mirrorX = true;
+                }
+
                 Position = oldPosition + Velocity * coll.timeOfImpact;
                 Velocity = new Vec2();
 
@@ -568,13 +579,13 @@ public class Player : AnimationSprite
     {
         if (element == Element.Fire)
         {
-            SetColor(0, 1, 1);
             element = Element.Ice;
+            spritesheetGap = 24;
         }
         else
         {
-            SetColor(1, 0, 1);
             element = Element.Fire;
+            spritesheetGap = 0;
         }
     }
 
@@ -605,6 +616,15 @@ public class Player : AnimationSprite
             playerState = PlayerState.None;
 
         isInAir = true;
+
+        if (Velocity.x < 0)
+        {
+            _mirrorX = false;
+        }
+        else
+        {
+            _mirrorX = true;
+        }
     }
 
     void Stick()
@@ -626,19 +646,19 @@ public class Player : AnimationSprite
     void UpdateSize()
     {
         bool shouldGrow = element == wallElement;
-        if (shouldGrow)
+        /*if (shouldGrow)
         {
             mass += 0.01f;
         }
         else
         {
             mass -= 0.01f;
-        }
-
+        }*/
+        mass = 1.5f; //testing
         mass = Mathf.Clamp(mass, 0.5f, 3f);
 
         SetScaleXY(mass / scale);
-        Radius = obj.Width / 2;
+        Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
     }
@@ -662,12 +682,14 @@ public class Player : AnimationSprite
             //if(firstCollision.otherReal is LineCap) { return; }
             ResolveCollision(firstCollision);
         }
+        PlaySlideAnim();
     }
 
     //Checks if the player is in or away from the wall and corrects it accordingly
     void CheckForScaleCorrection(bool shouldGrow)
     {
         float distance = 0f;
+
         if (shouldGrow && Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x) < Radius)
         {
             distance = Radius - Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x);
@@ -690,43 +712,64 @@ public class Player : AnimationSprite
     {
         float animDelay = 0.5f;
         
-        if(isCharging)
+        if (isCharging)
         {
-            if (playerState != PlayerState.Sticking)
+            if (playerState != PlayerState.Sticking && playerState != PlayerState.Sliding)
             {
-                if (currentFrame == 3)
+                if (currentFrame == 3 + spritesheetGap)
                 {
-                    SetCycle(3);
+                    SetCycle(3 + spritesheetGap);
                 }
             }
             else
             {
                 animDelay = 0.2f;
-                if (currentFrame == 11)
+                
+                if (currentFrame == 14 + spritesheetGap)
                 {
-                    SetCycle(11);
+                    SetCycle(14 + spritesheetGap);
                 }
             }
         }
         else if(playerState == PlayerState.Sticking)
         {
-            animDelay = 0.3f;
-            if (currentFrame == 9)
+            animDelay = 0.4f;
+            if (currentFrame == 12 + spritesheetGap)
             {
-                SetCycle(9);
+                SetCycle(12 + spritesheetGap);
+            }
+        }
+        else if (playerState == PlayerState.Sliding)
+        {
+            animDelay = 0.2f;
+            if (currentFrame == 14 + spritesheetGap)
+            {
+                SetCycle(14 + spritesheetGap);
             }
         }
         else if (isInAir)
         {
-            animDelay = 0.2f;
-            if (currentFrame == 14)
+            animDelay = 0.3f;
+            
+            if (Velocity.y > 0)
             {
-                SetCycle(14);
+                SetCycle(18 + spritesheetGap, 22 + spritesheetGap);
+                if (currentFrame == 21 + spritesheetGap)
+                {
+                    SetCycle(21 + spritesheetGap);
+                }
+            }
+            else
+            {
+                if (currentFrame == 18 + spritesheetGap)
+                {
+                    SetCycle(18 + spritesheetGap);
+                }
             }
         }
         else
         {
-            SetCycle(0);
+            SetCycle(0 + spritesheetGap);
         }
 
         Animate(animDelay);
@@ -736,26 +779,32 @@ public class Player : AnimationSprite
     {
         if (playerState == PlayerState.Sticking)
         {
-            SetCycle(10, 12);
+            SetCycle(13 + spritesheetGap, 15 + spritesheetGap);
         }
         else
         {
-            SetCycle(0, 4);
+            SetCycle(0 + spritesheetGap, 4 + spritesheetGap);
         }
+    }
+
+    void PlaySlideAnim()
+    {
+        SetCycle(13 + spritesheetGap, 15 + spritesheetGap);
+        
     }
 
     void PlayWallAnim()
     {
-        SetCycle(5, 10);
+        SetCycle(5 + spritesheetGap, 10 + spritesheetGap);
     }
 
     void PlayReleaseAnim()
     {
-        if (playerState == PlayerState.Sticking)
+        if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
         {
-            SetCycle(12, 15);
-        }
-        else { SetCycle(4); }
+            SetCycle(16 + spritesheetGap, 22 + spritesheetGap);
+        } 
+        else { SetCycle(4 + spritesheetGap); }
     }
 }
 
