@@ -35,8 +35,7 @@ public class Player : AnimationSprite
 
     Wall currentSlideWall;
     Element wallElement;
-    float durationToStick = 2000;
-    float durationToStickCounter = 0;
+    float startMass;
 
     ElementObstacle currentElementObstacle;
 
@@ -46,6 +45,7 @@ public class Player : AnimationSprite
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(width / 2, height / 2);
+
 
         this.Position = new Vec2(obj.X + obj.Width / 2, obj.Y - obj.Height / 2);
         Radius = width / 2;
@@ -80,13 +80,13 @@ public class Player : AnimationSprite
 
         switch (playerState)
         {
-            case PlayerState.StickingWall:
+            case PlayerState.StickWall:
                 StickWall();
                 break;
-            case PlayerState.StickingObstacle:
+            case PlayerState.StickObstacle:
                 StickObstacle();
                 break;
-            case PlayerState.Sliding:
+            case PlayerState.Slide:
                 SlideWall();
                 break;
             case PlayerState.None:
@@ -296,13 +296,23 @@ public class Player : AnimationSprite
             Velocity = new Vec2();
 
             //Start timer
-            durationToStickCounter = 0;
-            playerState = PlayerState.StickingWall;
+            startMass = mass;
+            playerState = PlayerState.StickWall;
 
             wallElement = Element.None;
             if (currentSlideWall is ElementWall)
             {
                 wallElement = ((ElementWall)currentSlideWall).Element;
+                if (startMass == 1f && element != wallElement)
+                {
+                    ((Level)parent).ReloadLevel();
+                    return;
+                }
+                else if (startMass == 3f && element == wallElement)
+                {
+                    playerState = PlayerState.Slide;
+                    return;
+                }
             }
         }
         else if (coll.other is ElementObstacle)
@@ -326,12 +336,13 @@ public class Player : AnimationSprite
 
                     if (mass < currentElementObstacle.Mass)
                     {
-                        playerState = PlayerState.StickingObstacle;
+                        startMass = mass;
+                        playerState = PlayerState.StickObstacle;
                         wallElement = currentElementObstacle.Element;
                     }
                     else
                     {
-                        playerState = PlayerState.Sliding;
+                        playerState = PlayerState.Slide;
                     }
                 }
                 //Collide from top or bottom
@@ -455,7 +466,7 @@ public class Player : AnimationSprite
 
         chargeIndicator.visible = false;
 
-        if (playerState == PlayerState.StickingWall || playerState == PlayerState.Sliding)
+        if (playerState == PlayerState.Slide)
             playerState = PlayerState.None;
 
         canJump = false;
@@ -463,43 +474,53 @@ public class Player : AnimationSprite
 
     void StickWall()
     {
-        durationToStickCounter += Time.deltaTime;
-        if (durationToStickCounter > durationToStick)
+        bool shouldGrow = element == wallElement;
+        if (shouldGrow)
         {
-            playerState = PlayerState.Sliding;//If the wall is a normal one, directly switch to the normal player state
-            durationToStickCounter = 0;
-
-            //Restart abilities
-            canJump = true;
-            canSwitchElement = true;
-
-            return;
+            mass += 0.01f;
+            mass = Mathf.Clamp(mass, startMass, startMass + 1);
+            if (mass == startMass + 1)
+            {
+                SetStateToSlide();
+            }
+        }
+        else
+        {
+            mass -= 0.01f;
+            mass = Mathf.Clamp(mass, startMass - 1, startMass);
+            if (mass == startMass - 1)
+            {
+                SetStateToSlide();
+            }
         }
 
-        if (wallElement != Element.None)
-        {
-            UpdateSize();
-        }
+        SetScaleXY(mass);
+        Radius = width / 2;
+
+        CheckForScaleCorrection(shouldGrow);
     }
 
     void StickObstacle()
     {
-        UpdateSize();
-        if (mass >= currentElementObstacle.Mass)
+        mass += 0.01f;
+        mass = Mathf.Clamp(mass, startMass, currentElementObstacle.Mass);
+        if (mass == currentElementObstacle.Mass)
         {
-            mass = currentElementObstacle.Mass;
-
-            SetScaleXY(mass);
-            Radius = width / 2;
-
-            CheckForScaleCorrection(true);
-
-            playerState = PlayerState.Sliding;
-
-            //Restart abilities
-            canJump = true;
-            canSwitchElement = true;
+            SetStateToSlide();
         }
+
+        SetScaleXY(mass);
+        Radius = width / 2;
+
+        CheckForScaleCorrection(true);
+    }
+
+    void SetStateToSlide()
+    {
+        playerState = PlayerState.Slide;
+        //Restart abilities
+        canJump = true;
+        canSwitchElement = true;
     }
 
     void UpdateSize()
@@ -513,8 +534,6 @@ public class Player : AnimationSprite
         {
             mass -= 0.01f;
         }
-
-        mass = Mathf.Clamp(mass, 0.5f, 3f);
 
         SetScaleXY(mass);
         Radius = width / 2;
@@ -568,5 +587,5 @@ public class Player : AnimationSprite
 
 enum PlayerState
 {
-    None, StickingWall, StickingObstacle, Sliding
+    None, StickWall, StickObstacle, Slide
 }
