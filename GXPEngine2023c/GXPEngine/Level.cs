@@ -27,7 +27,6 @@ public class Level : GameObject
         Name = fileName;
 
         tiledLoader = new TiledLoader(fileName);
-
         CreateLevel();
     }
 

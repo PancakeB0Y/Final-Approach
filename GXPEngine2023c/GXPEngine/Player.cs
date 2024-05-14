@@ -38,6 +38,15 @@ public class Player : AnimationSprite
     float durationToStick = 2000;
     float durationToStickCounter = 0;
 
+    //Sounds
+    const float baseVolume = 1.5f;
+    Sound waterJump = new Sound("Assets/Sounds/waterJump.wav");
+    Sound fireJump = new Sound("Assets/Sounds/fireJump.wav");
+    Sound waterSwitch = new Sound("Assets/Sounds/waterSwitch.wav");
+    Sound fireSwitch = new Sound("Assets/Sounds/fireSwitch.wav");
+    Sound collision = new Sound("Assets/Sounds/collision.wav");
+    Sound evaporate = new Sound("Assets/Sounds/evaporation.wav");
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(width / 2, height / 2);
@@ -427,6 +436,11 @@ public class Player : AnimationSprite
 
     void ResolveCollision(CollisionInfo coll)
     {
+        if (coll.normal.x != 0 && !(coll.otherReal is LineCap))
+        {
+            collision.Play(false, 0, baseVolume);
+        }
+
         if (coll.other is Wall)
         {
             currentSlideWall = (Wall)coll.other;
@@ -510,6 +524,8 @@ public class Player : AnimationSprite
             Position = otherBall.position + coll.normal;
             Velocity.Reflect(coll.normal.Normalized(), Bounciness);
         }
+
+        
     }
 
     void UpdateMousePosition()
@@ -548,11 +564,13 @@ public class Player : AnimationSprite
         {
             SetColor(0, 1, 1);
             element = Element.Ice;
+            waterSwitch.Play(false, 0, baseVolume);
         }
-        else
+        else if (element == Element.Ice)
         {
             SetColor(1, 0, 1);
             element = Element.Fire;
+            fireSwitch.Play(false, 0, baseVolume + 0.5f);
         }
     }
 
@@ -579,6 +597,15 @@ public class Player : AnimationSprite
 
         if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
             playerState = PlayerState.None;
+
+        if(element == Element.Ice)
+        {
+            waterJump.Play(false, 0, baseVolume);
+        }
+        else if(element == Element.Fire)
+        {
+            fireJump.Play(false, 0, baseVolume);
+        }
     }
 
     void Stick()
