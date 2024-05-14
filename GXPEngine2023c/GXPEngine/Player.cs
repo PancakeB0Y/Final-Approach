@@ -13,7 +13,7 @@ public class Player : AnimationSprite
     public float Radius;
 
     public Vec2 Velocity;
-    public Vec2 Gravity = new Vec2(0, 0.4f);
+    public Vec2 Gravity = new Vec2(0, 0.34f);
 
     public float Mass => mass;
     public bool CanJump => canJump;
@@ -40,6 +40,8 @@ public class Player : AnimationSprite
     Wall currentSlideWall;
     Element wallElement;
     float startMass;
+    float stickToWallDuration = 2000f;
+    float stickToWallCounter = 0f;
 
     ElementObstacle currentElementObstacle;
 
@@ -101,6 +103,12 @@ public class Player : AnimationSprite
                 break;
         }
 
+        if (y > game.height)
+        {
+            ((Level)parent).ReloadLevel();
+            return;
+        }
+
         //Aiming
         UpdateMousePosition();
         CheckForMouseInput();
@@ -127,12 +135,6 @@ public class Player : AnimationSprite
             accel = Gravity * mass;
             Velocity += accel;
             Position += Velocity;
-
-            if (y > game.height)
-            {
-                ((Level)parent).ReloadLevel();
-                return;
-            }
         }
 
         CollisionInfo firstCollision = null;
@@ -317,9 +319,8 @@ public class Player : AnimationSprite
                     playerState = PlayerState.Slide;
                     return;
                 }
-
-                canSwitchElement = false;
             }
+            canSwitchElement = false;
         }
         else if (coll.other is ElementObstacle)
         {
@@ -359,6 +360,8 @@ public class Player : AnimationSprite
                         //Restart abilities
                         canJump = true;
                         canSwitchElement = true;
+
+                        Velocity.x = 0;
                     }
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
@@ -389,9 +392,13 @@ public class Player : AnimationSprite
         {
             if (coll.normal.y == -1f)
             {
+                playerState = PlayerState.None;
+
                 //Restart abilities
                 canJump = true;
                 canSwitchElement = true;
+
+                Velocity.x = 0;
             }
 
             Position = oldPosition + Velocity * coll.timeOfImpact;
@@ -480,6 +487,17 @@ public class Player : AnimationSprite
 
     void StickWall()
     {
+        if (wallElement == Element.None)
+        {
+            stickToWallCounter += Time.deltaTime;
+            if (stickToWallCounter >= stickToWallDuration)
+            {
+                SetStateToSlide();
+                stickToWallCounter = 0f;
+            }
+            return;
+        }
+
         bool shouldGrow = element == wallElement;
         if (shouldGrow)
         {
