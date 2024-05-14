@@ -15,6 +15,10 @@ public class Player : AnimationSprite
     public Vec2 Velocity;
     public Vec2 Gravity = new Vec2(0, 0.34f);
 
+    public float Mass => mass;
+    public bool CanJump => canJump;
+    public bool CanSwitchElement => canSwitchElement;
+
     Vec2 accel = new Vec2(0, 0);
     float mass = 1;
 
@@ -313,6 +317,8 @@ public class Player : AnimationSprite
                     playerState = PlayerState.Slide;
                     return;
                 }
+
+                canSwitchElement = false;
             }
         }
         else if (coll.other is ElementObstacle)
