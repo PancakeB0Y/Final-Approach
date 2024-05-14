@@ -388,6 +388,8 @@ public class Player : AnimationSprite
         {
             if (coll.normal.y == -1f)
             {
+                playerState = PlayerState.None;
+
                 //Restart abilities
                 canJump = true;
                 canSwitchElement = true;
