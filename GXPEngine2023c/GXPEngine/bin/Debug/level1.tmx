@@ -19,16 +19,16 @@
   <image source="Assets/wallNormal.png" width="32" height="160"/>
  </tileset>
  <tileset firstgid="7" name="wallRed" tilewidth="32" tileheight="160" tilecount="1" columns="1">
-  <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/wallRed.png" width="32" height="160"/>
+  <image source="Assets/wallRed.png" width="32" height="160"/>
  </tileset>
  <tileset firstgid="8" name="wallGreen" tilewidth="32" tileheight="160" tilecount="1" columns="1">
-  <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/wallGreen.png" width="32" height="160"/>
+  <image source="Assets/wallGreen.png" width="32" height="160"/>
  </tileset>
  <tileset firstgid="9" name="player" tilewidth="64" tileheight="64" tilecount="1" columns="1">
-  <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/circle.png" width="64" height="64"/>
+  <image source="Assets/circle.png" width="64" height="64"/>
  </tileset>
  <tileset firstgid="10" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
-  <image source="../../../../../../../../Downloads/Final-Approach-main/Final-Approach-main/GXPEngine2023c/GXPEngine/bin/Debug/Assets/wallNormal.png" width="32" height="160"/>
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
   <object id="44" gid="1" x="1464" y="864" width="784" height="1368"/>
@@ -350,7 +350,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="252" name="AABB" type="Obstacle" gid="4" x="310" y="-8948" width="256" height="64">
+  <object id="252" name="AABB" type="Obstacle" gid="4" x="-496.061" y="-8744.97" width="256" height="64">
    <properties>
     <property name="isLeft" type="bool" value="true"/>
    </properties>
