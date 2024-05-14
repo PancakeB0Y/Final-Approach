@@ -8,6 +8,7 @@ using TiledMapParser;
 
 public class Player : AnimationSprite
 {
+    TiledObject obj;
     public readonly float Bounciness = 0.5f;
 
     public Vec2 Position;
@@ -41,12 +42,18 @@ public class Player : AnimationSprite
 
     bool isInAir = false;
 
+    //float scale = 1;
+    float scale = 4;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
+        this.obj = obj;
+
         SetOrigin(obj.Width / 2, obj.Height / 2);
 
         this.Position = new Vec2(obj.X + obj.Width / 2, obj.Y - obj.Height / 2);
-        Radius = width / 2;
+        //Radius = width / 2;
+        Radius = obj.Width / 2;
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
 
@@ -73,7 +80,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         //if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         //{
-            //((Level)parent).MoveLevel(1.5f);
+        //((Level)parent).MoveLevel(1.5f);
         //}
 
         oldPosition = Position;
@@ -434,6 +441,11 @@ public class Player : AnimationSprite
 
     void ResolveCollision(CollisionInfo coll)
     {
+        if (coll.normal.y < 0)
+        {
+            isInAir = false;
+        }
+            
         if (coll.other is Wall)
         {
             currentSlideWall = (Wall)coll.other;
@@ -445,7 +457,6 @@ public class Player : AnimationSprite
             durationToStickCounter = 0;
             playerState = PlayerState.Sticking;
             PlayWallAnim();
-            isInAir = false;
 
             wallElement = Element.None;
             if (currentSlideWall is ElementWall)
@@ -626,8 +637,8 @@ public class Player : AnimationSprite
 
         mass = Mathf.Clamp(mass, 0.5f, 3f);
 
-        SetScaleXY(mass);
-        Radius = width / 2;
+        SetScaleXY(mass / scale);
+        Radius = obj.Width / 2;
 
         CheckForScaleCorrection(shouldGrow);
     }
@@ -678,18 +689,10 @@ public class Player : AnimationSprite
     void HandleAnimatons()
     {
         float animDelay = 0.5f;
-
-        if (isInAir)
+        
+        if(isCharging)
         {
-            animDelay = 0.2f;
-            if (currentFrame == 14)
-            {
-                SetCycle(14);
-            }
-        }
-        else if(isCharging)
-        {
-            if(playerState != PlayerState.Sticking)
+            if (playerState != PlayerState.Sticking)
             {
                 if (currentFrame == 3)
                 {
@@ -711,6 +714,14 @@ public class Player : AnimationSprite
             if (currentFrame == 9)
             {
                 SetCycle(9);
+            }
+        }
+        else if (isInAir)
+        {
+            animDelay = 0.2f;
+            if (currentFrame == 14)
+            {
+                SetCycle(14);
             }
         }
         else

@@ -8,7 +8,7 @@ public class MyGame : Game
     {
         targetFps = 60;
 
-        curSceneName = "level1.tmx";
+        curSceneName = "animation-test.tmx";
         LoadScene(curSceneName);
     }
 
