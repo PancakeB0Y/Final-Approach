@@ -442,6 +442,11 @@ public class Player : AnimationSprite
             {
                 return;
             }
+            else if (coll.otherReal is LineCap)
+            {
+                canJump = true;
+                canSwitchElement = true;
+            }
 
             if (coll.normal.y == -1f)
             {
@@ -460,7 +465,10 @@ public class Player : AnimationSprite
         else if (coll.other is LineCap)
         {
             Position = oldPosition + Velocity * coll.timeOfImpact;
-            Velocity.Reflect(coll.normal, Bounciness);
+            //Velocity.Reflect(coll.normal, Bounciness);
+
+            canJump = true;
+            canSwitchElement = true;
         }
 
         
