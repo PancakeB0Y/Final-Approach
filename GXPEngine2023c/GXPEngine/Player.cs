@@ -61,15 +61,12 @@ public class Player : AnimationSprite
 
     bool isInAir = false;
 
-    //float scale = 1;
-    float scale = 4;
+    float scale = 8;
 
     int spritesheetGap = 0;
 
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        this.obj = obj;
-
         SetOrigin(obj.Width / 2, obj.Height / 2);
 
         this.Position = new Vec2(obj.X + obj.Width / 2, obj.Y - obj.Height / 2);
@@ -341,8 +338,6 @@ public class Player : AnimationSprite
             Position = oldPosition + Velocity * coll.timeOfImpact;
             Velocity = new Vec2();
 
-            //Start timer
-            durationToStickCounter = 0;
             PlayWallAnim();
             startMass = mass;
             playerState = PlayerState.StickWall;
@@ -420,7 +415,7 @@ public class Player : AnimationSprite
                 else
                 {
                     mass -= currentElementObstacle.Mass;
-                    SetScaleXY(mass);
+                    SetScaleXY(mass / scale);
                     Radius = width / 2;
                 if (coll.normal.x < 0)
                 {
@@ -460,10 +455,8 @@ public class Player : AnimationSprite
         else if (coll.other is LineCap)
         {
             Position = oldPosition + Velocity * coll.timeOfImpact;
-            Velocity.Reflect(coll.normal, Bounciness);
+            //Velocity.Reflect(coll.normal, Bounciness);
         }
-
-        
     }
 
     void UpdateMousePosition()
@@ -479,7 +472,6 @@ public class Player : AnimationSprite
             chargeMousePos = mousePosition;
 
             chargeIndicator.visible = true;
-
             PlayChargeAnim();
         }
         if (Input.GetMouseButtonUp(0) && canJump)
@@ -530,7 +522,7 @@ public class Player : AnimationSprite
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
 
-        if(playerState == PlayerState.Sticking || playerState == PlayerState.Sliding) { return; }
+        if(playerState == PlayerState.StickObstacle || playerState == PlayerState.StickWall || playerState == PlayerState.Slide) { return; }
 
         if (chargeIndicator.vector.x < 0)
         {
@@ -551,7 +543,7 @@ public class Player : AnimationSprite
 
         PlayReleaseAnim();
 
-        if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
             playerState = PlayerState.None;
 
         isInAir = true;
@@ -564,7 +556,7 @@ public class Player : AnimationSprite
         {
             Mirror(true, false);
         }
-    }
+    
 
         canJump = false;
 
@@ -626,7 +618,7 @@ public class Player : AnimationSprite
             SetStateToSlide();
         }
 
-        SetScaleXY(mass);
+        SetScaleXY(mass / scale);
         Radius = width / 2;
 
         CheckForScaleCorrection(true);
@@ -652,7 +644,7 @@ public class Player : AnimationSprite
             mass -= 0.01f;
         }
 
-        SetScaleXY(mass);
+        SetScaleXY(mass / scale);
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
@@ -709,7 +701,7 @@ public class Player : AnimationSprite
         
         if (isCharging)
         {
-            if (playerState != PlayerState.Sticking && playerState != PlayerState.Sliding)
+            if (playerState != PlayerState.StickWall && playerState != PlayerState.StickObstacle && playerState != PlayerState.Slide)
             {
                 if (currentFrame == 3 + spritesheetGap)
                 {
@@ -726,7 +718,7 @@ public class Player : AnimationSprite
                 }
             }
         }
-        else if(playerState == PlayerState.Sticking)
+        else if(playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
         {
             animDelay = 0.4f;
             if (currentFrame == 11 + spritesheetGap)
@@ -734,7 +726,7 @@ public class Player : AnimationSprite
                 SetCycle(11 + spritesheetGap);
             }
         }
-        else if (playerState == PlayerState.Sliding)
+        else if (playerState == PlayerState.Slide)
         {
             if (currentFrame == 15 + spritesheetGap)
             {
@@ -775,7 +767,7 @@ public class Player : AnimationSprite
 
     void PlayChargeAnim()
     {
-        if (playerState == PlayerState.Sticking)
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
         {
             SetCycle(16 + spritesheetGap, 17 + spritesheetGap);
         }
@@ -798,13 +790,14 @@ public class Player : AnimationSprite
 
     void PlayReleaseAnim()
     {
-        if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
         {
             SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
         } 
         else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
     }
 }
+
 
 enum PlayerState
 {
