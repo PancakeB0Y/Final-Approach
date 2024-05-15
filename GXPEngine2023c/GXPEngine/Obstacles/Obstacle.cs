@@ -9,7 +9,7 @@ using TiledMapParser;
 public class Obstacle : AnimationSprite
 {
     public List<LineSegment> topBottom;
-    public List<Wall> leftRight;
+    public List<LineSegment> leftRight;
 
     public Obstacle(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
@@ -22,10 +22,10 @@ public class Obstacle : AnimationSprite
             new LineSegment(new Vec2(obj.X + obj.Width, obj.Y), new Vec2(obj.X, obj.Y), true),
         };
 
-        leftRight = new List<Wall>
+        leftRight = new List<LineSegment>
         {
-            new Wall(filename, cols, rows, true, obj),
-            new Wall(filename, cols, rows, false, obj)
+            new LineSegment(new Vec2(obj.X, obj.Y), new Vec2(obj.X, obj.Y - obj.Height), true, true),
+            new LineSegment(new Vec2(obj.X + obj.Width, obj.Y - obj.Height), new Vec2(obj.X + obj.Width, obj.Y), true, true)
         };
     }
 }
