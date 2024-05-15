@@ -21,6 +21,9 @@
  <tileset firstgid="7" name="playerAnim" tilewidth="256" tileheight="256" tilecount="49" columns="7">
   <image source="Assets/player.png" width="1792" height="1792"/>
  </tileset>
+ <tileset firstgid="56" name="backgroundFinal" tilewidth="800" tileheight="4500" tilecount="1" columns="1">
+  <image source="Assets/background.png" width="800" height="4500"/>
+ </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds">
   <object id="35" name="RedWall" type="ElementWall" gid="5" x="816" y="752" width="32" height="352">
    <properties>
