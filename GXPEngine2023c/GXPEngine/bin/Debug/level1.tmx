@@ -962,7 +962,7 @@
   <object id="375" type="ElementObstacle" gid="4" x="650" y="150" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="false"/>
-    <property name="Mass" type="float" value="0.5"/>
+    <property name="Mass" type="float" value="1"/>
    </properties>
   </object>
   <object id="377" name="Player" type="Player" gid="11" x="908" y="936" width="32" height="32">
