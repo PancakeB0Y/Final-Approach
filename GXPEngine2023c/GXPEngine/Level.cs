@@ -20,6 +20,7 @@ public class Level : GameObject
     List<Wall> walls;
     List<Obstacle> obstacles;
 
+    EasyDraw instructions;
     EasyDraw sizeMeter;
     EasyDraw canJump;
     EasyDraw canSwitchElement;
@@ -75,6 +76,15 @@ public class Level : GameObject
 
     void InitEasyDraws()
     {
+        sizeMeter = new EasyDraw(400, 300, false);
+        sizeMeter.TextAlign(CenterMode.Center, CenterMode.Center);
+        sizeMeter.Fill(Color.White);
+        sizeMeter.TextSize(20);
+        sizeMeter.Text($"Press and drag the left mouse\nbutton to CHARGE and\nrelease to LAUNCH\n\nPress the right mouse\nbutton to SWITCH elements", true, 255, 0, 0, 0);
+        sizeMeter.SetOrigin(sizeMeter.width / 2, sizeMeter.height / 2);
+        sizeMeter.SetXY((game.width - 800) / 4, game.height / 2);
+        AddChild(sizeMeter);
+
         sizeMeter = new EasyDraw(150, 50, false);
         sizeMeter.TextAlign(CenterMode.Center, CenterMode.Center);
         sizeMeter.Fill(Color.White);
