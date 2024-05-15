@@ -455,8 +455,10 @@ public class Player : AnimationSprite
         else if (coll.other is LineCap)
         {
             Position = oldPosition + Velocity * coll.timeOfImpact;
-            //Velocity.Reflect(coll.normal, Bounciness);
+            Velocity.Reflect(coll.normal, Bounciness);
         }
+
+        
     }
 
     void UpdateMousePosition()
@@ -644,7 +646,7 @@ public class Player : AnimationSprite
             mass -= 0.01f;
         }
 
-        SetScaleXY(mass / scale);
+        SetScaleXY(mass);
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
