@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Linq.Expressions;
+using System.Collections;
 using GXPEngine;
 using static GXPEngine.GlobalVariables;
 using TiledMapParser;
@@ -58,30 +59,29 @@ public class Player : AnimationSprite
     Sound fireCollision = new Sound("Assets/Sounds/fireCollision.wav");
     Sound evaporate = new Sound("Assets/Sounds/evaporation.wav");
 
+    bool isInAir = false;
+
+    float scale = 8;
+
+    int spritesheetGap = 0;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
-        SetOrigin(width / 2, height / 2);
-
+        SetOrigin(obj.Width / 2, obj.Height / 2);
 
         this.Position = new Vec2(obj.X + obj.Width / 2, obj.Y - obj.Height / 2);
-        Radius = width / 2;
+        //Radius = width / 2;
+        Radius = obj.Width / 2;
 
         element = obj.GetBoolProperty("Fire", true) ? Element.Fire : Element.Ice;
-
-        if (element == Element.Fire)
-        {
-            SetColor(1, 0, 1);
-        }
-        else
-        {
-            SetColor(0, 1, 1);
-        }
 
         chargeIndicator = new Arrow(Position, new Vec2(0, 0), 10);
         AddChild(chargeIndicator);
         chargeIndicator.visible = false;
 
         UpdateCoordinates();
+
+        SetCycle(0 + spritesheetGap);
     }
 
     void Update()
@@ -89,7 +89,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         {
-            ((Level)parent).MoveLevel(.5f);
+            //((Level)parent).MoveLevel(.5f);
         }
 
         oldPosition = Position;
@@ -121,8 +121,10 @@ public class Player : AnimationSprite
 
         //Aiming
         UpdateMousePosition();
-        CheckForMouseInput();
+        HandleInputs();
         UpdateCoordinates();
+
+        HandleAnimatons();
     }
 
     void Move()
@@ -315,14 +317,28 @@ public class Player : AnimationSprite
             }
         }
 
+        if (coll.normal.y < 0)
+        {
+            isInAir = false;
+        }
+
         if (coll.other is Wall)
         {
+            if (coll.normal.x < 0)
+            {
+                Mirror(false, false);
+            }
+            else
+            {
+                Mirror(true, false);
+            }
+
             currentSlideWall = (Wall)coll.other;
 
             Position = oldPosition + Velocity * coll.timeOfImpact;
             Velocity = new Vec2();
 
-            //Start timer
+            PlayWallAnim();
             startMass = mass;
             playerState = PlayerState.StickWall;
 
@@ -399,8 +415,19 @@ public class Player : AnimationSprite
                 else
                 {
                     mass -= currentElementObstacle.Mass;
-                    SetScaleXY(mass);
+                    SetScaleXY(mass / scale);
                     Radius = width / 2;
+                if (coll.normal.x < 0)
+                {
+                    Mirror(false, false);
+                }
+                else
+                {
+                    Mirror(true, false);
+                }
+
+                Position = oldPosition + Velocity * coll.timeOfImpact;
+                Velocity = new Vec2();
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity *= 0.6f;
@@ -411,6 +438,11 @@ public class Player : AnimationSprite
         }
         else if (coll.other is Obstacle)
         {
+            if (coll.otherReal is LineCap && Velocity.x == 0)
+            {
+                return;
+            }
+
             if (coll.normal.y == -1f)
             {
                 playerState = PlayerState.None;
@@ -439,7 +471,7 @@ public class Player : AnimationSprite
         mousePosition.SetXY(Input.mouseX, Input.mouseY);
     }
 
-    void CheckForMouseInput()
+    void HandleInputs()
     {
         if (!isCharging && Input.GetMouseButtonDown(0) && canJump)
         {
@@ -447,6 +479,7 @@ public class Player : AnimationSprite
             chargeMousePos = mousePosition;
 
             chargeIndicator.visible = true;
+            PlayChargeAnim();
         }
         if (Input.GetMouseButtonUp(0) && canJump)
         {
@@ -468,15 +501,15 @@ public class Player : AnimationSprite
     {
         if (element == Element.Fire)
         {
-            SetColor(0, 1, 1);
             element = Element.Ice;
             waterSwitch.Play(false, 0, baseVolume);
+            spritesheetGap = 24;
         }
         else if (element == Element.Ice)
         {
-            SetColor(1, 0, 1);
             element = Element.Fire;
             fireSwitch.Play(false, 0, baseVolume + 0.5f);
+            spritesheetGap = 0;
         }
 
         canSwitchElement = false;
@@ -495,6 +528,17 @@ public class Player : AnimationSprite
         chargeIndicator.startPoint = Position;
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
+
+        if(playerState == PlayerState.StickObstacle || playerState == PlayerState.StickWall || playerState == PlayerState.Slide) { return; }
+
+        if (chargeIndicator.vector.x < 0)
+        {
+            Mirror(false, false);
+        }
+        else
+        {
+            Mirror(true, false);
+        }
     }
 
     void Release()
@@ -504,8 +548,22 @@ public class Player : AnimationSprite
 
         chargeIndicator.visible = false;
 
-        if (playerState == PlayerState.Slide)
+        PlayReleaseAnim();
+
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
             playerState = PlayerState.None;
+
+        isInAir = true;
+
+        if (Velocity.x < 0)
+        {
+            Mirror(false, false);
+        }
+        else
+        {
+            Mirror(true, false);
+        }
+    
 
         canJump = false;
 
@@ -552,7 +610,7 @@ public class Player : AnimationSprite
             }
         }
 
-        SetScaleXY(mass);
+        SetScaleXY(mass / scale);
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
@@ -567,7 +625,7 @@ public class Player : AnimationSprite
             SetStateToSlide();
         }
 
-        SetScaleXY(mass);
+        SetScaleXY(mass / scale);
         Radius = width / 2;
 
         CheckForScaleCorrection(true);
@@ -597,12 +655,14 @@ public class Player : AnimationSprite
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
+        PlaySlideAnim();
     }
 
     //Checks if the player is in or away from the wall and corrects it accordingly
     void CheckForScaleCorrection(bool shouldGrow)
     {
         float distance = 0f;
+
         if (shouldGrow && Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x) < Radius)
         {
             distance = Radius - Mathf.Abs(Position.x - currentSlideWall.LineSegment.start.x);
@@ -641,7 +701,124 @@ public class Player : AnimationSprite
         x = Position.x;
         y = Position.y;
     }
+
+    void HandleAnimatons()
+    {
+        float animDelay = 0.5f;
+        
+        if (isCharging)
+        {
+            if (playerState != PlayerState.StickWall && playerState != PlayerState.StickObstacle && playerState != PlayerState.Slide)
+            {
+                if (currentFrame == 3 + spritesheetGap)
+                {
+                    SetCycle(3 + spritesheetGap);
+                }
+            }
+            else
+            {
+                animDelay = 0.2f;
+                
+                if (currentFrame == 16 + spritesheetGap)
+                {
+                    SetCycle(16 + spritesheetGap);
+                }
+            }
+        }
+        else if(playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
+        {
+            animDelay = 0.4f;
+            if (currentFrame == 11 + spritesheetGap)
+            {
+                SetCycle(11 + spritesheetGap);
+            }
+        }
+        else if (playerState == PlayerState.Slide)
+        {
+            if (currentFrame == 15 + spritesheetGap)
+            {
+                SetCycle(15 + spritesheetGap);
+            }
+        }
+        else if (isInAir)
+        {
+            animDelay = 0.3f;
+            
+            if (Velocity.y > 0)
+            {
+                SetCycle(18 + spritesheetGap, 22 + spritesheetGap);
+                if (currentFrame == 21 + spritesheetGap)
+                {
+                    SetCycle(21 + spritesheetGap);
+                }
+            }
+            else
+            {
+                animDelay = 0.2f;
+                if (currentFrame == 18 + spritesheetGap)
+                {
+                    SetCycle(18 + spritesheetGap);
+                    return;
+                }else if(currentFrame == 5 + spritesheetGap)
+                {
+                    SetCycle(5 + spritesheetGap);
+                    return;
+                }
+
+                if(element == Element.Fire && currentFrame > 24)
+                {
+                    SetCycle(5);
+                    return;
+                }
+
+                if (element == Element.Ice && currentFrame < 24)
+                {
+                    SetCycle(29);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            SetCycle(0 + spritesheetGap);
+        }
+
+        Animate(animDelay);
+    }
+
+    void PlayChargeAnim()
+    {
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
+        {
+            SetCycle(16 + spritesheetGap, 17 + spritesheetGap);
+        }
+        else
+        {
+            SetCycle(0 + spritesheetGap, 4 + spritesheetGap);
+        }
+    }
+
+    void PlaySlideAnim()
+    {
+        SetCycle(12 + spritesheetGap, 16 + spritesheetGap);
+        
+    }
+
+    void PlayWallAnim()
+    {
+        SetCycle(6 + spritesheetGap, 12 + spritesheetGap);
+    }
+
+    void PlayReleaseAnim()
+    {
+        if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
+        {
+            SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
+        } 
+        else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
+    }
 }
+
 
 enum PlayerState
 {
