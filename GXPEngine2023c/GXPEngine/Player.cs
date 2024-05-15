@@ -40,7 +40,7 @@ public class Player : AnimationSprite
     Wall currentSlideWall;
     Element wallElement;
     float startMass;
-    float stickToWallDuration = 2000f;
+    float stickToWallDuration = 1500f;
     float stickToWallCounter = 0f;
 
     ElementObstacle currentElementObstacle;
