@@ -708,7 +708,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="333" name="Wall" type="Obstacle" gid="10" x="894" y="94" width="32" height="368">
+  <object id="333" name="Wall" type="Wall" gid="10" x="894" y="94" width="32" height="368">
    <properties>
     <property name="isLeft" type="bool" value="false"/>
    </properties>
