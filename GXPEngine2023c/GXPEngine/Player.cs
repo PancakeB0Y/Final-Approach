@@ -44,7 +44,8 @@ public class Player : AnimationSprite
     Sound fireJump = new Sound("Assets/Sounds/fireJump.wav");
     Sound waterSwitch = new Sound("Assets/Sounds/waterSwitch.wav");
     Sound fireSwitch = new Sound("Assets/Sounds/fireSwitch.wav");
-    Sound collision = new Sound("Assets/Sounds/collision.wav");
+    Sound waterCollision = new Sound("Assets/Sounds/waterCollision.wav");
+    Sound fireCollision = new Sound("Assets/Sounds/fireCollision.wav");
     Sound evaporate = new Sound("Assets/Sounds/evaporation.wav");
 
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
@@ -438,7 +439,13 @@ public class Player : AnimationSprite
     {
         if (coll.normal.x != 0 && !(coll.otherReal is LineCap))
         {
-            collision.Play(false, 0, baseVolume);
+            if(element == Element.Ice)
+            {
+                waterCollision.Play(false, 0, baseVolume);
+            }else if (element == Element.Fire)
+            {
+                fireCollision.Play(false, 0, baseVolume + 1.5f);
+            }
         }
 
         if (coll.other is Wall)
