@@ -89,7 +89,7 @@ public class Player : AnimationSprite
         //Camera slowly creeping up if the player is stationary
         if (playerState == PlayerState.None && Position.x == oldPosition.x && Position.y == oldPosition.y)
         {
-            ((Level)parent).MoveLevel(.5f);
+            //((Level)parent).MoveLevel(.5f);
         }
 
         oldPosition = Position;
@@ -470,6 +470,8 @@ public class Player : AnimationSprite
             canJump = true;
             canSwitchElement = true;
         }
+
+        
     }
 
     void UpdateMousePosition()
@@ -657,7 +659,7 @@ public class Player : AnimationSprite
             mass -= 0.01f;
         }
 
-        SetScaleXY(mass / scale);
+        SetScaleXY(mass);
         Radius = width / 2;
 
         CheckForScaleCorrection(shouldGrow);
@@ -764,9 +766,23 @@ public class Player : AnimationSprite
                 if (currentFrame == 18 + spritesheetGap)
                 {
                     SetCycle(18 + spritesheetGap);
+                    return;
                 }else if(currentFrame == 5 + spritesheetGap)
                 {
                     SetCycle(5 + spritesheetGap);
+                    return;
+                }
+
+                if(element == Element.Fire && currentFrame > 24)
+                {
+                    SetCycle(5);
+                    return;
+                }
+
+                if (element == Element.Ice && currentFrame < 24)
+                {
+                    SetCycle(29);
+                    return;
                 }
             }
         }
