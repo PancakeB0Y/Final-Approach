@@ -4,11 +4,14 @@ using System.Collections.Generic;
 public class MyGame : Game
 {
     string curSceneName;
+    public SoundChannel backgroundMusic;
     public MyGame() : base(1920, 1080, false, false)
     {
         targetFps = 60;
 
-        curSceneName = "animation-test.tmx";
+        backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
+
+        curSceneName = "level1.tmx";
         LoadScene(curSceneName);
     }
 
@@ -35,6 +38,8 @@ public class MyGame : Game
         children.Clear();
         AddChild(new Level(sceneName, 1));
         curSceneName = sceneName;
+        backgroundMusic.Stop();
+        backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
     }
 
     static void Main()
