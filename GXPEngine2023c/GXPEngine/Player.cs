@@ -443,11 +443,11 @@ public class Player : AnimationSprite
         {
             if (coll.normal.x < 0)
             {
-                _mirrorX = false;
+                Mirror(false, false);
             }
             else
             {
-                _mirrorX = true;
+                Mirror(true, false);
             }
 
             currentSlideWall = (Wall)coll.other;
@@ -501,11 +501,11 @@ public class Player : AnimationSprite
             {
                 if (coll.normal.x < 0)
                 {
-                    _mirrorX = false;
+                    Mirror(false, false);
                 }
                 else
                 {
-                    _mirrorX = true;
+                    Mirror(true, false);
                 }
 
                 Position = oldPosition + Velocity * coll.timeOfImpact;
@@ -597,10 +597,20 @@ public class Player : AnimationSprite
         chargeDistance = Mathf.Clamp(chargeDistance, 0f, chargeDistanceMax);
         chargeDistance = Mathf.Map(chargeDistance, 0, chargeDistanceMax, 0f, 20f);
 
-
         chargeIndicator.startPoint = new Vec2(x, game.height/2);
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
+
+        if(playerState == PlayerState.Sticking || playerState == PlayerState.Sliding) { return; }
+
+        if (chargeIndicator.vector.x < 0)
+        {
+            Mirror(false, false);
+        }
+        else
+        {
+            Mirror(true, false);
+        }
     }
 
     void Release()
@@ -619,11 +629,11 @@ public class Player : AnimationSprite
 
         if (Velocity.x < 0)
         {
-            _mirrorX = false;
+            Mirror(false, false);
         }
         else
         {
-            _mirrorX = true;
+            Mirror(true, false);
         }
     }
 
@@ -646,15 +656,14 @@ public class Player : AnimationSprite
     void UpdateSize()
     {
         bool shouldGrow = element == wallElement;
-        /*if (shouldGrow)
+        if (shouldGrow)
         {
             mass += 0.01f;
         }
         else
         {
             mass -= 0.01f;
-        }*/
-        mass = 1.5f; //testing
+        }
         mass = Mathf.Clamp(mass, 0.5f, 3f);
 
         SetScaleXY(mass / scale);
@@ -725,26 +734,25 @@ public class Player : AnimationSprite
             {
                 animDelay = 0.2f;
                 
-                if (currentFrame == 14 + spritesheetGap)
+                if (currentFrame == 16 + spritesheetGap)
                 {
-                    SetCycle(14 + spritesheetGap);
+                    SetCycle(16 + spritesheetGap);
                 }
             }
         }
         else if(playerState == PlayerState.Sticking)
         {
             animDelay = 0.4f;
-            if (currentFrame == 12 + spritesheetGap)
+            if (currentFrame == 11 + spritesheetGap)
             {
-                SetCycle(12 + spritesheetGap);
+                SetCycle(11 + spritesheetGap);
             }
         }
         else if (playerState == PlayerState.Sliding)
         {
-            animDelay = 0.2f;
-            if (currentFrame == 14 + spritesheetGap)
+            if (currentFrame == 15 + spritesheetGap)
             {
-                SetCycle(14 + spritesheetGap);
+                SetCycle(15 + spritesheetGap);
             }
         }
         else if (isInAir)
@@ -761,9 +769,13 @@ public class Player : AnimationSprite
             }
             else
             {
+                animDelay = 0.2f;
                 if (currentFrame == 18 + spritesheetGap)
                 {
                     SetCycle(18 + spritesheetGap);
+                }else if(currentFrame == 5 + spritesheetGap)
+                {
+                    SetCycle(5 + spritesheetGap);
                 }
             }
         }
@@ -779,7 +791,7 @@ public class Player : AnimationSprite
     {
         if (playerState == PlayerState.Sticking)
         {
-            SetCycle(13 + spritesheetGap, 15 + spritesheetGap);
+            SetCycle(16 + spritesheetGap, 17 + spritesheetGap);
         }
         else
         {
@@ -789,22 +801,22 @@ public class Player : AnimationSprite
 
     void PlaySlideAnim()
     {
-        SetCycle(13 + spritesheetGap, 15 + spritesheetGap);
+        SetCycle(12 + spritesheetGap, 16 + spritesheetGap);
         
     }
 
     void PlayWallAnim()
     {
-        SetCycle(5 + spritesheetGap, 10 + spritesheetGap);
+        SetCycle(6 + spritesheetGap, 12 + spritesheetGap);
     }
 
     void PlayReleaseAnim()
     {
         if (playerState == PlayerState.Sticking || playerState == PlayerState.Sliding)
         {
-            SetCycle(16 + spritesheetGap, 22 + spritesheetGap);
+            SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
         } 
-        else { SetCycle(4 + spritesheetGap); }
+        else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
     }
 }
 

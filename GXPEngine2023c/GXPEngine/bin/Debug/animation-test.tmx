@@ -48,7 +48,7 @@
   <object id="45" name="RedWall" type="ElementWall" gid="5" x="814" y="397.333" width="32" height="368">
    <properties>
     <property name="Fire" type="bool" value="true"/>
-    <property name="isLeft" type="bool" value="true"/>
+    <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
   <object id="46" name="AABB" type="Obstacle" gid="4" x="32" y="400" width="208" height="64">
@@ -221,6 +221,6 @@
     <property name="Mass" type="float" value="0.5"/>
    </properties>
   </object>
-  <object id="316" name="Player" type="Player" gid="7" x="98.6667" y="720" width="64" height="64"/>
+  <object id="316" name="Player" type="Player" gid="7" x="130" y="742" width="64" height="64"/>
  </objectgroup>
 </map>
