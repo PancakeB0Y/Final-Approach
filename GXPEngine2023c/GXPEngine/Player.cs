@@ -66,6 +66,9 @@ public class Player : AnimationSprite
 
     int spritesheetGap = 0;
 
+    int idleFrames = 0;
+    const int maxIdleFrames = 20;
+
     public Player(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         SetOrigin(obj.Width / 2, obj.Height / 2);
@@ -525,6 +528,8 @@ public class Player : AnimationSprite
         canSwitchElement = false;
 
         ((Level)parent).UpdateUISize();
+
+        idleFrames = 0;
     }
 
     void Charge()
@@ -722,6 +727,7 @@ public class Player : AnimationSprite
 
         if (isCharging)
         {
+            idleFrames = 0;
             if (playerState != PlayerState.StickWall && playerState != PlayerState.StickObstacle && playerState != PlayerState.Slide)
             {
                 if (currentFrame == 3 + spritesheetGap)
@@ -741,6 +747,7 @@ public class Player : AnimationSprite
         }
         else if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
         {
+            idleFrames = 0;
             animDelay = 0.4f;
             if (currentFrame == 11 + spritesheetGap)
             {
@@ -749,6 +756,7 @@ public class Player : AnimationSprite
         }
         else if (playerState == PlayerState.Slide)
         {
+            idleFrames = 0;
             if (currentFrame == 15 + spritesheetGap)
             {
                 SetCycle(15 + spritesheetGap);
@@ -756,6 +764,7 @@ public class Player : AnimationSprite
         }
         else if (isInAir)
         {
+            idleFrames = 0;
             animDelay = 0.3f;
 
             if (Velocity.y > 0)
@@ -795,8 +804,29 @@ public class Player : AnimationSprite
         }
         else
         {
-            SetCycle(0 + spritesheetGap);
+            Console.WriteLine(idleFrames);
+            idleFrames++;
+            if (idleFrames >= maxIdleFrames)
+            {
+                idleFrames = maxIdleFrames;
+
+                animDelay = 0.1f;
+                if (element == Element.Fire)
+                {
+                    SetCycle(48, 4);
+                }else if (element == Element.Ice)
+                {
+                    SetCycle(52, 6);
+                }
+            }
+            else
+            {
+                SetCycle(0 + spritesheetGap);
+            }
+            /*SetCycle(0 + spritesheetGap);*/
         }
+
+        
 
         Animate(animDelay);
     }
