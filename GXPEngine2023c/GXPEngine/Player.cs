@@ -823,7 +823,6 @@ public class Player : AnimationSprite
             {
                 SetCycle(0 + spritesheetGap);
             }
-            /*SetCycle(0 + spritesheetGap);*/
         }
 
         
