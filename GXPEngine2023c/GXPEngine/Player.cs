@@ -307,7 +307,7 @@ public class Player : AnimationSprite
 
     void ResolveCollision(CollisionInfo coll)
     {
-        if (coll.normal.x != 0 && !(coll.otherReal is LineCap))
+        if (coll.normal.x != 0 && !(coll.other is LineCap) && !(coll.otherReal is LineCap))
         {
             if (element == Element.Ice)
             {
