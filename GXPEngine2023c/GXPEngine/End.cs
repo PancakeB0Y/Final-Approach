@@ -44,6 +44,8 @@ public class End : AnimationSprite
         else
         {
             SetCycle(currentFrame - 1, 1, 255, false);
-        }       
+        }
+        position.x = x;
+        position.y = y;
     }
 }

@@ -130,8 +130,6 @@ public class Player : AnimationSprite
         UpdateCoordinates();
 
         HandleAnimatons();
-
-        CheckLevelEnd();
     }
 
     void Move()
@@ -233,6 +231,7 @@ public class Player : AnimationSprite
         }
 
         End end = level.end;
+        
         earliestCollision = CheckBallCollision(earliestCollision, end);
 
         return earliestCollision;
@@ -907,11 +906,6 @@ public class Player : AnimationSprite
             SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
         }
         else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
-    }
-
-    void CheckLevelEnd()
-    {
-
     }
 }
 
