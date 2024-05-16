@@ -33,8 +33,8 @@
  <tileset firstgid="11" name="PlayerSmall" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="Assets/circleSmall.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="12" name="PlayerAnim" tilewidth="256" tileheight="256" tilecount="49" columns="7">
-  <image source="Assets/player.png" width="1792" height="1792"/>
+ <tileset firstgid="12" name="PlayerAnim" tilewidth="256" tileheight="256" tilecount="64" columns="8">
+  <image source="Assets/player.png" width="2048" height="2048"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds" offsetx="-9.25" offsety="-53.25">
   <object id="44" gid="1" x="5880" y="1892" width="784" height="1368"/>
@@ -1907,7 +1907,7 @@
     <property name="isLeft" type="bool" value="false"/>
    </properties>
   </object>
-  <object id="1370" name="Obstacle" type="Obstacle" gid="4" x="785.25" y="524.5" width="576" height="32">
+  <object id="1370" name="Obstacle" type="Obstacle" gid="4" x="786.583" y="541.833" width="576" height="32">
    <properties>
     <property name="isLeft" value=""/>
    </properties>
