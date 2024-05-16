@@ -17,6 +17,7 @@ public class Player : AnimationSprite
     public Vec2 Gravity = new Vec2(0, 0.34f);
 
     public float Mass => mass;
+    public Element Element => element;
     public bool CanJump => canJump;
     public bool CanSwitchElement => canSwitchElement;
 
@@ -522,6 +523,8 @@ public class Player : AnimationSprite
         }
 
         canSwitchElement = false;
+
+        ((Level)parent).UpdateUISize();
     }
 
     void Charge()
@@ -646,6 +649,8 @@ public class Player : AnimationSprite
         //Restart abilities
         canJump = true;
         canSwitchElement = true;
+
+        ((Level)parent).UpdateUISize();
     }
 
     void UpdateSize()
