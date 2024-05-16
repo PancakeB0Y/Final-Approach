@@ -852,7 +852,6 @@ public class Player : AnimationSprite
         }
         else
         {
-            Console.WriteLine(idleFrames);
             idleFrames++;
             if (idleFrames >= maxIdleFrames)
             {
