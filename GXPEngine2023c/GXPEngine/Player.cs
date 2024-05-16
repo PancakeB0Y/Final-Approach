@@ -433,6 +433,7 @@ public class Player : AnimationSprite
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity *= 0.6f;
+                    ((Level)parent).UpdateUISize();
 
                     ((Level)parent).RemoveObstacle(currentElementObstacle);
                 }

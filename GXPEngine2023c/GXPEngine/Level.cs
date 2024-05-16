@@ -30,9 +30,6 @@ public class Level : GameObject
     EasyDraw sizeMeterMediumFire;
     EasyDraw sizeMeterLargeFire;
 
-    EasyDraw canJump;
-    EasyDraw canSwitchElement;
-
     public Level(string fileName, int id)
     {
         this.id = id;
@@ -96,24 +93,6 @@ public class Level : GameObject
         instructions.SetOrigin(instructions.width / 2, instructions.height / 2);
         instructions.SetXY((game.width - 800) / 4, game.height / 2);
         AddChild(instructions);
-
-        canJump = new EasyDraw(200, 50, false);
-        canJump.TextAlign(CenterMode.Center, CenterMode.Center);
-        canJump.Fill(Color.White);
-        canJump.TextSize(20);
-        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
-        canJump.SetOrigin(canJump.width / 2, canJump.height / 2);
-        canJump.SetXY(game.width - (game.width - 800) / 4, 30f);
-        game.AddChild(canJump);
-
-        canSwitchElement = new EasyDraw(310, 50, false);
-        canSwitchElement.TextAlign(CenterMode.Center, CenterMode.Center);
-        canSwitchElement.Fill(Color.White);
-        canSwitchElement.TextSize(20);
-        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
-        canSwitchElement.SetOrigin(canSwitchElement.width / 2, canSwitchElement.height / 2);
-        canSwitchElement.SetXY(game.width - (game.width - 800) / 4, 70f);
-        game.AddChild(canSwitchElement);
 
         InitSizeMeters();
     }
@@ -182,6 +161,7 @@ public class Level : GameObject
                 sizeMeterLargeFire.visible = false;
                 break;
             default:
+                Console.WriteLine("Icorrect mass in UI switch!!!");
                 break;
         }
     }
@@ -192,6 +172,14 @@ public class Level : GameObject
         {
             child.Destroy();
         }
+
+        sizeMeterSmallWater.Destroy();
+        sizeMeterMediumWater.Destroy();
+        sizeMeterLargeWater.Destroy();
+        sizeMeterSmallFire.Destroy();
+        sizeMeterMediumFire.Destroy();
+        sizeMeterLargeFire.Destroy();
+
         CreateLevel();
     }
 
@@ -273,16 +261,5 @@ public class Level : GameObject
             line.Destroy();
         }
         obstacle.Destroy();
-    }
-
-    void Update()
-    {
-        DrawEasyDraws();
-    }
-
-    void DrawEasyDraws()
-    {
-        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
-        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
     }
 }
