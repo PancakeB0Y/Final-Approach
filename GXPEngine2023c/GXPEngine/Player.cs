@@ -429,7 +429,7 @@ public class Player : AnimationSprite
                     }
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
-                    Velocity = new Vec2();
+                    //Velocity = new Vec2();
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity *= 0.6f;
