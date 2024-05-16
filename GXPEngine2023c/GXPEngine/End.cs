@@ -13,6 +13,7 @@ public class End : AnimationSprite
     public Vec2 position;
     public float Radius;
 
+    bool forwards = true;
     public End(string filename, int cols, int rows, TiledObject obj = null) : base(filename, cols, rows, -1, false, false)
     {
         NextScene = obj.GetStringProperty("NextScene", "endMenu.tmx");
@@ -23,11 +24,26 @@ public class End : AnimationSprite
 
         Radius = obj.Width / 2;
 
-        SetCycle(0, frameCount-1);
+        SetCycle(0);
     }
 
     void Update()
     {
-        Animate(0.1f);
+        Animate(0.10f);
+        if(currentFrame == 5)
+        {
+            forwards = false;
+        }else if(currentFrame == 0) {
+            forwards = true;
+        }
+
+        if (forwards)
+        {
+            SetCycle(currentFrame + 1, 1, 255, false);
+        }
+        else
+        {
+            SetCycle(currentFrame - 1, 1, 255, false);
+        }       
     }
 }
