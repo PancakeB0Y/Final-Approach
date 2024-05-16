@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1573">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1575">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>

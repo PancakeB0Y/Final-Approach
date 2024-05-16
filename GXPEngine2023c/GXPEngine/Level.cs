@@ -254,6 +254,11 @@ public class Level : GameObject
     {
         obstacles.Remove(obstacle);
 
+        //SpawnAnimation
+        var reactionParticle = new ReactionParticle("Assets/smoke.png", 3, 3);
+        reactionParticle.SetXY(obstacle.x, obstacle.y);
+        AddChild(reactionParticle);
+
         foreach (var line in obstacle.leftRight)
         {
             line.Destroy();
@@ -267,10 +272,6 @@ public class Level : GameObject
 
     void Update()
     {
-        if (true)
-        {
-
-        }
         DrawEasyDraws();
     }
 
