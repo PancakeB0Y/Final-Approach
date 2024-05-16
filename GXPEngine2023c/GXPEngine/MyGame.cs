@@ -1,4 +1,5 @@
 using GXPEngine;
+using System;
 using System.Collections.Generic;
 
 public class MyGame : Game
@@ -9,9 +10,17 @@ public class MyGame : Game
     {
         targetFps = 60;
 
-        backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
+        curSceneName = "startMenu.tmx";
 
-        curSceneName = "level1.tmx";
+        if (curSceneName == "level1.tmx")
+        {
+            backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
+        }
+        else
+        {
+            backgroundMusic = new Sound("Assets/Sounds/menu.wav", true).Play(false, 0, 3.5f);
+        }
+
         LoadScene(curSceneName);
     }
 
@@ -28,7 +37,7 @@ public class MyGame : Game
         }
     }
 
-    void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         List<GameObject> children = GetChildren();
         foreach (GameObject child in children)
@@ -39,7 +48,15 @@ public class MyGame : Game
         AddChild(new Level(sceneName, 1));
         curSceneName = sceneName;
         backgroundMusic.Stop();
-        backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
+
+        if (curSceneName == "level1.tmx")
+        {
+            backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
+        }
+        else
+        {
+            backgroundMusic = new Sound("Assets/Sounds/menu.wav", true).Play(false, 0, 3.5f);
+        }
     }
 
     static void Main()
