@@ -17,6 +17,7 @@ public class Player : AnimationSprite
     public Vec2 Gravity = new Vec2(0, 0.34f);
 
     public float Mass => mass;
+    public Element Element => element;
     public bool CanJump => canJump;
     public bool CanSwitchElement => canSwitchElement;
 
@@ -61,7 +62,7 @@ public class Player : AnimationSprite
 
     bool isInAir = false;
 
-    float scale = 8;
+    float scale = 4;
 
     int spritesheetGap = 0;
 
@@ -306,12 +307,13 @@ public class Player : AnimationSprite
 
     void ResolveCollision(CollisionInfo coll)
     {
-        if (coll.normal.x != 0 && !(coll.otherReal is LineCap))
+        if (coll.normal.x != 0 && !(coll.other is LineCap) && !(coll.otherReal is LineCap))
         {
-            if(element == Element.Ice)
+            if (element == Element.Ice)
             {
                 waterCollision.Play(false, 0, baseVolume);
-            }else if (element == Element.Fire)
+            }
+            else if (element == Element.Fire)
             {
                 fireCollision.Play(false, 0, baseVolume + 1.5f);
             }
@@ -351,7 +353,7 @@ public class Player : AnimationSprite
                     ((Level)parent).ReloadLevel();
                     return;
                 }
-                else if (startMass == 3f && element == wallElement)
+                else if (startMass == 2f && element == wallElement)
                 {
                     playerState = PlayerState.Slide;
                     return;
@@ -414,20 +416,20 @@ public class Player : AnimationSprite
                 }
                 else
                 {
-                    mass -= currentElementObstacle.Mass;
+                    mass -= currentElementObstacle.Mass - 0.5f;
                     SetScaleXY(mass / scale);
                     Radius = width / 2;
-                if (coll.normal.x < 0)
-                {
-                    Mirror(false, false);
-                }
-                else
-                {
-                    Mirror(true, false);
-                }
+                    if (coll.normal.x < 0)
+                    {
+                        Mirror(false, false);
+                    }
+                    else
+                    {
+                        Mirror(true, false);
+                    }
 
-                Position = oldPosition + Velocity * coll.timeOfImpact;
-                Velocity = new Vec2();
+                    Position = oldPosition + Velocity * coll.timeOfImpact;
+                    //Velocity = new Vec2();
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity *= 0.6f;
@@ -471,7 +473,7 @@ public class Player : AnimationSprite
             canSwitchElement = true;
         }
 
-        
+
     }
 
     void UpdateMousePosition()
@@ -521,6 +523,8 @@ public class Player : AnimationSprite
         }
 
         canSwitchElement = false;
+
+        ((Level)parent).UpdateUISize();
     }
 
     void Charge()
@@ -537,7 +541,7 @@ public class Player : AnimationSprite
         chargeIndicator.vector = chargeDistance * distanceVec.Normalized();
         chargeIndicator.lineWidth = (uint)Mathf.Map(chargeDistance, 0, chargeDistanceMax, 1f, 30f);
 
-        if(playerState == PlayerState.StickObstacle || playerState == PlayerState.StickWall || playerState == PlayerState.Slide) { return; }
+        if (playerState == PlayerState.StickObstacle || playerState == PlayerState.StickWall || playerState == PlayerState.Slide) { return; }
 
         if (chargeIndicator.vector.x < 0)
         {
@@ -571,15 +575,15 @@ public class Player : AnimationSprite
         {
             Mirror(true, false);
         }
-    
+
 
         canJump = false;
 
-        if(element == Element.Ice)
+        if (element == Element.Ice)
         {
             waterJump.Play(false, 0, baseVolume);
         }
-        else if(element == Element.Fire)
+        else if (element == Element.Fire)
         {
             fireJump.Play(false, 0, baseVolume);
         }
@@ -602,8 +606,8 @@ public class Player : AnimationSprite
         if (shouldGrow)
         {
             mass += 0.01f;
-            mass = Mathf.Clamp(mass, startMass, startMass + 1);
-            if (mass == startMass + 1)
+            mass = Mathf.Clamp(mass, startMass, startMass + 0.5f);
+            if (mass == startMass + 0.5f)
             {
                 SetStateToSlide();
             }
@@ -611,8 +615,8 @@ public class Player : AnimationSprite
         else
         {
             mass -= 0.01f;
-            mass = Mathf.Clamp(mass, startMass - 1, startMass);
-            if (mass == startMass - 1)
+            mass = Mathf.Clamp(mass, startMass - 0.5f, startMass);
+            if (mass == startMass - 0.5f)
             {
                 SetStateToSlide();
             }
@@ -645,6 +649,8 @@ public class Player : AnimationSprite
         //Restart abilities
         canJump = true;
         canSwitchElement = true;
+
+        ((Level)parent).UpdateUISize();
     }
 
     void UpdateSize()
@@ -713,7 +719,7 @@ public class Player : AnimationSprite
     void HandleAnimatons()
     {
         float animDelay = 0.5f;
-        
+
         if (isCharging)
         {
             if (playerState != PlayerState.StickWall && playerState != PlayerState.StickObstacle && playerState != PlayerState.Slide)
@@ -726,14 +732,14 @@ public class Player : AnimationSprite
             else
             {
                 animDelay = 0.2f;
-                
+
                 if (currentFrame == 16 + spritesheetGap)
                 {
                     SetCycle(16 + spritesheetGap);
                 }
             }
         }
-        else if(playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
+        else if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
         {
             animDelay = 0.4f;
             if (currentFrame == 11 + spritesheetGap)
@@ -751,7 +757,7 @@ public class Player : AnimationSprite
         else if (isInAir)
         {
             animDelay = 0.3f;
-            
+
             if (Velocity.y > 0)
             {
                 SetCycle(18 + spritesheetGap, 22 + spritesheetGap);
@@ -767,13 +773,14 @@ public class Player : AnimationSprite
                 {
                     SetCycle(18 + spritesheetGap);
                     return;
-                }else if(currentFrame == 5 + spritesheetGap)
+                }
+                else if (currentFrame == 5 + spritesheetGap)
                 {
                     SetCycle(5 + spritesheetGap);
                     return;
                 }
 
-                if(element == Element.Fire && currentFrame > 24)
+                if (element == Element.Fire && currentFrame > 24)
                 {
                     SetCycle(5);
                     return;
@@ -809,7 +816,7 @@ public class Player : AnimationSprite
     void PlaySlideAnim()
     {
         SetCycle(12 + spritesheetGap, 16 + spritesheetGap);
-        
+
     }
 
     void PlayWallAnim()
@@ -822,7 +829,7 @@ public class Player : AnimationSprite
         if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
         {
             SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
-        } 
+        }
         else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
     }
 }
