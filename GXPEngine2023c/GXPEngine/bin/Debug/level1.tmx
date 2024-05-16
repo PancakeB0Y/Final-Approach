@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1577">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1578">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
@@ -35,6 +35,9 @@
  </tileset>
  <tileset firstgid="12" name="PlayerAnim" tilewidth="256" tileheight="256" tilecount="64" columns="8">
   <image source="Assets/player.png" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="76" name="gaia" tilewidth="459" tileheight="933" tilecount="6" columns="3">
+  <image source="Assets/gaia.png" width="1377" height="1866"/>
  </tileset>
  <objectgroup draworder="index" id="4" name="ObjectBackgrounds" offsetx="-9.25" offsety="-53.25">
   <object id="44" gid="1" x="5880" y="1892" width="784" height="1368"/>
@@ -2848,7 +2851,7 @@
     <property name="Fire" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="1575" name="End" type="End" gid="9" x="771.25" y="977.25" width="64" height="64">
+  <object id="1577" name="End" type="End" gid="76" x="837.25" y="1006.92" width="62.3333" height="126.704">
    <properties>
     <property name="NextScene" value="endMenu.tmx"/>
    </properties>

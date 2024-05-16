@@ -28,6 +28,6 @@ public class End : AnimationSprite
 
     void Update()
     {
-        AnimateFixed();
+        Animate(0.1f);
     }
 }
