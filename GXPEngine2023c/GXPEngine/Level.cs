@@ -78,7 +78,10 @@ public class Level : GameObject
             }
         }
 
-        InitEasyDraws();
+        if(player != null)
+        {
+            InitEasyDraws();
+        }
     }
 
     void InitEasyDraws()
@@ -272,7 +275,10 @@ public class Level : GameObject
 
     void Update()
     {
-        DrawEasyDraws();
+        if(player != null)
+        {
+            DrawEasyDraws();
+        }
     }
 
     void DrawEasyDraws()
