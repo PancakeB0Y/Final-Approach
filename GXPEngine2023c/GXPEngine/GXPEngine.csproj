@@ -45,11 +45,13 @@
     <Compile Include="Components\CollisionInfo.cs" />
     <Compile Include="Components\LineCap.cs" />
     <Compile Include="Components\LineSegment.cs" />
+    <Compile Include="End.cs" />
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="LevelChange.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />

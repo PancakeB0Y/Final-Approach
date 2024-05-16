@@ -5,6 +5,7 @@ using System.Collections;
 using GXPEngine;
 using static GXPEngine.GlobalVariables;
 using TiledMapParser;
+using System.Drawing.Drawing2D;
 
 public class Player : AnimationSprite
 {
@@ -129,6 +130,8 @@ public class Player : AnimationSprite
         UpdateCoordinates();
 
         HandleAnimatons();
+
+        CheckLevelEnd();
     }
 
     void Move()
@@ -229,6 +232,9 @@ public class Player : AnimationSprite
             }
         }
 
+        End end = level.end;
+        earliestCollision = CheckBallCollision(earliestCollision, end);
+
         return earliestCollision;
     }
 
@@ -277,6 +283,43 @@ public class Player : AnimationSprite
         float a = Mathf.Pow(Velocity.Magnitude(), 2);
         float b = 2 * Vec2.Dot(relativePosition, Velocity);
         float c = Mathf.Pow(relativePosition.Magnitude(), 2) - Mathf.Pow(Radius + 0, 2);
+        if (c < 0)
+        {
+            if (b < 0)
+            {
+                Vec2 pNormal = relativePosition.Normalized();
+                earliestColl = new CollisionInfo(pNormal, ball, 0f);
+            }
+            return earliestColl;
+        }
+        if (a < 0.001f)
+        {
+            return earliestColl;
+        }
+        float D = Mathf.Pow(b, 2) - 4 * a * c;
+        if (D < 0)
+        {
+            return earliestColl;
+        }
+        float toi = (-b - Mathf.Sqrt(D)) / (2 * a);
+        if (toi < 1 && toi >= 0)
+        {
+            if (earliestColl == null || toi < earliestColl.timeOfImpact)
+            {
+                Vec2 poi = oldPosition + Velocity * toi;
+                earliestColl = new CollisionInfo((poi - ball.position).Normalized(), other == null ? ball : other, toi, ball);
+            }
+        }
+
+        return earliestColl;
+    }
+
+    CollisionInfo CheckBallCollision(CollisionInfo earliestColl, End ball, GameObject other = null)
+    {
+        Vec2 relativePosition = oldPosition - ball.position;
+        float a = Mathf.Pow(Velocity.Magnitude(), 2);
+        float b = 2 * Vec2.Dot(relativePosition, Velocity);
+        float c = Mathf.Pow(relativePosition.Magnitude(), 2) - Mathf.Pow(Radius + ball.Radius, 2);
         if (c < 0)
         {
             if (b < 0)
@@ -474,6 +517,11 @@ public class Player : AnimationSprite
 
             canJump = true;
             canSwitchElement = true;
+        }
+        else if (coll.other is End)
+        {
+            Level level = (Level)this.parent;
+            ((MyGame)game).LoadScene(level.end.NextScene);
         }
 
 
@@ -860,6 +908,11 @@ public class Player : AnimationSprite
             SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
         }
         else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
+    }
+
+    void CheckLevelEnd()
+    {
+
     }
 }
 

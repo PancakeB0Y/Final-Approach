@@ -20,6 +20,7 @@ public class Level : GameObject
     Player player;
     List<Wall> walls;
     List<Obstacle> obstacles;
+    public End end;
 
     EasyDraw instructions;
 
@@ -54,6 +55,7 @@ public class Level : GameObject
         tiledLoader.LoadObjectGroups(0);
 
         player = FindObjectOfType<Player>();
+        end = FindObjectOfType<End>();
 
         foreach (var wall in GetChildren().Where(c => c is Wall))
         {

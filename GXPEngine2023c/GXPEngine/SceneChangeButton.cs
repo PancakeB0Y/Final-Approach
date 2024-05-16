@@ -4,7 +4,7 @@ using TiledMapParser;
 
 public class SceneChangeButton : Sprite
 {
-    string _nextLevel;
+    string nextScene;
     public SceneChangeButton(TiledObject obj) : base("Assets/startButton.png", true, false)
     {
         SetOrigin(obj.Width / 2, obj.Height / 2);
@@ -12,7 +12,7 @@ public class SceneChangeButton : Sprite
         SetXY(obj.X, obj.Y);
         obj.Width = width; 
         obj.Height = height;
-        _nextLevel = obj.GetStringProperty("NextLevel", "level1.tmx");
+        nextScene = obj.GetStringProperty("NextScene", "level1.tmx");
     }
 
     void HandleInputs()
@@ -22,7 +22,7 @@ public class SceneChangeButton : Sprite
             SetColor(0.5f, 0.5f, 0.5f);
             if (Input.GetMouseButtonDown(0))
             {
-                ((MyGame)game).LoadScene(_nextLevel);
+                ((MyGame)game).LoadScene(nextScene);
             }
         }
         else
