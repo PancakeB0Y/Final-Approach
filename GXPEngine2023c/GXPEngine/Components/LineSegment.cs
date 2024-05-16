@@ -41,7 +41,7 @@ public class LineSegment : GameObject
     {
         if (game != null)
         {
-            Gizmos.RenderLine(start.x, start.y, end.x, end.y, color, lineWidth);
+            //Gizmos.RenderLine(start.x, start.y, end.x, end.y, color, lineWidth);
         }
     }
 }

@@ -52,6 +52,11 @@ public class Level : GameObject
         tiledLoader.addColliders = false;
 
         tiledLoader.LoadObjectGroups(0);
+        tiledLoader.LoadObjectGroups(1);
+        tiledLoader.LoadObjectGroups(2);
+        tiledLoader.LoadObjectGroups(3);
+        tiledLoader.LoadObjectGroups(4);
+        tiledLoader.LoadObjectGroups(5);
 
         player = FindObjectOfType<Player>();
 
@@ -115,32 +120,32 @@ public class Level : GameObject
 
     private void InitSizeMeters()
     {
-        sizeMeterSmallWater = new EasyDraw("Assets/small drop.png", false);
+        sizeMeterSmallWater = new EasyDraw("Assets/UI/small drop.png", false);
         sizeMeterSmallWater.SetOrigin(sizeMeterSmallWater.width / 2, sizeMeterSmallWater.height / 2);
         sizeMeterSmallWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterSmallWater);
 
-        sizeMeterMediumWater = new EasyDraw("Assets/middle drop.png", false);
+        sizeMeterMediumWater = new EasyDraw("Assets/UI/middle drop.png", false);
         sizeMeterMediumWater.SetOrigin(sizeMeterMediumWater.width / 2, sizeMeterMediumWater.height / 2);
         sizeMeterMediumWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterMediumWater);
 
-        sizeMeterLargeWater = new EasyDraw("Assets/big drop.png", false);
+        sizeMeterLargeWater = new EasyDraw("Assets/UI/big drop.png", false);
         sizeMeterLargeWater.SetOrigin(sizeMeterLargeWater.width / 2, sizeMeterMediumWater.height / 2);
         sizeMeterLargeWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterLargeWater);
 
-        sizeMeterSmallFire = new EasyDraw("Assets/small fire.png", false);
+        sizeMeterSmallFire = new EasyDraw("Assets/UI/small fire.png", false);
         sizeMeterSmallFire.SetOrigin(sizeMeterSmallFire.width / 2, sizeMeterSmallFire.height / 2);
         sizeMeterSmallFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterSmallFire);
 
-        sizeMeterMediumFire = new EasyDraw("Assets/middle fire.png", false);
+        sizeMeterMediumFire = new EasyDraw("Assets/UI/middle fire.png", false);
         sizeMeterMediumFire.SetOrigin(sizeMeterMediumFire.width / 2, sizeMeterMediumFire.height / 2);
         sizeMeterMediumFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterMediumFire);
 
-        sizeMeterLargeFire = new EasyDraw("Assets/big fire.png", false);
+        sizeMeterLargeFire = new EasyDraw("Assets/UI/big fire.png", false);
         sizeMeterLargeFire.SetOrigin(sizeMeterLargeFire.width / 2, sizeMeterLargeFire.height / 2);
         sizeMeterLargeFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterLargeFire);
@@ -255,7 +260,7 @@ public class Level : GameObject
         obstacles.Remove(obstacle);
 
         //SpawnAnimation
-        var reactionParticle = new ReactionParticle("Assets/smoke.png", 3, 3);
+        var reactionParticle = new ReactionParticle("Assets/player_animations/smoke.png", 3, 3);
         reactionParticle.SetXY(obstacle.x, obstacle.y);
         AddChild(reactionParticle);
 
