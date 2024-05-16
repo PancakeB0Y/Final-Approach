@@ -9,9 +9,17 @@ public class MyGame : Game
     {
         targetFps = 60;
 
-        backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
+        if(curSceneName == "level1.tmx")
+        {
+            backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
+        }
+        else
+        {
+            backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
+        }
+        
 
-        curSceneName = "level1.tmx";
+        curSceneName = "startMenu.tmx";
         LoadScene(curSceneName);
     }
 
@@ -28,7 +36,7 @@ public class MyGame : Game
         }
     }
 
-    void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         List<GameObject> children = GetChildren();
         foreach (GameObject child in children)

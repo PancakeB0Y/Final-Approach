@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1575">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1577">
  <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
   <image source="Assets/Background.jpg" width="406" height="720"/>
  </tileset>
@@ -2846,6 +2846,11 @@
   <object id="1572" name="Player" type="Player" gid="12" x="629.25" y="965.25" width="64" height="64">
    <properties>
     <property name="Fire" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="1575" name="End" type="End" gid="9" x="771.25" y="977.25" width="64" height="64">
+   <properties>
+    <property name="NextScene" value="endMenu.tmx"/>
    </properties>
   </object>
  </objectgroup>

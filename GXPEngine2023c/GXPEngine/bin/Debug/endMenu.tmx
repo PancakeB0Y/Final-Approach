@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="8" nextobjectid="1585">
+ <tileset firstgid="1" name="Background" tilewidth="400" tileheight="700" tilecount="1" columns="1">
+  <image source="Assets/Background.jpg" width="406" height="720"/>
+ </tileset>
+ <tileset firstgid="2" name="player" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Assets/circle.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="3" name="wallGreen" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallGreen.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="4" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="5" name="wallRed" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallRed.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="6" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="7" name="wallRed" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallRed.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="8" name="wallGreen" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallGreen.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="9" name="player" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Assets/circle.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="10" name="wallNormal" tilewidth="32" tileheight="160" tilecount="1" columns="1">
+  <image source="Assets/wallNormal.png" width="32" height="160"/>
+ </tileset>
+ <tileset firstgid="11" name="PlayerSmall" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="Assets/circleSmall.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="12" name="PlayerAnim" tilewidth="256" tileheight="256" tilecount="64" columns="8">
+  <image source="Assets/player.png" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="76" name="StartMenuBackground" tilewidth="1920" tileheight="1080" tilecount="1" columns="1">
+  <image source="Assets/startMenuBackground.png" width="1920" height="1080"/>
+ </tileset>
+ <tileset firstgid="77" name="EndMenu" tilewidth="1920" tileheight="1080" tilecount="1" columns="1">
+  <image source="Assets/endMenu.png" width="1920" height="1080"/>
+ </tileset>
+ <objectgroup draworder="index" id="4" name="ObjectBackgrounds" offsetx="-9.25" offsety="-53.25">
+  <object id="1580" name="Background" gid="77" x="0" y="1080" width="1920" height="1080"/>
+  <object id="1581" name="LevelChange" type="LevelChange" x="106.22" y="95.6742" width="287.879" height="154.545">
+   <properties>
+    <property name="NextScene" value="startMenu.tmx"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
