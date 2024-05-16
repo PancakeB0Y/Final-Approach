@@ -11,7 +11,7 @@ public class MyGame : Game
 
         backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 1);
 
-        curSceneName = "level1.tmx";
+        curSceneName = "levelNew.tmx";
         LoadScene(curSceneName);
     }
 
