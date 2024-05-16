@@ -91,6 +91,7 @@
     <Compile Include="Obstacles\Obstacle.cs" />
     <Compile Include="Obstacles\ElementObstacle.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="ReactionParticle.cs" />
     <Compile Include="Vec2.cs" />
     <Compile Include="MyUtils.cs" />
     <Compile Include="Walls\ElementWall.cs" />
