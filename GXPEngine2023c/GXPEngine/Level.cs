@@ -31,9 +31,6 @@ public class Level : GameObject
     EasyDraw sizeMeterMediumFire;
     EasyDraw sizeMeterLargeFire;
 
-    EasyDraw canJump;
-    EasyDraw canSwitchElement;
-
     public Level(string fileName, int id)
     {
         this.id = id;
@@ -53,6 +50,11 @@ public class Level : GameObject
         tiledLoader.addColliders = false;
 
         tiledLoader.LoadObjectGroups(0);
+        tiledLoader.LoadObjectGroups(1);
+        tiledLoader.LoadObjectGroups(2);
+        tiledLoader.LoadObjectGroups(3);
+        tiledLoader.LoadObjectGroups(4);
+        tiledLoader.LoadObjectGroups(5);
 
         player = FindObjectOfType<Player>();
         end = FindObjectOfType<End>();
@@ -97,55 +99,37 @@ public class Level : GameObject
         instructions.SetXY((game.width - 800) / 4, game.height / 2);
         AddChild(instructions);
 
-        canJump = new EasyDraw(200, 50, false);
-        canJump.TextAlign(CenterMode.Center, CenterMode.Center);
-        canJump.Fill(Color.White);
-        canJump.TextSize(20);
-        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
-        canJump.SetOrigin(canJump.width / 2, canJump.height / 2);
-        canJump.SetXY(game.width - (game.width - 800) / 4, 30f);
-        game.AddChild(canJump);
-
-        canSwitchElement = new EasyDraw(310, 50, false);
-        canSwitchElement.TextAlign(CenterMode.Center, CenterMode.Center);
-        canSwitchElement.Fill(Color.White);
-        canSwitchElement.TextSize(20);
-        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
-        canSwitchElement.SetOrigin(canSwitchElement.width / 2, canSwitchElement.height / 2);
-        canSwitchElement.SetXY(game.width - (game.width - 800) / 4, 70f);
-        game.AddChild(canSwitchElement);
-
         InitSizeMeters();
     }
 
     private void InitSizeMeters()
     {
-        sizeMeterSmallWater = new EasyDraw("Assets/small drop.png", false);
+        sizeMeterSmallWater = new EasyDraw("Assets/UI/small drop.png", false);
         sizeMeterSmallWater.SetOrigin(sizeMeterSmallWater.width / 2, sizeMeterSmallWater.height / 2);
         sizeMeterSmallWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterSmallWater);
 
-        sizeMeterMediumWater = new EasyDraw("Assets/middle drop.png", false);
+        sizeMeterMediumWater = new EasyDraw("Assets/UI/middle drop.png", false);
         sizeMeterMediumWater.SetOrigin(sizeMeterMediumWater.width / 2, sizeMeterMediumWater.height / 2);
         sizeMeterMediumWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterMediumWater);
 
-        sizeMeterLargeWater = new EasyDraw("Assets/big drop.png", false);
+        sizeMeterLargeWater = new EasyDraw("Assets/UI/big drop.png", false);
         sizeMeterLargeWater.SetOrigin(sizeMeterLargeWater.width / 2, sizeMeterMediumWater.height / 2);
         sizeMeterLargeWater.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterLargeWater);
 
-        sizeMeterSmallFire = new EasyDraw("Assets/small fire.png", false);
+        sizeMeterSmallFire = new EasyDraw("Assets/UI/small fire.png", false);
         sizeMeterSmallFire.SetOrigin(sizeMeterSmallFire.width / 2, sizeMeterSmallFire.height / 2);
         sizeMeterSmallFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterSmallFire);
 
-        sizeMeterMediumFire = new EasyDraw("Assets/middle fire.png", false);
+        sizeMeterMediumFire = new EasyDraw("Assets/UI/middle fire.png", false);
         sizeMeterMediumFire.SetOrigin(sizeMeterMediumFire.width / 2, sizeMeterMediumFire.height / 2);
         sizeMeterMediumFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterMediumFire);
 
-        sizeMeterLargeFire = new EasyDraw("Assets/big fire.png", false);
+        sizeMeterLargeFire = new EasyDraw("Assets/UI/big fire.png", false);
         sizeMeterLargeFire.SetOrigin(sizeMeterLargeFire.width / 2, sizeMeterLargeFire.height / 2);
         sizeMeterLargeFire.SetXY((game.width - 800) / 4, 100);
         game.AddChild(sizeMeterLargeFire);
@@ -182,6 +166,7 @@ public class Level : GameObject
                 sizeMeterLargeFire.visible = false;
                 break;
             default:
+                Console.WriteLine("Icorrect mass in UI switch!!!");
                 break;
         }
     }
@@ -192,6 +177,14 @@ public class Level : GameObject
         {
             child.Destroy();
         }
+
+        sizeMeterSmallWater.Destroy();
+        sizeMeterMediumWater.Destroy();
+        sizeMeterLargeWater.Destroy();
+        sizeMeterSmallFire.Destroy();
+        sizeMeterMediumFire.Destroy();
+        sizeMeterLargeFire.Destroy();
+
         CreateLevel();
     }
 
@@ -260,7 +253,7 @@ public class Level : GameObject
         obstacles.Remove(obstacle);
 
         //SpawnAnimation
-        var reactionParticle = new ReactionParticle("Assets/smoke.png", 3, 3);
+        var reactionParticle = new ReactionParticle("Assets/player_animations/smoke.png", 3, 3);
         reactionParticle.SetXY(obstacle.x, obstacle.y);
         AddChild(reactionParticle);
 
@@ -273,19 +266,5 @@ public class Level : GameObject
             line.Destroy();
         }
         obstacle.Destroy();
-    }
-
-    void Update()
-    {
-        if(player != null)
-        {
-            DrawEasyDraws();
-        }
-    }
-
-    void DrawEasyDraws()
-    {
-        canJump.Text($"Can jump: {player.CanJump}", true, 255, 0, 0, 0);
-        canSwitchElement.Text($"Can switch element: {player.CanSwitchElement}", true, 255, 0, 0, 0);
     }
 }

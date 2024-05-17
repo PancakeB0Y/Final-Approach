@@ -26,7 +26,7 @@ public class Wall : AnimationSprite
         }
     }
 
-    public Wall(bool isLeft, LineSegment line) : base("Assets/wallNormal.png", 1, 1, -1, false, false)
+    public Wall(bool isLeft, LineSegment line) : base("Assets/objects/wallNormal.png", 1, 1, -1, false, false)
     {
         IsLeft = isLeft;
         LineSegment = line;

@@ -428,6 +428,17 @@ public class Player : AnimationSprite
 
                     if (mass < currentElementObstacle.Mass)
                     {
+                        if (coll.normal.x < 0)
+                        {
+                            Mirror(false, false);
+                        }
+                        else
+                        {
+                            Mirror(true, false);
+                        }
+
+                        PlayWallAnim();
+
                         startMass = mass;
                         playerState = PlayerState.StickObstacle;
                         wallElement = currentElementObstacle.Element;
@@ -479,6 +490,7 @@ public class Player : AnimationSprite
 
                     Position = oldPosition + Velocity * coll.timeOfImpact;
                     Velocity *= 0.6f;
+                    ((Level)parent).UpdateUISize();
 
                     ((Level)parent).RemoveObstacle(currentElementObstacle);
                 }
