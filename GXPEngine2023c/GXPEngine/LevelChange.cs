@@ -4,7 +4,7 @@ using TiledMapParser;
 public class LevelChange : Sprite
 {
     string nextScene;
-    public LevelChange(TiledObject data) : base("Assets/square.png", true, false)
+    public LevelChange(TiledObject data) : base("Assets/UI/small fire.png", true, false)
     {
         alpha = 0f;
         nextScene = data.GetStringProperty("NextScene", "startMenu.tmx");

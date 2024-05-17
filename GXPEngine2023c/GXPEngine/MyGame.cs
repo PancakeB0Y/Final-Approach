@@ -12,7 +12,7 @@ public class MyGame : Game
 
         curSceneName = "startMenu.tmx";
 
-        if (curSceneName == "level1.tmx")
+        if (curSceneName == "levelNew.tmx")
         {
             backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
         }
@@ -49,7 +49,7 @@ public class MyGame : Game
         curSceneName = sceneName;
         backgroundMusic.Stop();
 
-        if (curSceneName == "level1.tmx")
+        if (curSceneName == "levelNew.tmx")
         {
             backgroundMusic = new Sound("Assets/Sounds/background.wav", true).Play(false, 0, 3.5f);
         }

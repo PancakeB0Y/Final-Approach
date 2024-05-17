@@ -12,7 +12,7 @@ public class SceneChangeButton : Sprite
         SetXY(obj.X, obj.Y);
         obj.Width = width; 
         obj.Height = height;
-        nextScene = obj.GetStringProperty("NextScene", "level1.tmx");
+        nextScene = obj.GetStringProperty("NextScene", "levelNew.tmx");
     }
 
     void HandleInputs()
