@@ -58,6 +58,11 @@ public class Level : GameObject
 
         player = FindObjectOfType<Player>();
         end = FindObjectOfType<End>();
+        
+        if(end != null)
+        {
+            AddChild(end);
+        }
 
         foreach (var wall in GetChildren().Where(c => c is Wall))
         {
@@ -215,7 +220,6 @@ public class Level : GameObject
         }
         if (player.y + y < game.height / 2)
         {
-            Console.WriteLine("In");
             y = game.height / 2 - player.y;
         }
     }
