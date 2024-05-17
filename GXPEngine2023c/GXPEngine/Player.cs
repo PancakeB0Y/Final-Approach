@@ -781,6 +781,15 @@ public class Player : AnimationSprite
                 {
                     SetCycle(3 + spritesheetGap);
                 }
+
+                if (element == Element.Fire && currentFrame > 24)
+                {
+                    SetCycle(3);
+                }
+                else if (element == Element.Ice && currentFrame < 24)
+                {
+                    SetCycle(27);
+                }
             }
             else
             {
@@ -789,6 +798,15 @@ public class Player : AnimationSprite
                 if (currentFrame == 16 + spritesheetGap)
                 {
                     SetCycle(16 + spritesheetGap);
+                }
+
+                if (element == Element.Fire && currentFrame > 24)
+                {
+                    SetCycle(16);
+                }
+                else if (element == Element.Ice && currentFrame < 24)
+                {
+                    SetCycle(40);
                 }
             }
         }
@@ -800,6 +818,15 @@ public class Player : AnimationSprite
             {
                 SetCycle(11 + spritesheetGap);
             }
+
+            if (element == Element.Fire && currentFrame > 24)
+            {
+                SetCycle(11);
+            }
+            else if (element == Element.Ice && currentFrame < 24)
+            {
+                SetCycle(35);
+            }
         }
         else if (playerState == PlayerState.Slide)
         {
@@ -807,6 +834,15 @@ public class Player : AnimationSprite
             if (currentFrame == 15 + spritesheetGap)
             {
                 SetCycle(15 + spritesheetGap);
+            }
+
+            if (element == Element.Fire && currentFrame > 24)
+            {
+                SetCycle(15);
+            }
+            else if (element == Element.Ice && currentFrame < 24)
+            {
+                SetCycle(39);
             }
         }
         else if (isInAir)
@@ -821,6 +857,15 @@ public class Player : AnimationSprite
                 {
                     SetCycle(21 + spritesheetGap);
                 }
+
+                if (element == Element.Fire && currentFrame > 24)
+                {
+                    SetCycle(21);
+                }
+                else if (element == Element.Ice && currentFrame < 24)
+                {
+                    SetCycle(45);
+                }
             }
             else
             {
@@ -828,24 +873,18 @@ public class Player : AnimationSprite
                 if (currentFrame == 18 + spritesheetGap)
                 {
                     SetCycle(18 + spritesheetGap);
-                    return;
                 }
                 else if (currentFrame == 5 + spritesheetGap)
                 {
                     SetCycle(5 + spritesheetGap);
-                    return;
                 }
 
                 if (element == Element.Fire && currentFrame > 24)
                 {
                     SetCycle(5);
-                    return;
-                }
-
-                if (element == Element.Ice && currentFrame < 24)
+                }else if (element == Element.Ice && currentFrame < 24)
                 {
                     SetCycle(29);
-                    return;
                 }
             }
         }
@@ -871,6 +910,10 @@ public class Player : AnimationSprite
             }
         }
 
+        if(currentFrame> 45 && currentFrame < 48)
+        {
+            SetCycle(11 + spritesheetGap);
+        }
         
 
         Animate(animDelay);
@@ -880,7 +923,7 @@ public class Player : AnimationSprite
     {
         if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle)
         {
-            SetCycle(16 + spritesheetGap, 17 + spritesheetGap);
+            //SetCycle(16 + spritesheetGap, 17 + spritesheetGap);
         }
         else
         {
@@ -903,7 +946,7 @@ public class Player : AnimationSprite
     {
         if (playerState == PlayerState.StickWall || playerState == PlayerState.StickObstacle || playerState == PlayerState.Slide)
         {
-            SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
+            //SetCycle(17 + spritesheetGap, 22 + spritesheetGap);
         }
         else { SetCycle(4 + spritesheetGap, 6 + spritesheetGap); }
     }

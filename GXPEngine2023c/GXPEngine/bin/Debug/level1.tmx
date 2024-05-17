@@ -2851,7 +2851,7 @@
     <property name="Fire" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="1577" name="End" type="End" gid="76" x="887.735" y="1018.44" width="62.3333" height="126.704">
+  <object id="1577" name="End" type="End" gid="76" x="921.068" y="-5151.26" width="62.3333" height="126.704">
    <properties>
     <property name="NextScene" value="endMenu.tmx"/>
    </properties>
