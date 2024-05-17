@@ -22,7 +22,7 @@ public class SceneChangeButton : Sprite
             SetColor(0.5f, 0.5f, 0.5f);
             if (Input.GetMouseButtonDown(0))
             {
-                ((MyGame)game).LoadScene(nextScene);
+                ((MyGame)game).LoadScene(nextScene, 4239);
             }
         }
         else

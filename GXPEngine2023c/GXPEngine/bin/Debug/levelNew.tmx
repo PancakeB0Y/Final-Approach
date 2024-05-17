@@ -78,7 +78,7 @@
   <image source="Assets/gaia.png" width="1377" height="1866"/>
  </tileset>
  <objectgroup id="12" name="BG">
-  <object id="3405" name="BG" gid="152" x="1.42467" y="1079.24" width="1920" height="5372.73"/>
+  <object id="3405" name="BG" gid="152" x="1.42467" y="1080" width="1920" height="6081.82"/>
  </objectgroup>
  <objectgroup id="13" name="Obstacles">
   <object id="3406" name="Obstacle" type="Obstacle" gid="80" x="877.137" y="1076.71" width="166.44" height="54.31"/>

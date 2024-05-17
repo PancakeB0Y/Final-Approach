@@ -532,7 +532,7 @@ public class Player : AnimationSprite
         else if (coll.other is End)
         {
             Level level = (Level)this.parent;
-            ((MyGame)game).LoadScene(level.end.NextScene);
+            ((MyGame)game).LoadScene(level.end.NextScene, 0);
         }
 
 

@@ -31,13 +31,20 @@ public class Level : GameObject
     EasyDraw sizeMeterMediumFire;
     EasyDraw sizeMeterLargeFire;
 
-    public Level(string fileName, int id)
+    int score;
+    EasyDraw scoreIndicator;
+
+    public Level(string fileName, int id, int score)
     {
         this.id = id;
         Name = fileName;
 
+        this.score = score;
+
         tiledLoader = new TiledLoader(fileName);
         CreateLevel();
+
+        CheckScoreAmount();
     }
 
     void CreateLevel()
@@ -58,8 +65,8 @@ public class Level : GameObject
 
         player = FindObjectOfType<Player>();
         end = FindObjectOfType<End>();
-        
-        if(end != null)
+
+        if (end != null)
         {
             AddChild(end);
         }
@@ -87,7 +94,7 @@ public class Level : GameObject
             }
         }
 
-        if(player != null)
+        if (player != null)
         {
             InitEasyDraws();
         }
@@ -103,11 +110,21 @@ public class Level : GameObject
         instructions.SetOrigin(instructions.width / 2, instructions.height / 2);
         instructions.SetXY((game.width - 800) / 4, game.height - 200);
         AddChild(instructions);
-
-        //InitSizeMeters();
     }
 
-    private void InitSizeMeters()
+    void InitScoreIndicator()
+    {
+        scoreIndicator = new EasyDraw(200, 100, false);
+        scoreIndicator.TextAlign(CenterMode.Center, CenterMode.Center);
+        scoreIndicator.Fill(Color.White);
+        scoreIndicator.TextSize(20);
+        scoreIndicator.Text($"Score: {score}", true);
+        scoreIndicator.SetOrigin(scoreIndicator.width / 2, scoreIndicator.height / 2);
+        scoreIndicator.SetXY(game.width - (game.width - 800) / 4, 100);
+        game.AddChild(scoreIndicator);
+    }
+
+    void InitSizeMeters()
     {
         sizeMeterSmallWater = new EasyDraw("Assets/UI/small drop.png", false);
         sizeMeterSmallWater.SetOrigin(sizeMeterSmallWater.width / 2, sizeMeterSmallWater.height / 2);
@@ -196,7 +213,35 @@ public class Level : GameObject
         sizeMeterLargeFire.Destroy();
         sizeMeterLargeFire = null;
 
+        scoreIndicator.Destroy();
+        scoreIndicator = null;
+
         CreateLevel();
+
+        CheckScoreAmount();
+    }
+
+    void CheckScoreAmount()
+    {
+        if (score >= 4239)
+        {
+            MoveLevel(4239);
+            score = 4239;
+        }
+        else if (score >= 3050)
+        {
+            MoveLevel(3050);
+            score = 3050;
+        }
+        else if (score >= 1757)
+        {
+            MoveLevel(1757);
+            score = 1757;
+        }
+        else
+        {
+            score = 0;
+        }
     }
 
     public void MoveLevel(float moveAmount)
@@ -214,6 +259,8 @@ public class Level : GameObject
                 line.MoveLine(moveAmount);
             }
         }
+
+        score += (int)moveAmount;
     }
 
     public void HandleScrolling()
@@ -282,7 +329,15 @@ public class Level : GameObject
     {
         if (sizeMeterSmallFire == null && !Name.ToLower().Contains("menu"))
         {
+            InitScoreIndicator();
             InitSizeMeters();
         }
+        if (scoreIndicator != null)
+            UpdateScore();
+    }
+
+    void UpdateScore()
+    {
+        scoreIndicator.Text($"Score: {score}", true);
     }
 }

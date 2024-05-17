@@ -14,7 +14,7 @@ public class LevelChange : Sprite
     {
         if ((Input.AnyKeyDown() || Input.GetMouseButtonDown(0)) && !Input.GetKey(Key.R))
         {
-            ((MyGame)game).LoadScene(nextScene);
+            ((MyGame)game).LoadScene(nextScene, 0);
         }
     }
 

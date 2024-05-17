@@ -21,7 +21,7 @@ public class MyGame : Game
             backgroundMusic = new Sound("Assets/Sounds/menu.wav", true).Play(false, 0, 3.5f);
         }
 
-        LoadScene(curSceneName);
+        LoadScene(curSceneName, 0);
     }
 
     void Update()
@@ -33,11 +33,11 @@ public class MyGame : Game
     {
         if (Input.GetKeyDown(Key.R))
         {
-            LoadScene(curSceneName);
+            LoadScene(curSceneName, 0);
         }
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, int score)
     {
         List<GameObject> children = GetChildren();
         foreach (GameObject child in children)
@@ -45,7 +45,7 @@ public class MyGame : Game
             child.LateDestroy();
         }
         children.Clear();
-        AddChild(new Level(sceneName, 1));
+        AddChild(new Level(sceneName, 1, score));
         curSceneName = sceneName;
         backgroundMusic.Stop();
 
