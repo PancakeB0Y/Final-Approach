@@ -95,16 +95,16 @@ public class Level : GameObject
 
     void InitEasyDraws()
     {
-        instructions = new EasyDraw(400, 300, false);
+        instructions = new EasyDraw(300, 200, false);
         instructions.TextAlign(CenterMode.Center, CenterMode.Center);
         instructions.Fill(Color.White);
-        instructions.TextSize(20);
-        instructions.Text($"Press and drag the left mouse\nbutton to CHARGE and\nrelease to LAUNCH\n\nPress the right mouse\nbutton to SWITCH elements", true, 255, 0, 0, 0);
+        instructions.TextSize(15);
+        instructions.Text($"Press and drag the left mouse\nbutton to CHARGE and\nrelease to LAUNCH\n\nPress the right mouse\nbutton to SWITCH elements", true);
         instructions.SetOrigin(instructions.width / 2, instructions.height / 2);
-        instructions.SetXY((game.width - 800) / 4, game.height / 2);
+        instructions.SetXY((game.width - 800) / 4, game.height - 200);
         AddChild(instructions);
 
-        InitSizeMeters();
+        //InitSizeMeters();
     }
 
     private void InitSizeMeters()
@@ -184,11 +184,17 @@ public class Level : GameObject
         }
 
         sizeMeterSmallWater.Destroy();
+        sizeMeterSmallWater = null;
         sizeMeterMediumWater.Destroy();
+        sizeMeterMediumWater = null;
         sizeMeterLargeWater.Destroy();
+        sizeMeterLargeWater = null;
         sizeMeterSmallFire.Destroy();
+        sizeMeterSmallFire = null;
         sizeMeterMediumFire.Destroy();
+        sizeMeterMediumFire = null;
         sizeMeterLargeFire.Destroy();
+        sizeMeterLargeFire = null;
 
         CreateLevel();
     }
@@ -270,5 +276,13 @@ public class Level : GameObject
             line.Destroy();
         }
         obstacle.Destroy();
+    }
+
+    void Update()
+    {
+        if (sizeMeterSmallFire == null && !Name.ToLower().Contains("menu"))
+        {
+            InitSizeMeters();
+        }
     }
 }
