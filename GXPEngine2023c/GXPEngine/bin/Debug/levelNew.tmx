@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="17" nextobjectid="3707">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="1920" height="1080" tilewidth="1" tileheight="1" infinite="0" nextlayerid="17" nextobjectid="3717">
  <tileset firstgid="1" name="player" tilewidth="64" tileheight="64" tilecount="0" columns="1">
   <image source="Assets/circle.png" width="64" height="64"/>
  </tileset>
@@ -78,7 +78,13 @@
   <image source="Assets/gaia.png" width="1377" height="1866"/>
  </tileset>
  <objectgroup id="12" name="BG">
-  <object id="3405" name="BG" gid="152" x="1.42467" y="1080" width="1920" height="6081.82"/>
+  <object id="3405" name="BG" gid="152" x="-35.9087" y="1077.33" width="1920" height="6081.82"/>
+  <object id="3707" gid="82" x="-224.212" y="1080" width="768.169" height="401.717"/>
+  <object id="3712" gid="82" x="1376" y="1076" width="637.879" height="691.5"/>
+  <object id="3713" gid="82" x="1430.78" y="390" width="574.52" height="567.87"/>
+  <object id="3714" gid="82" x="-18.9242" y="385.227" width="504.424" height="562.955"/>
+  <object id="3715" gid="82" x="-49.6667" y="-683.25" width="541.333" height="3668.27"/>
+  <object id="3716" gid="5" x="1420.67" y="-684.135" width="512.666" height="3671.6"/>
  </objectgroup>
  <objectgroup id="13" name="Obstacles">
   <object id="3406" name="Obstacle" type="Obstacle" gid="80" x="877.137" y="1076.71" width="166.44" height="54.31"/>
