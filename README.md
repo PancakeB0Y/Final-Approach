@@ -2,6 +2,11 @@
 
 A 2D physics-based puzzle game, product of a group project, in which Engineers, Designers and Artist come together to develop a game in 2 weeks.
 
+<p align="center">
+  <img src="Media/demo.gif"><br/>
+  *<i>Low frame rate caused by gif limitations</i>*
+</p>
+
 ## Overview
 
 In the heart of a mystical cave, an elemental spirit goes on a quest to reunite with the mother spirit, Gaia, to help him restore his wings.
@@ -39,13 +44,6 @@ Developed by utilizing the GxP 2D Game Engine, provided by the institution.
  
 ### Level editing
 Done by using Tiled level editor
-
-## Demo
-
-<p align="center">
-  <img src="Media/demo.gif"><br/>
-  *<i>Low frame rate caused by gif limitations</i>*
-</p>
 
 ## Controls
 
