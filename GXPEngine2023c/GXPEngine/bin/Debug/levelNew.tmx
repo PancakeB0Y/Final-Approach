@@ -77,7 +77,7 @@
  <tileset firstgid="153" name="gaia" tilewidth="459" tileheight="933" tilecount="6" columns="3">
   <image source="Assets/gaia.png" width="1377" height="1866"/>
  </tileset>
- <objectgroup id="12" name="BG">
+ <objectgroup id="12" name="BG" visible="0">
   <object id="3405" name="BG" gid="152" x="-35.9087" y="1077.33" width="1920" height="6081.82"/>
   <object id="3707" gid="82" x="-224.212" y="1080" width="768.169" height="401.717"/>
   <object id="3712" gid="82" x="1376" y="1076" width="637.879" height="691.5"/>
@@ -1119,7 +1119,7 @@
  </objectgroup>
  <objectgroup id="9" name="Obj">
   <object id="3402" name="Player" type="Player" gid="88" x="925.167" y="996.197" width="64" height="64"/>
-  <object id="3706" name="End" type="End" gid="153" x="928.833" y="-4107.35" width="62.3333" height="126.704">
+  <object id="3706" name="End" type="End" gid="153" x="914.203" y="-4101.35" width="95.2946" height="193.704">
    <properties>
     <property name="NextScene" value="endMenu.tmx"/>
    </properties>
