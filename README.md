@@ -43,7 +43,7 @@ Developed by utilizing the GxP 2D Game Engine, provided by the institution.
   1. Smoke particle when the obstacle gets destroyed
  
 ### Level editing
-Done by using Tiled level editor
+Done by using [Tiled](https://www.mapeditor.org/) level editor
 
 ## Controls
 
