@@ -13,8 +13,7 @@ In the heart of a mystical cave, an elemental spirit goes on a quest to reunite 
 The spirit navigates through a labyrinthine world filled with obstacles and floating rocks.
 Possessing the remarkable ability to change between the elemental states of fire and water, it ascends the towering walls, each step a delicate balance between gaining power and losing it.
 
-Developed by utilizing the GxP 2D Game Engine, provided by the institution.
-
+Developed by utilizing the [GXP 2D Game Engine](https://github.com/PancakeB0Y/Final-Approach/tree/main/GXPEngine2023c/GXPEngine/GXPEngine) - a code-based small engine designed and developed by the teachers to introduce students to how a game engine may opperate.
 ## Features
 
 ### Gameplay (Engineers)
