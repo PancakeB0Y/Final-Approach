@@ -56,3 +56,6 @@ Done by: @AndriiTaizhkorob, @AllardMulder
 
 ## Art
 Done by: @Finley Murronmaa, @Ivayla Panayotova, @Vanina Velcheva
+
+## Programming
+Done by: [Nikola Goev](https://www.linkedin.com/in/nikola-goev-827645266/), [Kaloyan Ivanov](https://www.linkedin.com/in/kaloyan-ivanov-ge/)
